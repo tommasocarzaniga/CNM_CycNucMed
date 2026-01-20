@@ -6,5 +6,6 @@ __all__ = [
     "analysis",
     "plotting",
     "pdf_report",
-    "utils"
+    "utils",
+    "async_utils"
 ]
