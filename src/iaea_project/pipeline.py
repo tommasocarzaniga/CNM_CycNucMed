@@ -1,3 +1,3 @@
-from scripts.run_full import main as run_full
+from scripts.run import main as run
 
-__all__ = ["run_full"]
+__all__ = ["run"]
