@@ -12,3 +12,8 @@ where = ["src"]
 
 [project.scripts]
 iaea-project = "iaea_project.run:run"
+
+dependencies = [
+    "country_converter",
+    ...
+]
