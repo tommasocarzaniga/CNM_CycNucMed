@@ -1,5 +1,7 @@
 """IAEA cyclotron list project (scrape -> clean -> analyze -> plot -> PDF)."""
 
+from .run import run
+
 __all__ = [
     "scraper",
     "cleaning",
@@ -7,4 +9,5 @@ __all__ = [
     "plotting",
     "pdf_report",
     "utils",
+    "run",
 ]
