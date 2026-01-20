@@ -9,3 +9,6 @@ requires-python = ">=3.10"
 
 [tool.setuptools.packages.find]
 where = ["src"]
+
+[project.scripts]
+iaea-project = "iaea_project.run:run"
