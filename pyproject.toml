@@ -6,14 +6,16 @@ build-backend = "setuptools.build_meta"
 name = "iaea-project"
 version = "0.1.0"
 requires-python = ">=3.10"
+dependencies = [
+  "country_converter",
+  "pandas",
+  "playwright",
+  "nest_asyncio",
+  # add the rest you use...
+]
 
 [tool.setuptools.packages.find]
 where = ["src"]
 
 [project.scripts]
 iaea-project = "iaea_project.run:run"
-
-dependencies = [
-    "country_converter",
-    ...
-]
