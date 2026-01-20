@@ -240,9 +240,28 @@ async def scrape_all_pages_async(config: ScraperConfig = ScraperConfig()) -> pd.
 
 
 def scrape_iaea_cyclotrons(config: ScraperConfig = ScraperConfig()) -> pd.DataFrame:
-    """Synchronous wrapper around the async scraper."""
-    return asyncio.run(scrape_all_pages_async(config=config))
+    """Synchronous wrapper around the async scraper (CLI + Jupyter safe)."""
+    coro = scrape_all_pages_async(config=config)
 
+    try:
+        # If this works, we're inside an existing event loop (Jupyter/Colab)
+        loop = asyncio.get_running_loop()
+    except RuntimeError:
+        # No running loop → normal script execution
+        return asyncio.run(coro)
+
+    # Running loop → Jupyter/Colab
+    # We need nest_asyncio to allow nested loop.run_until_complete
+    try:
+        import nest_asyncio  # pip install nest_asyncio
+        nest_asyncio.apply()
+    except Exception as e:
+        raise RuntimeError(
+            "You're running inside a Jupyter/Colab event loop. "
+            "Install nest_asyncio: pip install nest_asyncio"
+        ) from e
+
+    return loop.run_until_complete(coro)
 
 def save_raw(df: pd.DataFrame, out_csv: Path) -> Path:
     out_csv.parent.mkdir(parents=True, exist_ok=True)
