@@ -1,4 +1,22 @@
+# Core
 pandas
 matplotlib
 reportlab
+pillow
+
+# Scraping
+playwright
+
+# Cleaning / similarity guardrails
+rapidfuzz
+
+# Geocoding + maps (optional)
+geopy
+geopandas
+shapely
+pyproj
+fiona
+rasterio
+
+# Tests
 pytest
