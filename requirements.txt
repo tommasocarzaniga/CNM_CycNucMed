@@ -3,7 +3,10 @@ pandas
 matplotlib
 reportlab
 pillow
+
+# addition
 nest_asyncio
+country_converter
 
 # Scraping
 playwright
