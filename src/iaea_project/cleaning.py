@@ -109,11 +109,12 @@ class ManufacturerCanonConfig:
 
 
 SEED_CANON = {
-    "Siemens Healthineers",        # acquired CTI
-    "Avelion",                     # PMB -> Avelion (Alcen)
-    "Best Cyclotron Systems",      # ABT -> BCS
-    "Advanced Cyclotron Systems",  # ACSI/ASCI
-    "Rosatom",                     # Rosatom
+    "Siemens Healthineers",                            # acquired CTI
+    "Avelion (Alcen)",                                 # PMB -> Avelion (Alcen)
+    "Best Cyclotron Systems (BCS)",                    # ABT -> BCS
+    "Advanced Cyclotron Systems, Inc. (ACSI)",         # ACSI/ASCI
+    "Rosatom",                                         # Rosatom
+    "Sichuan Longevous Beamtech Co., Ltd (LBT)",       # LBT
 }
 
 
