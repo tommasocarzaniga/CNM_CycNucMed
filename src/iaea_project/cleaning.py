@@ -149,13 +149,13 @@ def _manual_map(raw: str) -> Optional[str]:
         or k.startswith("asci ")
         or "advanced cyclotron systems" in k
     ):
-        return "Advanced Cyclotron Systems"
+        return "Advanced Cyclotron Systems, Inc. (ACSI)"
 
     if "siemens" in k or k == "cti" or k.startswith("cti "):
         return "Siemens Healthineers"
 
     if "pmb" in k:
-        return "Avelion"
+        return "Avelion (Alcen)"
 
     if (
         k == "abt"
@@ -164,7 +164,7 @@ def _manual_map(raw: str) -> Optional[str]:
         or "bcs" in k
         or "best cyclotron systems" in k
     ):
-        return "Best Cyclotron Systems"
+        return "Best Cyclotron Systems (BCS)"
 
     return None
 
