@@ -105,11 +105,14 @@ def data_quality_summary(df: pd.DataFrame) -> dict:
     }
 
 def top_facility_context(df: pd.DataFrame, country: str, top_rows: int = 8) -> dict:
+    """
+    Deterministically find the 'top site' in a country (facility with most rows)
+    and return a compact context dictionary to feed into an LLM.
+    """
     sub = df[df["Country"].str.lower() == str(country).strip().lower()].copy()
     if sub.empty:
         return {"found": False, "country": country}
 
-    # top facility by number of rows
     fac_counts = sub["Facility"].dropna().astype(str).value_counts()
     if fac_counts.empty:
         return {"found": False, "country": country}
@@ -119,20 +122,29 @@ def top_facility_context(df: pd.DataFrame, country: str, top_rows: int = 8) -> d
 
     sub_fac = sub[sub["Facility"].astype(str) == top_fac].copy()
 
-    city_counts = sub_fac["City"].dropna().astype(str).value_counts().head(3).to_dict()
-    manu_counts = sub_fac["Manufacturer"].dropna().astype(str).value_counts().head(3).to_dict()
-    model_counts = sub_fac["Model"].dropna().astype(str).value_counts().head(3).to_dict()
+    # pick the most frequent city for this facility (if present)
+    top_city = None
+    if "City" in sub_fac.columns:
+        city_counts = sub_fac["City"].dropna().astype(str).value_counts()
+        top_city = city_counts.index[0] if not city_counts.empty else None
+    else:
+        city_counts = pd.Series(dtype=int)
+
+    manu_counts = sub_fac["Manufacturer"].dropna().astype(str).value_counts().head(3).to_dict() if "Manufacturer" in sub_fac.columns else {}
+    model_counts = sub_fac["Model"].dropna().astype(str).value_counts().head(3).to_dict() if "Model" in sub_fac.columns else {}
 
     cols = [c for c in ["Facility", "City", "Manufacturer", "Model", "Proton energy (MeV)", "Energy_num"] if c in sub_fac.columns]
-    examples = sub_fac[cols].head(top_rows).to_dict(orient="records")
+    examples = sub_fac[cols].head(top_rows).to_dict(orient="records") if cols else []
 
     return {
         "found": True,
         "country": country,
         "top_facility": top_fac,
         "top_facility_rows": top_fac_n,
-        "top_cities": city_counts,
+        "top_city": top_city,
+        "top_cities": city_counts.head(3).to_dict() if hasattr(city_counts, "head") else {},
         "top_manufacturers": manu_counts,
         "top_models": model_counts,
         "examples": examples,
     }
+
