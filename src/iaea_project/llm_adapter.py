@@ -94,3 +94,16 @@ def llm_choose_manufacturer_openai(
     )
 
     return (resp.choices[0].message.content or "").strip()
+
+def llm_describe_top_facility_openai(context: dict, model: str = "gpt-4.1-mini") -> str:
+    # You already have OpenAI wiring in this file; reuse your client style.
+    prompt = f"""
+Write a 2–3 sentence description of the top cyclotron site in the country.
+Use ONLY the facts provided below. Do NOT add any external knowledge.
+If a detail is missing, say "unknown".
+
+Facts (JSON):
+{json.dumps(context, ensure_ascii=False, indent=2)}
+""".strip()
+
+    # return openai_chat(prompt, model=model)  # use your existing helper
