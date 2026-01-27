@@ -182,6 +182,8 @@ def run_pipeline(
         
                     top_site_cache[cache_key] = top_site_blurb
                     save_top_site_cache()
+
+        print("[DEBUG]", c, "top_site_blurb:", repr(top_site_blurb)[:200])
         
         sections.append(
             {
