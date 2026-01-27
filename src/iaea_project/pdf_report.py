@@ -214,11 +214,11 @@ def build_pdf_report(
     
         story.append(
             two_column_tables(
-                "Energy distribution (numeric) — A–M",
+                #"Energy distribution (numeric)",
                 left_df,
-                "Energy distribution (numeric) — N–Z",
+                #"Energy distribution (numeric)",
                 right_df,
-                max_rows=25,
+                max_rows=20,
             )
         )
         story.append(Spacer(1, 12))
