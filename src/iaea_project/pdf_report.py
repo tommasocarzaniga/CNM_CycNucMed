@@ -285,7 +285,7 @@ def build_pdf_report(
             top_site_blurb = sec.get("top_site_blurb")
             if top_site_blurb:
                 story.append(Paragraph("Top site (short description)", styles["Heading3"]))
-                story.append(Paragraph(escape_paragraph_text(str(top_site_blurb)), styles["BodyText"]))
+                story.append(Paragraph(escape_paragraph_text(str(top_site_blurb)), styles["Normal"]))
                 story.append(Spacer(1, 10))
             
             tables = sec.get("tables") or {}
