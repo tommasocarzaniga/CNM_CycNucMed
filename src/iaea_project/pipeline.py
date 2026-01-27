@@ -64,7 +64,7 @@ def run_pipeline(
     llm_fix_country = None
     llm_choose_manu = None
     if enable_llm:
-        from iaea_project.llm_adapters import (
+        from iaea_project.llm_adapter import (
             llm_fix_country_openai,
             llm_choose_manufacturer_openai,
         )
@@ -128,7 +128,7 @@ def run_pipeline(
     # Optional LLM function for the top-site blurb (only if enable_llm=True)
     llm_top_site_blurb = None
     if enable_llm:
-        from iaea_project.llm_adapters import llm_top_site_blurb_openai  # you create this adapter
+        from iaea_project.llm_adapter import llm_top_site_blurb_openai  # you create this adapter
 
         llm_top_site_blurb = lambda ctx: llm_top_site_blurb_openai(ctx, model=llm_model)
 
