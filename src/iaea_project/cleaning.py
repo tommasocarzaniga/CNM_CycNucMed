@@ -206,49 +206,72 @@ def _best_fuzzy_to_canon(raw: str, canon_list: list[str], threshold: int = 93) -
 
 
 def _manual_map(raw: str) -> Optional[str]:
-    """Deterministic vendor alias rules (safe, high-precision)."""
-    k = _norm_key(raw)
-    if not k:
+    """
+    Deterministic vendor alias rules (high precision).
+    Uses both light and strong keys to catch typos / hyphenated descriptors robustly.
+    """
+    k = _norm_key(raw)          # light key (keeps more tokens)
+    ks = _norm_key_strong(raw)  # strong key (drops legal suffixes & boilerplate)
+
+    if not k and not ks:
         return None
 
-    if k in {"rossatom", "ross atom", "rosatom"} or "rossatom" in k:
+    # --- Rosatom ---
+    if k in {"rossatom", "ross atom", "rosatom"} or "rossatom" in k or "rosatom" in k:
         return "Rosatom"
 
+    # --- ACSI / ASCI ---
     if (
         k in {"acsi", "asci"}
         or k.startswith("acsi ")
         or k.startswith("asci ")
         or "advanced cyclotron systems" in k
+        or ks in {"acsi", "asci"}
+        or "advanced cyclotron" in ks
     ):
         return "Advanced Cyclotron Systems, Inc. (ACSI)"
 
-    if "siemens" in k or k == "cti" or k.startswith("cti "):
+    # --- Siemens / CTI ---
+    if "siemens" in k or k == "cti" or k.startswith("cti ") or "siemens" in ks or ks == "cti":
         return "Siemens Healthineers"
 
-    if "pmb" in k:
+    # --- PMB / Avelion-Alcen ---
+    if "pmb" in k or "pmb" in ks or "alcen" in ks or "avelion" in ks:
         return "Avelion (Alcen)"
 
+    # --- ABT / BCS ---
     if (
         k == "abt"
         or k.startswith("abt ")
         or "advanced beam technologies" in k
         or "bcs" in k
         or "best cyclotron systems" in k
+        or ks == "abt"
+        or "best cyclotron" in ks
+        or "bcs" in ks
     ):
         return "Best Cyclotron Systems (BCS)"
 
-    # --- extra collapses for duplicates seen in your output ---
-    if "longevous" in k or re.search(r"\blbt\b", k):
+    # --- Sichuan Longevous Beamtech / LBT ---
+    if "longevous" in ks or re.search(r"\blbt\b", ks):
         return "Sichuan Longevous Beamtech Co., Ltd (LBT)"
 
-    if k == "tcc" or "the cyclotron corporation" in k:
-        return "TCC (The Cyclotron Corporation)"
+    # --- TCC variants ---
+    # catches: "TCC", "TCC The Cyclotron Corporation", punctuation variants
+    if ks == "tcc" or ("cyclotron" in ks and "corporation" in ks and "tcc" in (k or ks)):
+        # pick ONE canonical label (choose whichever you prefer)
+        return "TCC (The Cyclotron Corporation)"  # <— recommended
 
-    if "scanditronix" in k:
+    # --- Scanditronix variants ---
+    # catches: "Scanditronix-Negative-Ion", "Scanditronix Negative Ion", etc.
+    if "scanditronix" in ks:
         return "Scanditronix"
 
-    return None
+    # --- Sumitomo typo variants ---
+    if ks in {"sumotomo", "sumitomo"} or "sumitomo" in ks or "sumotomo" in ks:
+        return "Sumitomo"
 
+    return None
 
 def _looks_like_acsi(raw: str) -> bool:
     k = _norm_key(raw)
