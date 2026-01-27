@@ -1,3 +1,172 @@
+from __future__ import annotations
+
+from pathlib import Path
+from typing import Iterable, Optional
+
+import pandas as pd
+from reportlab.lib import colors
+from reportlab.lib.enums import TA_CENTER
+from reportlab.lib.pagesizes import A4
+from reportlab.lib.styles import ParagraphStyle, getSampleStyleSheet
+from reportlab.platypus import (
+    Image,
+    PageBreak,
+    Paragraph,
+    SimpleDocTemplate,
+    Spacer,
+    Table,
+    TableStyle,
+)
+from xml.sax.saxutils import escape as xml_escape
+
+styles = getSampleStyleSheet()
+
+# Centered Heading2
+if "Heading2Center" not in styles.byName:
+    styles.add(
+        ParagraphStyle(
+            name="Heading2Center",
+            parent=styles["Heading2"],
+            alignment=TA_CENTER,
+        )
+    )
+
+# Centered subtitle style
+if "SubtitleCenter" not in styles.byName:
+    styles.add(
+        ParagraphStyle(
+            name="SubtitleCenter",
+            parent=styles["Normal"],
+            alignment=TA_CENTER,
+            fontSize=11,
+            spaceAfter=8,
+        )
+    )
+
+
+def escape_paragraph_text(s: str) -> str:
+    """Escape &, <, > for ReportLab Paragraph mini-HTML + preserve newlines."""
+    if s is None:
+        return ""
+    s = xml_escape(str(s))
+    return s.replace("\n", "<br/>")
+
+
+def df_to_table(
+    df: pd.DataFrame,
+    max_rows: int = 30,
+    font_size: int = 8,
+    repeat_header: bool = True,
+) -> Table:
+    df2 = df.copy()
+    if len(df2) > max_rows:
+        df2 = df2.head(max_rows)
+
+    data = [list(df2.reset_index().columns)] + df2.reset_index().values.tolist()
+    t = Table(data, repeatRows=1 if repeat_header else 0)
+    t.setStyle(
+        TableStyle(
+            [
+                ("BACKGROUND", (0, 0), (-1, 0), colors.lightgrey),
+                ("GRID", (0, 0), (-1, -1), 0.25, colors.grey),
+                ("FONTNAME", (0, 0), (-1, 0), "Helvetica-Bold"),
+                ("FONTSIZE", (0, 0), (-1, -1), font_size),
+                ("VALIGN", (0, 0), (-1, -1), "TOP"),
+                ("LEFTPADDING", (0, 0), (-1, -1), 4),
+                ("RIGHTPADDING", (0, 0), (-1, -1), 4),
+                ("TOPPADDING", (0, 0), (-1, -1), 2),
+                ("BOTTOMPADDING", (0, 0), (-1, -1), 2),
+            ]
+        )
+    )
+    return t
+
+
+def two_column_toplists(
+    left_title: str,
+    left: pd.Series,
+    right_title: str,
+    right: pd.Series,
+    max_rows: int = 20,
+) -> Table:
+    """Build a 2-column layout: left toplist and right toplist on the same page."""
+
+    def series_to_df(s: pd.Series, name: str) -> pd.DataFrame:
+        return s.head(max_rows).rename(name).to_frame()
+
+    lt = df_to_table(series_to_df(left, "count"), max_rows=max_rows)
+    rt = df_to_table(series_to_df(right, "count"), max_rows=max_rows)
+
+    outer = Table(
+        [
+            [
+                Paragraph(escape_paragraph_text(left_title), styles["Heading3"]),
+                Paragraph(escape_paragraph_text(right_title), styles["Heading3"]),
+            ],
+            [lt, rt],
+        ],
+        colWidths=[270, 270],
+    )
+    outer.setStyle(
+        TableStyle(
+            [
+                ("VALIGN", (0, 0), (-1, -1), "TOP"),
+                ("LEFTPADDING", (0, 0), (-1, -1), 6),
+                ("RIGHTPADDING", (0, 0), (-1, -1), 6),
+                ("TOPPADDING", (0, 0), (-1, -1), 4),
+                ("BOTTOMPADDING", (0, 0), (-1, -1), 4),
+            ]
+        )
+    )
+    return outer
+
+
+def two_column_tables(
+    left_title: str,
+    left_obj,
+    right_title: str,
+    right_obj,
+    *,
+    max_rows: int = 20,
+    col_widths=(270, 270),
+) -> Table:
+    """Two arbitrary tables (Series/DataFrame) side-by-side with titles."""
+
+    def obj_to_table(obj) -> Table:
+        if isinstance(obj, pd.Series):
+            tdf = obj.rename("value").to_frame()
+            return df_to_table(tdf, max_rows=max_rows)
+        if isinstance(obj, pd.DataFrame):
+            return df_to_table(obj, max_rows=max_rows)
+        # fallback: show as text
+        return Table([[Paragraph(escape_paragraph_text(str(obj)), styles["Normal"])]])
+
+    lt = obj_to_table(left_obj)
+    rt = obj_to_table(right_obj)
+
+    outer = Table(
+        [
+            [
+                Paragraph(escape_paragraph_text(left_title), styles["Heading3"]),
+                Paragraph(escape_paragraph_text(right_title), styles["Heading3"]),
+            ],
+            [lt, rt],
+        ],
+        colWidths=list(col_widths),
+    )
+    outer.setStyle(
+        TableStyle(
+            [
+                ("VALIGN", (0, 0), (-1, -1), "TOP"),
+                ("LEFTPADDING", (0, 0), (-1, -1), 6),
+                ("RIGHTPADDING", (0, 0), (-1, -1), 6),
+                ("TOPPADDING", (0, 0), (-1, -1), 4),
+                ("BOTTOMPADDING", (0, 0), (-1, -1), 4),
+            ]
+        )
+    )
+    return outer
+
 def build_pdf_report(
     out_pdf: Path,
     *,
