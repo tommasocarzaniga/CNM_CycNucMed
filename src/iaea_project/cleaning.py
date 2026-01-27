@@ -382,7 +382,7 @@ def canonicalize_manufacturers(
             return False
         return True
 
-   def choose_or_new(raw: str, canon_list: list[str]) -> str:
+def choose_or_new(raw: str, canon_list: list[str]) -> str:
     raw0 = _basic_cleanup(raw)
     if not raw0:
         return raw0
