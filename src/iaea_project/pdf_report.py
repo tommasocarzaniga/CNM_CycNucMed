@@ -1,168 +1,3 @@
-from __future__ import annotations
-
-from pathlib import Path
-from typing import Iterable, Optional
-
-import pandas as pd
-from reportlab.lib import colors
-from reportlab.lib.enums import TA_CENTER
-from reportlab.lib.pagesizes import A4
-from reportlab.lib.styles import ParagraphStyle, getSampleStyleSheet
-from reportlab.platypus import (
-    Image,
-    PageBreak,
-    Paragraph,
-    SimpleDocTemplate,
-    Spacer,
-    Table,
-    TableStyle,
-)
-from xml.sax.saxutils import escape as xml_escape
-
-styles = getSampleStyleSheet()
-
-from reportlab.lib.enums import TA_CENTER
-from reportlab.lib.styles import ParagraphStyle
-
-styles.add(
-    ParagraphStyle(
-        name="Heading2Center",
-        parent=styles["Heading2"],
-        alignment=TA_CENTER,
-    )
-)
-
-# --- Add centered subtitle style ---
-if "SubtitleCenter" not in styles.byName:
-    styles.add(
-        ParagraphStyle(
-            name="SubtitleCenter",
-            parent=styles["Normal"],
-            alignment=TA_CENTER,
-            fontSize=11,
-            spaceAfter=8,
-        )
-    )
-
-
-def escape_paragraph_text(s: str) -> str:
-    """Escape &, <, > for ReportLab Paragraph mini-HTML + preserve newlines."""
-    if s is None:
-        return ""
-    s = xml_escape(str(s))
-    return s.replace("\n", "<br/>")
-
-
-def df_to_table(df: pd.DataFrame, max_rows: int = 30, font_size: int = 8, repeat_header: bool = True) -> Table:
-    df2 = df.copy()
-    if len(df2) > max_rows:
-        df2 = df2.head(max_rows)
-
-    data = [list(df2.reset_index().columns)] + df2.reset_index().values.tolist()
-    t = Table(data, repeatRows=1 if repeat_header else 0)
-    t.setStyle(
-        TableStyle(
-            [
-                ("BACKGROUND", (0, 0), (-1, 0), colors.lightgrey),
-                ("GRID", (0, 0), (-1, -1), 0.25, colors.grey),
-                ("FONTNAME", (0, 0), (-1, 0), "Helvetica-Bold"),
-                ("FONTSIZE", (0, 0), (-1, -1), font_size),
-                ("VALIGN", (0, 0), (-1, -1), "TOP"),
-                ("LEFTPADDING", (0, 0), (-1, -1), 4),
-                ("RIGHTPADDING", (0, 0), (-1, -1), 4),
-                ("TOPPADDING", (0, 0), (-1, -1), 2),
-                ("BOTTOMPADDING", (0, 0), (-1, -1), 2),
-            ]
-        )
-    )
-    return t
-
-
-def two_column_toplists(
-    left_title: str,
-    left: pd.Series,
-    right_title: str,
-    right: pd.Series,
-    max_rows: int = 20,
-) -> Table:
-    """Build a 2-column layout: left toplist and right toplist on the same page."""
-
-    def series_to_df(s: pd.Series, name: str) -> pd.DataFrame:
-        return s.head(max_rows).rename(name).to_frame()
-
-    lt = df_to_table(series_to_df(left, "count"), max_rows=max_rows)
-    rt = df_to_table(series_to_df(right, "count"), max_rows=max_rows)
-
-    outer = Table(
-        [
-            [
-                Paragraph(escape_paragraph_text(left_title), styles["Heading3"]),
-                Paragraph(escape_paragraph_text(right_title), styles["Heading3"]),
-            ],
-            [lt, rt],
-        ],
-        colWidths=[270, 270],
-    )
-    outer.setStyle(
-        TableStyle(
-            [
-                ("VALIGN", (0, 0), (-1, -1), "TOP"),
-                ("LEFTPADDING", (0, 0), (-1, -1), 6),
-                ("RIGHTPADDING", (0, 0), (-1, -1), 6),
-                ("TOPPADDING", (0, 0), (-1, -1), 4),
-                ("BOTTOMPADDING", (0, 0), (-1, -1), 4),
-            ]
-        )
-    )
-    return outer
-
-def two_column_tables(
-    left_title: str,
-    left_obj,
-    right_title: str,
-    right_obj,
-    *,
-    max_rows: int = 20,
-    col_widths=(270, 270),
-) -> Table:
-    """Two arbitrary tables (Series/DataFrame) side-by-side with titles."""
-
-    def obj_to_table(obj) -> Table:
-        if isinstance(obj, pd.Series):
-            tdf = obj.rename("value").to_frame()
-            return df_to_table(tdf, max_rows=max_rows)
-        if isinstance(obj, pd.DataFrame):
-            return df_to_table(obj, max_rows=max_rows)
-        # fallback: show as text
-        return Table([[Paragraph(escape_paragraph_text(str(obj)), styles["Normal"])]])
-
-    lt = obj_to_table(left_obj)
-    rt = obj_to_table(right_obj)
-
-    outer = Table(
-        [
-            [
-                Paragraph(escape_paragraph_text(left_title), styles["Heading3"]),
-                Paragraph(escape_paragraph_text(right_title), styles["Heading3"]),
-            ],
-            [lt, rt],
-        ],
-        colWidths=list(col_widths),
-    )
-    outer.setStyle(
-        TableStyle(
-            [
-                ("VALIGN", (0, 0), (-1, -1), "TOP"),
-                ("LEFTPADDING", (0, 0), (-1, -1), 6),
-                ("RIGHTPADDING", (0, 0), (-1, -1), 6),
-                ("TOPPADDING", (0, 0), (-1, -1), 4),
-                ("BOTTOMPADDING", (0, 0), (-1, -1), 4),
-            ]
-        )
-    )
-    return outer
-
-
 def build_pdf_report(
     out_pdf: Path,
     *,
@@ -183,13 +18,13 @@ def build_pdf_report(
 
     story.append(Paragraph(escape_paragraph_text(title), styles["Title"]))
 
-    # --- Subtitle centered here ---
+    # Subtitle centered
     if subtitle:
         story.append(Paragraph(escape_paragraph_text(subtitle), styles["SubtitleCenter"]))
 
     story.append(Spacer(1, 12))
 
-    # Global comparison page (two columns)
+    # Global comparison page (countries vs manufacturers)
     if top_countries is not None and top_manufacturers is not None:
         story.append(Paragraph("Global snapshot", styles["Heading2Center"]))
         story.append(Spacer(1, 8))
@@ -204,39 +39,41 @@ def build_pdf_report(
         )
         story.append(Spacer(1, 12))
 
+    # Split Top manufacturers into two columns
     if top_manufacturers is not None:
-    story.append(Paragraph("Top manufacturers (global)", styles["Heading2Center"]))
-    story.append(Spacer(1, 8))
+        story.append(Paragraph("Top manufacturers (global)", styles["Heading2Center"]))
+        story.append(Spacer(1, 8))
 
-    s = top_manufacturers.copy()
-    n = len(s)
-    left_s = s.iloc[: (n + 1) // 2]
-    right_s = s.iloc[(n + 1) // 2 :]
+        s = top_manufacturers.copy()
+        n = len(s)
+        left_s = s.iloc[: (n + 1) // 2]
+        right_s = s.iloc[(n + 1) // 2 :]
 
-    story.append(
-        two_column_tables(
-            "Top manufacturers (1/2)",
-            left_s,
-            "Top manufacturers (2/2)",
-            right_s,
-            max_rows=20,   # how many per column
+        story.append(
+            two_column_tables(
+                "Top manufacturers (1/2)",
+                left_s,
+                "Top manufacturers (2/2)",
+                right_s,
+                max_rows=20,
+            )
         )
-    )
-    story.append(Spacer(1, 12))
+        story.append(Spacer(1, 12))
 
+    # Energy table split into two columns
     if energy_country is not None:
         story.append(Paragraph("Global Snapshot", styles["Heading2Center"]))
         story.append(Spacer(1, 8))
-    
+
         n = len(energy_country)
         left_df = energy_country.iloc[: (n + 1) // 2].copy()
         right_df = energy_country.iloc[(n + 1) // 2 :].copy()
-    
+
         story.append(
             two_column_tables(
                 "Number of cyclotrons and energy distribution (1/2)",
                 left_df,
-                "Number of cyclotrons and energy distribution (1/2)",
+                "Number of cyclotrons and energy distribution (2/2)",
                 right_df,
                 max_rows=20,
             )
