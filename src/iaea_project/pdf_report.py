@@ -5,8 +5,9 @@ from typing import Iterable, Optional
 
 import pandas as pd
 from reportlab.lib import colors
+from reportlab.lib.enums import TA_CENTER
 from reportlab.lib.pagesizes import A4
-from reportlab.lib.styles import getSampleStyleSheet
+from reportlab.lib.styles import ParagraphStyle, getSampleStyleSheet
 from reportlab.platypus import (
     Image,
     PageBreak,
@@ -20,16 +21,18 @@ from xml.sax.saxutils import escape as xml_escape
 
 styles = getSampleStyleSheet()
 
-from reportlab.lib.enums import TA_CENTER
-from reportlab.lib.styles import ParagraphStyle
-
-styles.add(
-    ParagraphStyle(
-        name="Heading2Center",
-        parent=styles["Heading2"],
-        alignment=TA_CENTER,
+# --- Add centered subtitle style ---
+if "SubtitleCenter" not in styles.byName:
+    styles.add(
+        ParagraphStyle(
+            name="SubtitleCenter",
+            parent=styles["Normal"],
+            alignment=TA_CENTER,
+            fontSize=11,
+            spaceAfter=8,
+        )
     )
-)
+
 
 def escape_paragraph_text(s: str) -> str:
     """Escape &, <, > for ReportLab Paragraph mini-HTML + preserve newlines."""
@@ -81,8 +84,10 @@ def two_column_toplists(
 
     outer = Table(
         [
-            [Paragraph(escape_paragraph_text(left_title), styles["Heading3"]),
-             Paragraph(escape_paragraph_text(right_title), styles["Heading3"])],
+            [
+                Paragraph(escape_paragraph_text(left_title), styles["Heading3"]),
+                Paragraph(escape_paragraph_text(right_title), styles["Heading3"]),
+            ],
             [lt, rt],
         ],
         colWidths=[270, 270],
@@ -112,19 +117,7 @@ def build_pdf_report(
     country_sections: Optional[Iterable[dict]] = None,
     figures: Optional[Iterable[Path]] = None,
 ) -> Path:
-    """Build a PDF report.
-
-    Parameters
-    ----------
-    country_sections:
-        Iterable of dicts like:
-        {
-          "country": "Italy",
-          "summary_md": "...",      # plain text ok
-          "tables": {"Cities": series_or_df, ...},
-          "images": [Path(...), ...]
-        }
-    """
+    """Build a PDF report."""
     out_pdf = Path(out_pdf)
     out_pdf.parent.mkdir(parents=True, exist_ok=True)
 
@@ -132,13 +125,16 @@ def build_pdf_report(
     story = []
 
     story.append(Paragraph(escape_paragraph_text(title), styles["Title"]))
+
+    # --- Subtitle centered here ---
     if subtitle:
-        story.append(Paragraph(escape_paragraph_text(subtitle), styles["Normal"]))
+        story.append(Paragraph(escape_paragraph_text(subtitle), styles["SubtitleCenter"]))
+
     story.append(Spacer(1, 12))
 
     # Global comparison page (two columns)
     if top_countries is not None and top_manufacturers is not None:
-        story.append(Paragraph("Global snapshot", styles["Heading2Center"]))
+        story.append(Paragraph("Global snapshot", styles["Heading2"]))
         story.append(Spacer(1, 8))
         story.append(
             two_column_toplists(
@@ -146,7 +142,6 @@ def build_pdf_report(
                 top_countries,
                 "Top manufacturers (global)",
                 top_manufacturers,
-                max_rows=15,
             )
         )
         story.append(Spacer(1, 12))
