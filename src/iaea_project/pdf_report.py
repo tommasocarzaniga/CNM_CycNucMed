@@ -21,6 +21,17 @@ from xml.sax.saxutils import escape as xml_escape
 
 styles = getSampleStyleSheet()
 
+from reportlab.lib.enums import TA_CENTER
+from reportlab.lib.styles import ParagraphStyle
+
+styles.add(
+    ParagraphStyle(
+        name="Heading2Center",
+        parent=styles["Heading2"],
+        alignment=TA_CENTER,
+    )
+)
+
 # --- Add centered subtitle style ---
 if "SubtitleCenter" not in styles.byName:
     styles.add(
@@ -134,7 +145,7 @@ def build_pdf_report(
 
     # Global comparison page (two columns)
     if top_countries is not None and top_manufacturers is not None:
-        story.append(Paragraph("Global snapshot", styles["Heading2"]))
+        story.append(Paragraph("Global snapshot", styles["Heading2Center"]))
         story.append(Spacer(1, 8))
         story.append(
             two_column_toplists(
