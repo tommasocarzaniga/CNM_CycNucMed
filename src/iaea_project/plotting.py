@@ -147,7 +147,7 @@ def save_country_map(df: pd.DataFrame, country: str, out_path: Optional[Path] = 
 
     # Natural Earth polygons (remote zip)
     world = gpd.read_file(
-        "https://naturalearth.s3.amazonaws.com/110m_cultural/ne_110m_admin_0_countries.zip"
+    "https://naturalearth.s3.amazonaws.com/50m_cultural/ne_50m_admin_0_countries.zip"
     )
 
     country_poly = None
