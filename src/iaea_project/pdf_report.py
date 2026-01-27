@@ -149,7 +149,7 @@ def build_pdf_report(
         story.append(Spacer(1, 8))
         story.append(
             two_column_toplists(
-                "Top countries by cyclotron count",
+                "Top countries",
                 top_countries,
                 "Top manufacturers (global)",
                 top_manufacturers,
