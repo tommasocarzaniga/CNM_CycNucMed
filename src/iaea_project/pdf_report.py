@@ -237,7 +237,7 @@ def build_pdf_report(
 
     # Energy table split into two columns
     if energy_country is not None:
-        story.append(Paragraph("Number of Cyclotrons and Energy Distribution (Global)", styles["Heading2Center"]))
+        story.append(Paragraph("Energy Distribution (Global)", styles["Heading2Center"]))
         story.append(Spacer(1, 8))
 
         s = energy_country.head(10)
@@ -267,6 +267,7 @@ def build_pdf_report(
                 story.append(Spacer(1, 10))
         story.append(PageBreak())
 
+    story.append(PageBreak())
     # Country sections
     if country_sections:
         for sec in country_sections:
