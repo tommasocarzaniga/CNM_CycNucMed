@@ -142,6 +142,7 @@ def build_pdf_report(
                 top_countries,
                 "Top manufacturers (global)",
                 top_manufacturers,
+                max_rows=15,
             )
         )
         story.append(Spacer(1, 12))
