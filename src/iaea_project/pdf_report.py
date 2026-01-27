@@ -116,6 +116,52 @@ def two_column_toplists(
     )
     return outer
 
+def two_column_tables(
+    left_title: str,
+    left_obj,
+    right_title: str,
+    right_obj,
+    *,
+    max_rows: int = 20,
+    col_widths=(270, 270),
+) -> Table:
+    """Two arbitrary tables (Series/DataFrame) side-by-side with titles."""
+
+    def obj_to_table(obj) -> Table:
+        if isinstance(obj, pd.Series):
+            tdf = obj.rename("value").to_frame()
+            return df_to_table(tdf, max_rows=max_rows)
+        if isinstance(obj, pd.DataFrame):
+            return df_to_table(obj, max_rows=max_rows)
+        # fallback: show as text
+        return Table([[Paragraph(escape_paragraph_text(str(obj)), styles["Normal"])]])
+
+    lt = obj_to_table(left_obj)
+    rt = obj_to_table(right_obj)
+
+    outer = Table(
+        [
+            [
+                Paragraph(escape_paragraph_text(left_title), styles["Heading3"]),
+                Paragraph(escape_paragraph_text(right_title), styles["Heading3"]),
+            ],
+            [lt, rt],
+        ],
+        colWidths=list(col_widths),
+    )
+    outer.setStyle(
+        TableStyle(
+            [
+                ("VALIGN", (0, 0), (-1, -1), "TOP"),
+                ("LEFTPADDING", (0, 0), (-1, -1), 6),
+                ("RIGHTPADDING", (0, 0), (-1, -1), 6),
+                ("TOPPADDING", (0, 0), (-1, -1), 4),
+                ("BOTTOMPADDING", (0, 0), (-1, -1), 4),
+            ]
+        )
+    )
+    return outer
+
 
 def build_pdf_report(
     out_pdf: Path,
@@ -159,15 +205,24 @@ def build_pdf_report(
         story.append(Spacer(1, 12))
 
     if energy_country is not None:
+        story.append(Paragraph("Energy distribution (numeric)", styles["Heading2Center"]))
         story.append(Spacer(1, 8))
+    
+        n = len(energy_country)
+        left_df = energy_country.iloc[: (n + 1) // 2].copy()
+        right_df = energy_country.iloc[(n + 1) // 2 :].copy()
+    
         story.append(
-            two_column_toplists(
-                "Energy distribution (numeric)",
-                energy_country,
-                max_rows=10,
+            two_column_tables(
+                "Energy distribution (numeric) — A–M",
+                left_df,
+                "Energy distribution (numeric) — N–Z",
+                right_df,
+                max_rows=25,
             )
         )
         story.append(Spacer(1, 12))
+
 
     # Figures
     if figures:
