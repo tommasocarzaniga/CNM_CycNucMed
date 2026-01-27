@@ -159,9 +159,15 @@ def build_pdf_report(
         story.append(Spacer(1, 12))
 
     if energy_country is not None:
-        story.append(Paragraph("Energy distribution by country (numeric only)", styles["Heading2Center"]))
-        story.append(df_to_table(energy_country, max_rows=10))
-        story.append(PageBreak())
+        story.append(Spacer(1, 8))
+        story.append(
+            two_column_toplists(
+                "Energy distribution (numeric)",
+                energy_country,
+                max_rows=10,
+            )
+        )
+        story.append(Spacer(1, 12))
 
     # Figures
     if figures:
