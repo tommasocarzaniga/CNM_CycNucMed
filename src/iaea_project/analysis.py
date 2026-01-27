@@ -103,3 +103,36 @@ def data_quality_summary(df: pd.DataFrame) -> dict:
         "missing_counts": missing,
         "missing_pct": {k: (v / total * 100 if total else 0) for k, v in missing.items()},
     }
+
+def top_facility_context(df: pd.DataFrame, country: str, top_rows: int = 8) -> dict:
+    sub = df[df["Country"].str.lower() == str(country).strip().lower()].copy()
+    if sub.empty:
+        return {"found": False, "country": country}
+
+    # top facility by number of rows
+    fac_counts = sub["Facility"].dropna().astype(str).value_counts()
+    if fac_counts.empty:
+        return {"found": False, "country": country}
+
+    top_fac = fac_counts.index[0]
+    top_fac_n = int(fac_counts.iloc[0])
+
+    sub_fac = sub[sub["Facility"].astype(str) == top_fac].copy()
+
+    city_counts = sub_fac["City"].dropna().astype(str).value_counts().head(3).to_dict()
+    manu_counts = sub_fac["Manufacturer"].dropna().astype(str).value_counts().head(3).to_dict()
+    model_counts = sub_fac["Model"].dropna().astype(str).value_counts().head(3).to_dict()
+
+    cols = [c for c in ["Facility", "City", "Manufacturer", "Model", "Proton energy (MeV)", "Energy_num"] if c in sub_fac.columns]
+    examples = sub_fac[cols].head(top_rows).to_dict(orient="records")
+
+    return {
+        "found": True,
+        "country": country,
+        "top_facility": top_fac,
+        "top_facility_rows": top_fac_n,
+        "top_cities": city_counts,
+        "top_manufacturers": manu_counts,
+        "top_models": model_counts,
+        "examples": examples,
+    }
