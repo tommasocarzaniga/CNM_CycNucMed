@@ -267,9 +267,10 @@ def build_pdf_report(
                 story.append(Spacer(1, 10))
         story.append(PageBreak())
 
-    story.append(PageBreak())
+    
     # Country sections
     if country_sections:
+        story.append(PageBreak())
         for sec in country_sections:
             ctry = sec.get("country", "")
             story.append(Paragraph(escape_paragraph_text(ctry), styles["Heading1"]))
