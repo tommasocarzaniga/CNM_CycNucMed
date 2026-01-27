@@ -163,25 +163,25 @@ def run_pipeline(
 
         if ctx.get("found"):
             cache_key = f"{ctx.get('country')}|{ctx.get('top_facility')}|{ctx.get('top_city')}"
-        
-            if cache_key in top_site_cache:
-                top_site_blurb = top_site_cache[cache_key]
-        
-            elif llm_top_site_blurb is not None:
-                try:
-                    top_site_blurb = str(llm_top_site_blurb(ctx))
-                except Exception:
-                    top_site_blurb = None
-        
-                # ✅ CLEANUP BLOCK GOES HERE
-                if top_site_blurb:
-                    top_site_blurb = top_site_blurb.strip()
-                    if len(top_site_blurb) > 600:
-                        top_site_blurb = top_site_blurb[:600].rsplit(" ", 1)[0] + "…"
-        
-                    # Now cache the cleaned version
-                    top_site_cache[cache_key] = top_site_blurb
-                    save_top_site_cache()
+
+                cached = top_site_cache.get(cache_key)
+                if cached:
+                    top_site_blurb = cached
+            
+                elif llm_top_site_blurb is not None:
+                    try:
+                        top_site_blurb = str(llm_top_site_blurb(ctx))
+                    except Exception as e:
+                        print("[LLM ERROR]", c, e)
+                        top_site_blurb = None
+            
+                    if top_site_blurb:
+                        top_site_blurb = top_site_blurb.strip()
+                        if len(top_site_blurb) > 600:
+                            top_site_blurb = top_site_blurb[:600].rsplit(" ", 1)[0] + "…"
+            
+                        top_site_cache[cache_key] = top_site_blurb
+                        save_top_site_cache()
         
         sections.append(
             {
