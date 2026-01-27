@@ -13,6 +13,7 @@ from __future__ import annotations
 
 import os
 from typing import List
+import json
 
 
 def _require_openai_client():
@@ -106,4 +107,30 @@ Facts (JSON):
 {json.dumps(context, ensure_ascii=False, indent=2)}
 """.strip()
 
-    # return openai_chat(prompt, model=model)  # use your existing helper
+# return openai_chat(prompt, model=model)  # use your existing helper
+
+def llm_top_site_blurb_openai(context: dict, model: str = "gpt-4.1-mini") -> str:
+    """
+    Produce a short (2–3 sentences) description of the top cyclotron site in a country,
+    using ONLY the provided context dict (no external facts).
+
+    Intended to be called once per country from pipeline.py and cached.
+    """
+    client = _require_openai_client()
+
+    prompt = (
+        "You are writing a short factual description for a PDF report.\n"
+        "Write 2–3 sentences about the top cyclotron site in the country.\n"
+        "Use ONLY the facts provided in the JSON below. Do NOT add external knowledge.\n"
+        "If a detail is missing, say 'unknown'.\n\n"
+        f"Facts (JSON):\n{json.dumps(context, ensure_ascii=False, indent=2)}\n\n"
+        "Answer:"
+    )
+
+    resp = client.chat.completions.create(
+        model=model,
+        messages=[{"role": "user", "content": prompt}],
+        temperature=0,
+    )
+
+    return (resp.choices[0].message.content or "").strip()
