@@ -28,18 +28,7 @@ def canonicalize_countries(
     config: CountryCanonConfig = CountryCanonConfig(),
     llm_fix: Optional[Callable[[str], str]] = None,
 ) -> pd.DataFrame:
-    """Canonicalize country names to country_converter's `name_short`.
-
-    - Deterministic conversion first.
-    - Optional LLM fallback only for values that still fail.
-    - Adds Country_iso3 column (ISO3) for mapping.
-
-    Parameters
-    ----------
-    llm_fix:
-        Optional function raw_country -> fixed_country_name (short form).
-        If omitted, unresolved values stay as-is.
-    """
+    """Canonicalize country names to country_converter's `name_short`."""
     import country_converter as coco
 
     df = df.copy()
@@ -115,16 +104,18 @@ SEED_CANON: set[str] = {
     "Advanced Cyclotron Systems, Inc. (ACSI)",         # ACSI/ASCI
     "Rosatom",                                         # Rosatom
     "Sichuan Longevous Beamtech Co., Ltd (LBT)",       # LBT
+    "TCC (The Cyclotron Corporation)",                 # TCC variants
+    "Scanditronix",                                    # Scanditronix variants
+    "Sumitomo",                                        # Sumitomo typo variants
 }
 
-# --- Stronger normalization for manufacturer matching ---
+# Strong normalization helpers (for dedup/collapse)
 LEGAL_SUFFIXES = {
     "inc", "incorporated", "corp", "corporation", "co", "company",
     "ltd", "limited", "llc", "plc",
     "gmbh", "ag", "sa", "sarl", "srl", "spa", "bv", "nv", "kg", "oy", "ab", "as",
     "pte", "pty", "kk", "ltda", "sas",
 }
-
 GENERIC_TOKENS = {
     "the", "and", "&",
     "group", "international", "global", "holding", "holdings",
@@ -144,7 +135,7 @@ def _basic_cleanup(s: str) -> str:
 
 
 def _norm_key(s: str) -> str:
-    """Light normalization (kept for compatibility)."""
+    """Light normalization (for compatibility + simple manual rules)."""
     s = _basic_cleanup(s).lower()
     s = re.sub(r"\(([^)]{1,20})\)", " ", s)   # remove short bracket chunks
     s = re.sub(r"[^\w\s]", " ", s)            # remove punctuation
@@ -153,9 +144,9 @@ def _norm_key(s: str) -> str:
 
 
 def _norm_key_strong(s: str) -> str:
-    """Stronger normalization for dedup/collapse."""
+    """Stronger normalization for fuzzy dedup (drops legal suffixes & boilerplate)."""
     s = _basic_cleanup(s).lower()
-    s = re.sub(r"\(([^)]{1,60})\)", " ", s)   # remove bracket chunks (acronyms/legal suffix often)
+    s = re.sub(r"\(([^)]{1,60})\)", " ", s)   # remove bracket chunks (acronyms/legal often)
     s = re.sub(r"[^\w\s]", " ", s)
     s = re.sub(r"\s+", " ", s).strip()
 
@@ -171,18 +162,12 @@ def _norm_key_strong(s: str) -> str:
     return " ".join(toks2).strip()
 
 
-def _is_acronym(s: str) -> bool:
-    s = _basic_cleanup(s)
-    return bool(re.fullmatch(r"[A-Z0-9]{2,6}", s))
-
-
 def _choose_rep_label(labels: list[str]) -> str:
-    """Pick the 'best' representative label among duplicates."""
+    """Prefer labels with an acronym in parentheses; otherwise longest."""
     def score(x: str) -> tuple[int, int]:
         x0 = _basic_cleanup(x)
         has_paren = 1 if ("(" in x0 and ")" in x0) else 0
         return (has_paren, len(x0))
-
     return max(labels, key=score)
 
 
@@ -206,21 +191,18 @@ def _best_fuzzy_to_canon(raw: str, canon_list: list[str], threshold: int = 93) -
 
 
 def _manual_map(raw: str) -> Optional[str]:
-    """
-    Deterministic vendor alias rules (high precision).
-    Uses both light and strong keys to catch typos / hyphenated descriptors robustly.
-    """
-    k = _norm_key(raw)          # light key (keeps more tokens)
-    ks = _norm_key_strong(raw)  # strong key (drops legal suffixes & boilerplate)
+    """Deterministic vendor alias rules (high precision, designed to override cache)."""
+    k = _norm_key(raw)
+    ks = _norm_key_strong(raw)
 
     if not k and not ks:
         return None
 
-    # --- Rosatom ---
-    if k in {"rossatom", "ross atom", "rosatom"} or "rossatom" in k or "rosatom" in k:
+    # Rosatom
+    if "rosatom" in k or "rosatom" in ks or "rossatom" in k or "rossatom" in ks:
         return "Rosatom"
 
-    # --- ACSI / ASCI ---
+    # ACSI / ASCI
     if (
         k in {"acsi", "asci"}
         or k.startswith("acsi ")
@@ -231,15 +213,15 @@ def _manual_map(raw: str) -> Optional[str]:
     ):
         return "Advanced Cyclotron Systems, Inc. (ACSI)"
 
-    # --- Siemens / CTI ---
+    # Siemens / CTI
     if "siemens" in k or k == "cti" or k.startswith("cti ") or "siemens" in ks or ks == "cti":
         return "Siemens Healthineers"
 
-    # --- PMB / Avelion-Alcen ---
+    # PMB -> Avelion (Alcen)
     if "pmb" in k or "pmb" in ks or "alcen" in ks or "avelion" in ks:
         return "Avelion (Alcen)"
 
-    # --- ABT / BCS ---
+    # ABT / BCS
     if (
         k == "abt"
         or k.startswith("abt ")
@@ -252,26 +234,24 @@ def _manual_map(raw: str) -> Optional[str]:
     ):
         return "Best Cyclotron Systems (BCS)"
 
-    # --- Sichuan Longevous Beamtech / LBT ---
+    # Sichuan Longevous Beamtech / LBT variants
     if "longevous" in ks or re.search(r"\blbt\b", ks):
         return "Sichuan Longevous Beamtech Co., Ltd (LBT)"
 
-    # --- TCC variants ---
-    # catches: "TCC", "TCC The Cyclotron Corporation", punctuation variants
-    if ks == "tcc" or ("cyclotron" in ks and "corporation" in ks and "tcc" in (k or ks)):
-        # pick ONE canonical label (choose whichever you prefer)
-        return "TCC (The Cyclotron Corporation)"  # <— recommended
+    # TCC variants
+    if ks == "tcc" or ("tcc" in k and "cyclotron" in ks and "corporation" in ks):
+        return "TCC (The Cyclotron Corporation)"
 
-    # --- Scanditronix variants ---
-    # catches: "Scanditronix-Negative-Ion", "Scanditronix Negative Ion", etc.
+    # Scanditronix variants (incl. "Negative-Ion")
     if "scanditronix" in ks:
         return "Scanditronix"
 
-    # --- Sumitomo typo variants ---
-    if ks in {"sumotomo", "sumitomo"} or "sumitomo" in ks or "sumotomo" in ks:
+    # Sumitomo typo variants
+    if "sumitomo" in ks or "sumotomo" in ks:
         return "Sumitomo"
 
     return None
+
 
 def _looks_like_acsi(raw: str) -> bool:
     k = _norm_key(raw)
@@ -312,19 +292,15 @@ def canonicalize_manufacturers(
     verbose: bool = True,
     *,
     fuzzy_threshold: int = 93,
-    dedup_canon_threshold: int = 95,
     dedup_existing_canon: bool = True,
+    dedup_canon_threshold: int = 95,
 ) -> tuple[pd.DataFrame, dict[str, str]]:
-    """Canonicalize manufacturer names.
+    """Canonicalize manufacturer names (intelligent dedup).
 
-    Improvements vs original:
-    - Strong normalization + non-LLM fuzzy collapse to existing canon
-    - Optional one-time dedup of the canon set itself
+    Key upgrades:
+    - Manual rules + fuzzy collapse override stale cache entries
+    - Optional one-time dedup of persisted canon_set
     - Safer canon growth to avoid runaway duplicates
-
-    If `llm_choose` is provided, it must take (raw, canon_list) and return either:
-    - an EXACT canonical string from canon_list, OR
-    - "NEW:<name>" to introduce a new canonical.
     """
     df = df.copy()
 
@@ -332,7 +308,7 @@ def canonicalize_manufacturers(
     llm_cache = _load_json_dict(Path(config.cache_path))
     canon_set.update(SEED_CANON)
 
-    # Optional: dedup the canon set itself (helps if you already persisted duplicates)
+    # Optional: dedup the existing canon set itself
     canon_rep_map: dict[str, str] = {}
 
     def _dedup_canon(cset: set[str], threshold: int) -> tuple[set[str], dict[str, str]]:
@@ -376,69 +352,85 @@ def canonicalize_manufacturers(
         lab = _basic_cleanup(label)
         if len(lab) < 3:
             return False
-        if _is_acronym(lab):
-            return True
         if len(_norm_key_strong(lab)) < 3:
             return False
         return True
 
-def choose_or_new(raw: str, canon_list: list[str]) -> str:
-    raw0 = _basic_cleanup(raw)
-    if not raw0:
-        return raw0
+    # -------------------------
+    # UPDATED choose_or_new:
+    # manual + fuzzy OVERRIDE stale cache entries
+    # -------------------------
+    def choose_or_new(raw: str, canon_list: list[str]) -> str:
+        raw0 = _basic_cleanup(raw)
+        if not raw0:
+            return raw0
 
-    # 1) Always try deterministic/manual rules first (they should override old cache)
-    m = _manual_map(raw0)
-    if m:
-        llm_cache[raw0] = m
-        _save_json(Path(config.cache_path), llm_cache)
-        return m
+        raw0 = canon_rep_map.get(raw0, raw0)
+        canon_list = [canon_rep_map.get(c, c) for c in canon_list]
+        canon_list = sorted(set(canon_list))
 
-    # 2) Always try fuzzy collapse to existing canon (also overrides old cache)
-    hit = _best_fuzzy_to_canon(raw0, canon_list, threshold=fuzzy_threshold)
-    if hit:
-        llm_cache[raw0] = hit
-        _save_json(Path(config.cache_path), llm_cache)
-        return hit
+        # 1) Manual rules first (override cache)
+        m = _manual_map(raw0)
+        if m:
+            m = canon_rep_map.get(m, m)
+            llm_cache[raw0] = m
+            _save_json(Path(config.cache_path), llm_cache)
+            return m
 
-    # 3) If cached, use it (only after manual+fuzzy had a chance)
-    if raw0 in llm_cache:
-        return llm_cache[raw0]
+        # 2) Fuzzy collapse to existing canon (override cache)
+        hit = _best_fuzzy_to_canon(raw0, canon_list, threshold=fuzzy_threshold)
+        if hit:
+            hit = canon_rep_map.get(hit, hit)
+            llm_cache[raw0] = hit
+            _save_json(Path(config.cache_path), llm_cache)
+            return hit
 
-    # 4) No LLM: accept raw as canonical
-    if llm_choose is None:
-        llm_cache[raw0] = raw0
-        _save_json(Path(config.cache_path), llm_cache)
-        return raw0
+        # 3) Only now use cached value (if any)
+        if raw0 in llm_cache:
+            return llm_cache[raw0]
 
-    # 5) LLM path (unchanged, but keep the fuzzy collapse on NEW:)
-    ans = str(llm_choose(raw0, canon_list)).strip().strip('"').strip("'")
+        # 4) No LLM: accept raw as new canonical
+        if llm_choose is None:
+            llm_cache[raw0] = raw0
+            _save_json(Path(config.cache_path), llm_cache)
+            return raw0
 
-    if ans.startswith("NEW:"):
-        canon = _basic_cleanup(ans[4:].strip())
-        hit2 = _best_fuzzy_to_canon(canon, canon_list, threshold=fuzzy_threshold)
-        chosen_final = hit2 or canon
+        # 5) LLM path
+        ans = str(llm_choose(raw0, canon_list)).strip().strip('"').strip("'")
+
+        if ans.startswith("NEW:"):
+            canon = _basic_cleanup(ans[4:].strip())
+            hit2 = _best_fuzzy_to_canon(canon, canon_list, threshold=fuzzy_threshold)
+            chosen_final = canon_rep_map.get(hit2 or canon, hit2 or canon)
+            llm_cache[raw0] = chosen_final
+            _save_json(Path(config.cache_path), llm_cache)
+            return chosen_final
+
+        chosen = _basic_cleanup(ans)
+        chosen = canon_rep_map.get(chosen, chosen)
+
+        if chosen in canon_set:
+            if chosen == "Advanced Cyclotron Systems" and not _looks_like_acsi(raw0):
+                llm_cache[raw0] = raw0
+                _save_json(Path(config.cache_path), llm_cache)
+                return raw0
+
+            score = fuzz.token_sort_ratio(_norm_key_strong(raw0), _norm_key_strong(chosen))
+            if score >= 90:
+                llm_cache[raw0] = chosen
+                _save_json(Path(config.cache_path), llm_cache)
+                return chosen
+
+            llm_cache[raw0] = raw0
+            _save_json(Path(config.cache_path), llm_cache)
+            return raw0
+
+        hit3 = _best_fuzzy_to_canon(chosen, canon_list, threshold=fuzzy_threshold)
+        chosen_final = canon_rep_map.get(hit3 or chosen, hit3 or chosen)
+
         llm_cache[raw0] = chosen_final
         _save_json(Path(config.cache_path), llm_cache)
         return chosen_final
-
-    chosen = _basic_cleanup(ans)
-
-    if chosen in canon_set:
-        score = fuzz.token_sort_ratio(_norm_key_strong(raw0), _norm_key_strong(chosen))
-        if score >= 90:
-            llm_cache[raw0] = chosen
-            _save_json(Path(config.cache_path), llm_cache)
-            return chosen
-        llm_cache[raw0] = raw0
-        _save_json(Path(config.cache_path), llm_cache)
-        return raw0
-
-    hit3 = _best_fuzzy_to_canon(chosen, canon_list, threshold=fuzzy_threshold)
-    chosen_final = hit3 or chosen
-    llm_cache[raw0] = chosen_final
-    _save_json(Path(config.cache_path), llm_cache)
-    return chosen_final
 
     if verbose:
         print(f"Unique manufacturers: {len(uniq)}")
@@ -549,7 +541,7 @@ def clean_cyclotron_df(
             overwrite=True,
             keep_backup=True,
             llm_choose=llm_choose_manufacturer,
-            # Practical default while iterating: avoid canon explosion.
+            # Safe default while iterating (prevents canon explosion)
             grow_canon=False,
             verbose=False,
         )
