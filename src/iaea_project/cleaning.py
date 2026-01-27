@@ -110,18 +110,22 @@ SEED_CANON: set[str] = {
 }
 
 # Strong normalization helpers (for dedup/collapse)
+# NOTE: "corporation" deliberately NOT treated as legal suffix because we need it for "Cyclotron Corporation" matching.
 LEGAL_SUFFIXES = {
-    "inc", "incorporated", "corp", "corporation", "co", "company",
+    "inc", "incorporated", "corp",
+    # "corporation",  # intentionally removed
+    "co", "company",
     "ltd", "limited", "llc", "plc",
     "gmbh", "ag", "sa", "sarl", "srl", "spa", "bv", "nv", "kg", "oy", "ab", "as",
     "pte", "pty", "kk", "ltda", "sas",
 }
+
+# NOTE: we do NOT remove "negative"/"ion" because "Scanditronix-Negative-Ion" should still match reliably.
 GENERIC_TOKENS = {
     "the", "and", "&",
     "group", "international", "global", "holding", "holdings",
     "systems", "system", "technology", "technologies",
     "medical", "health", "healthcare",
-    "negative", "ion", "ions",
 }
 
 
@@ -146,8 +150,19 @@ def _norm_key(s: str) -> str:
 def _norm_key_strong(s: str) -> str:
     """Stronger normalization for fuzzy dedup (drops legal suffixes & boilerplate)."""
     s = _basic_cleanup(s).lower()
-    s = re.sub(r"\(([^)]{1,60})\)", " ", s)   # remove bracket chunks (acronyms/legal often)
+
+    # normalize unicode dashes to spaces
+    s = re.sub(r"[‐-‒–—−]", " ", s)
+
+    # remove bracket chunks (acronyms/legal often)
+    s = re.sub(r"\(([^)]{1,60})\)", " ", s)
+
+    # turn punctuation into spaces
     s = re.sub(r"[^\w\s]", " ", s)
+
+    # split camel-like stuck tokens (rare but safe)
+    s = re.sub(r"([a-z])([A-Z])", r"\1 \2", s)
+
     s = re.sub(r"\s+", " ", s).strip()
 
     toks = s.split()
@@ -238,11 +253,11 @@ def _manual_map(raw: str) -> Optional[str]:
     if "longevous" in ks or re.search(r"\blbt\b", ks):
         return "Sichuan Longevous Beamtech Co., Ltd (LBT)"
 
-    # TCC variants
-    if ks == "tcc" or ("tcc" in k and "cyclotron" in ks and "corporation" in ks):
+    # TCC variants: match explicit "tcc" OR the phrase
+    if "tcc" in ks or ("cyclotron" in ks and "corporation" in ks):
         return "TCC (The Cyclotron Corporation)"
 
-    # Scanditronix variants (incl. "Negative-Ion")
+    # Scanditronix variants: incl. "Negative-Ion" etc.
     if "scanditronix" in ks:
         return "Scanditronix"
 
