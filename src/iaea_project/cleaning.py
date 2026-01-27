@@ -20,6 +20,19 @@ from .utils import CACHE_DIR
 class CountryCanonConfig:
     cache_path: Path = CACHE_DIR / "country_fix_cache.json"
 
+def _pre_map_country(raw: str) -> str:
+    s = str(raw).strip()
+    k = s.lower()
+
+    # UAE subdivisions / common dataset quirks
+    if k == "dubai":
+        return "United Arab Emirates"
+
+    # UK subdivisions
+    if k == "northern ireland":
+        return "United Kingdom"
+
+    return s
 
 def canonicalize_countries(
     df: pd.DataFrame,
@@ -61,11 +74,14 @@ def canonicalize_countries(
         cache_path.write_text(json.dumps(fix_cache, ensure_ascii=False, indent=2), encoding="utf-8")
         return fixed
 
-    # Step A: deterministic conversion
+    # Pre-map obvious non-country entries
+    df[col] = df[col].apply(lambda x: _pre_map_country(x) if pd.notna(x) else x)
+    
     unique = df[col].dropna().unique()
     short_names = coco.convert(names=list(unique), to="name_short", not_found=None)
     mapping = dict(zip(unique, short_names))
 
+    
     tmp_col = out_col or f"{col}__canon"
     df[tmp_col] = df[col].map(mapping)
 
