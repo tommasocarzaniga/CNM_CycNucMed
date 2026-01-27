@@ -203,8 +203,17 @@ def save_country_map(df: pd.DataFrame, country: str, out_path: Optional[Path] = 
         country_poly.boundary.plot(ax=ax, linewidth=1)
 
     # Points
-    gdf_pts.plot(ax=ax, markersize=30)
+    gdf_pts.plot(
+    ax=ax,
+    markersize=30,
+    color="red",          # or any color
+    edgecolor="white",
+    linewidth=0.5,
+    alpha=0.9,
+    )
 
+
+    
     title = f"{country} – cyclotron cities"
     if raster_ok:
         title += " (pop density background)"
