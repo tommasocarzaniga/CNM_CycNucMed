@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 from pathlib import Path
-from typing import Optional
 
 
 def run_pipeline(
@@ -30,7 +29,11 @@ def run_pipeline(
     )
     from iaea_project.scraper import scrape_iaea_cyclotrons, save_raw
     from iaea_project.cleaning import clean_cyclotron_df
-    from iaea_project.analysis import global_comparison_tables, country_summary
+    from iaea_project.analysis import (
+        global_comparison_tables,
+        country_summary,
+        country_report_for_llm,  # NEW
+    )
     from iaea_project.plotting import save_country_map
     from iaea_project.pdf_report import build_pdf_report
 
@@ -39,11 +42,7 @@ def run_pipeline(
     raw_csv = RAW_DIR / "iaea_cyclotrons_raw.csv"
     clean_csv = PROCESSED_DIR / "iaea_cyclotrons_clean.csv"
 
-    out_pdf_path = (
-        (REPORTS_DIR / "IAEA_Cyclotron_Report.pdf")
-        if out_pdf is None
-        else Path(out_pdf)
-    )
+    out_pdf_path = (REPORTS_DIR / "IAEA_Cyclotron_Report.pdf") if out_pdf is None else Path(out_pdf)
 
     # -------------------
     # 1) Scrape or read
@@ -52,9 +51,7 @@ def run_pipeline(
         import pandas as pd
 
         if not raw_csv.exists():
-            raise FileNotFoundError(
-                f"skip_scrape=True but raw CSV not found at: {raw_csv}"
-            )
+            raise FileNotFoundError(f"skip_scrape=True but raw CSV not found at: {raw_csv}")
         df_raw = pd.read_csv(raw_csv)
     else:
         df_raw = scrape_iaea_cyclotrons()
@@ -72,9 +69,7 @@ def run_pipeline(
         )
 
         llm_fix_country = lambda s: llm_fix_country_openai(s, model=llm_model)
-        llm_choose_manu = lambda raw, canon: llm_choose_manufacturer_openai(
-            raw, canon, model=llm_model
-        )
+        llm_choose_manu = lambda raw, canon: llm_choose_manufacturer_openai(raw, canon, model=llm_model)
 
     df_clean = clean_cyclotron_df(
         df_raw,
@@ -92,12 +87,7 @@ def run_pipeline(
     # 4) Decide which countries to include
     # -------------------
     if countries is None:
-        all_countries = (
-            df_clean.get("Country")
-            .dropna()
-            .astype(str)
-            .map(str.strip)
-        )
+        all_countries = df_clean.get("Country").dropna().astype(str).map(str.strip)
         countries_list = sorted({c for c in all_countries if c})
     else:
         seen: set[str] = set()
@@ -114,7 +104,7 @@ def run_pipeline(
     # -------------------
     # 5) Per-country sections
     # -------------------
-    sections = []
+    sections: list[dict] = []
     for c in countries_list:
         cs = country_summary(df_clean, c, top_n=10)
         if not cs.get("found"):
@@ -136,10 +126,14 @@ def run_pipeline(
             f"Unique cities: {cs['all_cities_count']}, Unique facilities: {cs['all_facilities_count']}"
         )
 
+        # NEW: narrative text summary (LLM-style formatting, but deterministic)
+        llm_report = country_report_for_llm(df_clean, c, top_n=10)
+
         sections.append(
             {
                 "country": c,
                 "summary_md": summary_md,
+                "llm_report": llm_report,  # NEW
                 "tables": {
                     "Top cities": cs["cities_top"],
                     "Top facilities": cs["facilities_top"],
