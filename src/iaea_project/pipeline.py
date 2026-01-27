@@ -30,10 +30,11 @@ def run_pipeline(
     from iaea_project.scraper import scrape_iaea_cyclotrons, save_raw
     from iaea_project.cleaning import clean_cyclotron_df
     from iaea_project.analysis import (
-        global_comparison_tables,
-        country_summary,
-        country_report_for_llm,  # NEW
+    global_comparison_tables,
+    country_summary,
+    top_facility_context,  # NEW
     )
+    
     from iaea_project.plotting import save_country_map
     from iaea_project.pdf_report import build_pdf_report
 
@@ -104,7 +105,34 @@ def run_pipeline(
     # -------------------
     # 5) Per-country sections
     # -------------------
-    sections: list[dict] = []
+    import json
+    from iaea_project.utils import CACHE_DIR
+
+    CACHE_DIR.mkdir(parents=True, exist_ok=True)
+    top_site_cache_path = CACHE_DIR / "top_site_blurb_cache.json"
+
+    if top_site_cache_path.exists():
+        try:
+            top_site_cache = json.loads(top_site_cache_path.read_text(encoding="utf-8"))
+        except Exception:
+            top_site_cache = {}
+    else:
+        top_site_cache = {}
+
+    def save_top_site_cache():
+        top_site_cache_path.write_text(
+            json.dumps(top_site_cache, ensure_ascii=False, indent=2),
+            encoding="utf-8",
+        )
+
+    # Optional LLM function for the top-site blurb (only if enable_llm=True)
+    llm_top_site_blurb = None
+    if enable_llm:
+        from iaea_project.llm_adapters import llm_top_site_blurb_openai  # you create this adapter
+
+        llm_top_site_blurb = lambda ctx: llm_top_site_blurb_openai(ctx, model=llm_model)
+
+    sections = []
     for c in countries_list:
         cs = country_summary(df_clean, c, top_n=10)
         if not cs.get("found"):
@@ -126,14 +154,31 @@ def run_pipeline(
             f"Unique cities: {cs['all_cities_count']}, Unique facilities: {cs['all_facilities_count']}"
         )
 
-        # NEW: narrative text summary (LLM-style formatting, but deterministic)
-        llm_report = country_report_for_llm(df_clean, c, top_n=10)
+        # -------- NEW: top site context + (optional) LLM blurb + cache --------
+        ctx = top_facility_context(df_clean, c, top_rows=8)
+        top_site_blurb = None
+
+        if ctx.get("found"):
+            cache_key = f"{ctx.get('country')}|{ctx.get('top_facility')}|{ctx.get('top_city')}"
+            if cache_key in top_site_cache:
+                top_site_blurb = top_site_cache[cache_key]
+            elif llm_top_site_blurb is not None:
+                # One LLM call per country (only when needed)
+                try:
+                    top_site_blurb = str(llm_top_site_blurb(ctx)).strip()
+                except Exception:
+                    top_site_blurb = None
+
+                if top_site_blurb:
+                    top_site_cache[cache_key] = top_site_blurb
+                    save_top_site_cache()
 
         sections.append(
             {
                 "country": c,
                 "summary_md": summary_md,
-                "llm_report": llm_report,  # NEW
+                "top_site_blurb": top_site_blurb,  # <--- NEW
+                "top_site_ctx": ctx,               # <--- optional: keep context for debugging
                 "tables": {
                     "Top cities": cs["cities_top"],
                     "Top facilities": cs["facilities_top"],
