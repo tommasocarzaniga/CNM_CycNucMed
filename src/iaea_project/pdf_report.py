@@ -280,6 +280,13 @@ def build_pdf_report(
             if txt:
                 story.append(Paragraph(escape_paragraph_text(str(txt)), styles["BodyText"]))
                 story.append(Spacer(1, 8))
+
+                      # NEW BLOCK
+            top_site_blurb = sec.get("top_site_blurb")
+            if top_site_blurb:
+                story.append(Paragraph("Top site (short description)", styles["Heading3"]))
+                story.append(Paragraph(escape_paragraph_text(str(top_site_blurb)), styles["BodyText"]))
+                story.append(Spacer(1, 10))
             
             tables = sec.get("tables") or {}
             for name, obj in tables.items():
