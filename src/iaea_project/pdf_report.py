@@ -281,6 +281,13 @@ def build_pdf_report(
                 story.append(Paragraph(escape_paragraph_text(str(txt)), styles["BodyText"]))
                 story.append(Spacer(1, 8))
 
+            # NEW BLOCK HERE
+            llm_report = sec.get("llm_report")
+            if llm_report:
+                story.append(Paragraph("Narrative summary", styles["Heading3"]))
+                story.append(Paragraph(escape_paragraph_text(str(llm_report)), styles["BodyText"]))
+                story.append(Spacer(1, 10))
+            
             tables = sec.get("tables") or {}
             for name, obj in tables.items():
                 story.append(Paragraph(escape_paragraph_text(str(name)), styles["Heading3"]))
