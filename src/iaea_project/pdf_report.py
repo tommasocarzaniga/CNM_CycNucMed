@@ -210,7 +210,7 @@ def build_pdf_report(
 
     # Split Top manufacturers into two columns
     if top_manufacturers is not None:
-        story.append(Paragraph("Top manufacturers (global)", styles["Heading2Center"]))
+        story.append(Paragraph("Number of Cyclotrons per Manufacturer (Global)", styles["Heading2Center"]))
         story.append(Spacer(1, 8))
 
         s = top_manufacturers.copy()
@@ -220,9 +220,9 @@ def build_pdf_report(
 
         story.append(
             two_column_tables(
-                "Top manufacturers (1/2)",
+                "Top Manufacturers (1/2)",
                 left_s,
-                "Top manufacturers (2/2)",
+                "Top Manufacturers (2/2)",
                 right_s,
                 max_rows=20,
             )
@@ -231,7 +231,7 @@ def build_pdf_report(
 
     # Energy table split into two columns
     if energy_country is not None:
-        story.append(Paragraph("Global Snapshot", styles["Heading2Center"]))
+        story.append(Paragraph("Number of Cyclotrons and Energy Distribution (Global)", styles["Heading2Center"]))
         story.append(Spacer(1, 8))
 
         n = len(energy_country)
@@ -240,9 +240,9 @@ def build_pdf_report(
 
         story.append(
             two_column_tables(
-                "Number of cyclotrons and energy distribution (1/2)",
+                "Top Countries (1/2)",
                 left_df,
-                "Number of cyclotrons and energy distribution (2/2)",
+                "Top Countries (2/2)",
                 right_df,
                 max_rows=20,
             )
