@@ -155,8 +155,8 @@ def run_pipeline(
     # -------------------
     build_pdf_report(
         out_pdf_path,
-        title="IAEA Cyclotron Report",
-        subtitle="University project: modular Python package + reproducible pipeline",
+        title="Coding & KI - Exam",
+        subtitle="Cyclotron Atlas: A Country-Selectable AI Guide for Medical Cyclotrons",
         top_countries=top_countries,
         top_manufacturers=top_manu,
         energy_country=energy_country,
