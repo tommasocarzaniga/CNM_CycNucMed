@@ -205,7 +205,7 @@ def build_pdf_report(
         story.append(Spacer(1, 12))
 
     if energy_country is not None:
-        story.append(Paragraph("Energy distribution (numeric)", styles["Heading2Center"]))
+        story.append(Paragraph("Global Snapshot", styles["Heading2Center"]))
         story.append(Spacer(1, 8))
     
         n = len(energy_country)
@@ -214,9 +214,9 @@ def build_pdf_report(
     
         story.append(
             two_column_tables(
-                #"Energy distribution (numeric)",
+                "Number of cyclotrons and energy distribution (1/2)",
                 left_df,
-                #"Energy distribution (numeric)",
+                "Number of cyclotrons and energy distribution (1/2)",
                 right_df,
                 max_rows=20,
             )
