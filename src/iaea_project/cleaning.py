@@ -382,81 +382,63 @@ def canonicalize_manufacturers(
             return False
         return True
 
-    def choose_or_new(raw: str, canon_list: list[str]) -> str:
-        raw0 = _basic_cleanup(raw)
-        if not raw0:
-            return raw0
+   def choose_or_new(raw: str, canon_list: list[str]) -> str:
+    raw0 = _basic_cleanup(raw)
+    if not raw0:
+        return raw0
 
-        # Normalize to representative if raw0 itself is a stored canon duplicate
-        raw0_rep = canon_rep_map.get(raw0, raw0)
+    # 1) Always try deterministic/manual rules first (they should override old cache)
+    m = _manual_map(raw0)
+    if m:
+        llm_cache[raw0] = m
+        _save_json(Path(config.cache_path), llm_cache)
+        return m
 
-        if raw0_rep in llm_cache:
-            return llm_cache[raw0_rep]
+    # 2) Always try fuzzy collapse to existing canon (also overrides old cache)
+    hit = _best_fuzzy_to_canon(raw0, canon_list, threshold=fuzzy_threshold)
+    if hit:
+        llm_cache[raw0] = hit
+        _save_json(Path(config.cache_path), llm_cache)
+        return hit
 
-        # Manual layer first (high precision)
-        m = _manual_map(raw0_rep)
-        if m:
-            m = canon_rep_map.get(m, m)
-            llm_cache[raw0_rep] = m
-            _save_json(Path(config.cache_path), llm_cache)
-            return m
+    # 3) If cached, use it (only after manual+fuzzy had a chance)
+    if raw0 in llm_cache:
+        return llm_cache[raw0]
 
-        canon_list_rep = [canon_rep_map.get(c, c) for c in canon_list]
+    # 4) No LLM: accept raw as canonical
+    if llm_choose is None:
+        llm_cache[raw0] = raw0
+        _save_json(Path(config.cache_path), llm_cache)
+        return raw0
 
-        # NEW: non-LLM fuzzy collapse to existing canon (conservative)
-        hit = _best_fuzzy_to_canon(raw0_rep, canon_list_rep, threshold=fuzzy_threshold)
-        if hit:
-            hit = canon_rep_map.get(hit, hit)
-            llm_cache[raw0_rep] = hit
-            _save_json(Path(config.cache_path), llm_cache)
-            return hit
+    # 5) LLM path (unchanged, but keep the fuzzy collapse on NEW:)
+    ans = str(llm_choose(raw0, canon_list)).strip().strip('"').strip("'")
 
-        # If no LLM, treat as new canonical (cleaned raw)
-        if llm_choose is None:
-            llm_cache[raw0_rep] = raw0_rep
-            _save_json(Path(config.cache_path), llm_cache)
-            return raw0_rep
-
-        # LLM path
-        ans = str(llm_choose(raw0_rep, sorted(set(canon_list_rep)))).strip().strip('"').strip("'")
-
-        if ans.startswith("NEW:"):
-            canon = _basic_cleanup(ans[4:].strip())
-            # Still try to collapse "NEW" into existing canon if it's essentially the same
-            hit2 = _best_fuzzy_to_canon(canon, canon_list_rep, threshold=fuzzy_threshold)
-            chosen_final = canon_rep_map.get(hit2 or canon, hit2 or canon)
-            llm_cache[raw0_rep] = chosen_final
-            _save_json(Path(config.cache_path), llm_cache)
-            return chosen_final
-
-        chosen = _basic_cleanup(ans)
-        chosen = canon_rep_map.get(chosen, chosen)
-
-        # If it chose an existing canonical, validate similarity (guardrail)
-        if chosen in canon_set:
-            if chosen == "Advanced Cyclotron Systems" and not _looks_like_acsi(raw0_rep):
-                llm_cache[raw0_rep] = raw0_rep
-                _save_json(Path(config.cache_path), llm_cache)
-                return raw0_rep
-
-            score = fuzz.token_sort_ratio(_norm_key_strong(raw0_rep), _norm_key_strong(chosen))
-            if score >= 90:
-                llm_cache[raw0_rep] = chosen
-                _save_json(Path(config.cache_path), llm_cache)
-                return chosen
-
-            llm_cache[raw0_rep] = raw0_rep
-            _save_json(Path(config.cache_path), llm_cache)
-            return raw0_rep
-
-        # If it returned something not in canon without NEW:, accept as new
-        # ...but try collapsing to existing canon anyway
-        hit3 = _best_fuzzy_to_canon(chosen, canon_list_rep, threshold=fuzzy_threshold)
-        chosen_final = canon_rep_map.get(hit3 or chosen, hit3 or chosen)
-
-        llm_cache[raw0_rep] = chosen_final
+    if ans.startswith("NEW:"):
+        canon = _basic_cleanup(ans[4:].strip())
+        hit2 = _best_fuzzy_to_canon(canon, canon_list, threshold=fuzzy_threshold)
+        chosen_final = hit2 or canon
+        llm_cache[raw0] = chosen_final
         _save_json(Path(config.cache_path), llm_cache)
         return chosen_final
+
+    chosen = _basic_cleanup(ans)
+
+    if chosen in canon_set:
+        score = fuzz.token_sort_ratio(_norm_key_strong(raw0), _norm_key_strong(chosen))
+        if score >= 90:
+            llm_cache[raw0] = chosen
+            _save_json(Path(config.cache_path), llm_cache)
+            return chosen
+        llm_cache[raw0] = raw0
+        _save_json(Path(config.cache_path), llm_cache)
+        return raw0
+
+    hit3 = _best_fuzzy_to_canon(chosen, canon_list, threshold=fuzzy_threshold)
+    chosen_final = hit3 or chosen
+    llm_cache[raw0] = chosen_final
+    _save_json(Path(config.cache_path), llm_cache)
+    return chosen_final
 
     if verbose:
         print(f"Unique manufacturers: {len(uniq)}")
