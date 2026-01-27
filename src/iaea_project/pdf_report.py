@@ -193,17 +193,23 @@ def build_pdf_report(
 
     story.append(Spacer(1, 12))
 
-    # Global comparison page (countries vs manufacturers)
-    if top_countries is not None and top_manufacturers is not None:
-        story.append(Paragraph("Global snapshot", styles["Heading2Center"]))
+    # Split Top countries into two columns
+    if top_countries is not None:
+        story.append(Paragraph("Top countries", styles["Heading2Center"]))
         story.append(Spacer(1, 8))
+    
+        s = top_countries.head(10)
+        n = len(s)
+        left_s = s.iloc[: (n + 1) // 2]
+        right_s = s.iloc[(n + 1) // 2 :]
+    
         story.append(
-            two_column_toplists(
-                "Top countries",
-                top_countries,
-                "Top manufacturers (global)",
-                top_manufacturers,
-                max_rows=10,
+            two_column_tables(
+                "Top countries (1/2)",
+                left_s,
+                "Top countries (2/2)",
+                right_s,
+                max_rows=5,   # how many per column
             )
         )
         story.append(Spacer(1, 12))
@@ -213,7 +219,7 @@ def build_pdf_report(
         story.append(Paragraph("Number of Cyclotrons per Manufacturer (Global)", styles["Heading2Center"]))
         story.append(Spacer(1, 8))
 
-        s = top_manufacturers.copy()
+        s = top_manufacturers.head(10)
         n = len(s)
         left_s = s.iloc[: (n + 1) // 2]
         right_s = s.iloc[(n + 1) // 2 :]
@@ -224,7 +230,7 @@ def build_pdf_report(
                 left_s,
                 "Top Manufacturers (2/2)",
                 right_s,
-                max_rows=20,
+                max_rows=5,
             )
         )
         story.append(Spacer(1, 12))
@@ -234,9 +240,10 @@ def build_pdf_report(
         story.append(Paragraph("Number of Cyclotrons and Energy Distribution (Global)", styles["Heading2Center"]))
         story.append(Spacer(1, 8))
 
-        n = len(energy_country)
-        left_df = energy_country.iloc[: (n + 1) // 2].copy()
-        right_df = energy_country.iloc[(n + 1) // 2 :].copy()
+        s = energy_country.head(10)
+        n = len(s)
+        left_df = s.iloc[: (n + 1) // 2].copy()
+        right_df = s.iloc[(n + 1) // 2 :].copy()
 
         story.append(
             two_column_tables(
@@ -244,7 +251,7 @@ def build_pdf_report(
                 left_df,
                 "Top Countries (2/2)",
                 right_df,
-                max_rows=20,
+                max_rows=5,
             )
         )
         story.append(Spacer(1, 12))
