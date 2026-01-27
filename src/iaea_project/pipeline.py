@@ -64,7 +64,7 @@ def run_pipeline(
     # 2) Clean (LLM optional)
     # -------------------
     llm_fix_country = None
-    llm_choose_manu = True
+    llm_choose_manu = None
     if enable_llm:
         from iaea_project.llm_adapters import (
             llm_fix_country_openai,
