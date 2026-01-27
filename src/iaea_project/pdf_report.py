@@ -153,14 +153,14 @@ def build_pdf_report(
                 top_countries,
                 "Top manufacturers (global)",
                 top_manufacturers,
-                max_rows=15,
+                max_rows=10,
             )
         )
         story.append(Spacer(1, 12))
 
     if energy_country is not None:
         story.append(Paragraph("Energy distribution by country (numeric only)", styles["Heading2"]))
-        story.append(df_to_table(energy_country, max_rows=25))
+        story.append(df_to_table(energy_country, max_rows=10))
         story.append(PageBreak())
 
     # Figures
