@@ -201,6 +201,11 @@ def run_pipeline(
             }
         )
 
+    print("[DEBUG] sections:", len(sections))
+    if sections:
+        print("[DEBUG] section keys:", sections[0].keys())
+        print("[DEBUG] first top_site_blurb:", repr(sections[0].get("top_site_blurb"))[:200])
+
     # -------------------
     # 6) Build PDF
     # -------------------
