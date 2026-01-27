@@ -204,6 +204,26 @@ def build_pdf_report(
         )
         story.append(Spacer(1, 12))
 
+    if top_manufacturers is not None:
+    story.append(Paragraph("Top manufacturers (global)", styles["Heading2Center"]))
+    story.append(Spacer(1, 8))
+
+    s = top_manufacturers.copy()
+    n = len(s)
+    left_s = s.iloc[: (n + 1) // 2]
+    right_s = s.iloc[(n + 1) // 2 :]
+
+    story.append(
+        two_column_tables(
+            "Top manufacturers (1/2)",
+            left_s,
+            "Top manufacturers (2/2)",
+            right_s,
+            max_rows=20,   # how many per column
+        )
+    )
+    story.append(Spacer(1, 12))
+
     if energy_country is not None:
         story.append(Paragraph("Global Snapshot", styles["Heading2Center"]))
         story.append(Spacer(1, 8))
@@ -222,7 +242,6 @@ def build_pdf_report(
             )
         )
         story.append(Spacer(1, 12))
-
 
     # Figures
     if figures:
