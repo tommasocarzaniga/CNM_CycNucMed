@@ -156,6 +156,9 @@ def run_pipeline(
 
         # -------- NEW: top site context + (optional) LLM blurb + cache --------
         ctx = top_facility_context(df_clean, c, top_rows=8)
+
+        print("[DEBUG]", c, "ctx found:", ctx.get("found"), "facility:", ctx.get("top_facility"))
+    
         top_site_blurb = None
 
         if ctx.get("found"):
