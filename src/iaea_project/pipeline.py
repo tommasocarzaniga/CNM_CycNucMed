@@ -9,6 +9,7 @@ def run_pipeline(
     max_country_sections: int | None = None,
     disable_maps: bool = False,
     enable_llm: bool = False,
+    enable_web_enrichment: bool = False,  # <-- NEW
     llm_model: str = "gpt-4.1-mini",
     out_pdf: str | Path | None = None,
     skip_scrape: bool = False,
@@ -30,13 +31,16 @@ def run_pipeline(
     from iaea_project.scraper import scrape_iaea_cyclotrons, save_raw
     from iaea_project.cleaning import clean_cyclotron_df
     from iaea_project.analysis import (
-    global_comparison_tables,
-    country_summary,
-    top_facility_context,  # NEW
+        global_comparison_tables,
+        country_summary,
+        top_facility_context,
     )
-    
     from iaea_project.plotting import save_country_map
     from iaea_project.pdf_report import build_pdf_report
+
+    # <-- NEW: web enrichment helper (Serper-based)
+    if enable_web_enrichment:
+        from iaea_project.web_enrichment import enrich_facility
 
     ensure_dirs()
 
@@ -128,8 +132,7 @@ def run_pipeline(
     # Optional LLM function for the top-site blurb (only if enable_llm=True)
     llm_top_site_blurb = None
     if enable_llm:
-        from iaea_project.llm_adapter import llm_top_site_blurb_openai  # you create this adapter
-
+        from iaea_project.llm_adapter import llm_top_site_blurb_openai
         llm_top_site_blurb = lambda ctx: llm_top_site_blurb_openai(ctx, model=llm_model)
 
     sections = []
@@ -154,43 +157,55 @@ def run_pipeline(
             f"Unique cities: {cs['all_cities_count']}, Unique facilities: {cs['all_facilities_count']}"
         )
 
-        # -------- NEW: top site context + (optional) LLM blurb + cache --------
+        # -------- Top site context + (optional) web enrichment + (optional) LLM blurb + cache --------
         ctx = top_facility_context(df_clean, c, top_rows=8)
 
         print("[DEBUG]", c, "ctx found:", ctx.get("found"), "facility:", ctx.get("top_facility"))
-    
+
+        # <-- NEW: optional web enrichment (adds ctx["web_evidence"])
+        if enable_web_enrichment and ctx.get("found"):
+            try:
+                ctx = enrich_facility(ctx)
+            except Exception as e:
+                print("[WEB ENRICH ERROR]", c, e)
+
         top_site_blurb = None
 
         if ctx.get("found"):
-            cache_key = f"{ctx.get('country')}|{ctx.get('top_facility')}|{ctx.get('top_city')}"
+            # <-- NEW: cache key includes web flag + model so old short blurbs don't get reused
+            cache_key = (
+                f"{ctx.get('country')}|{ctx.get('top_facility')}|{ctx.get('top_city')}"
+                f"|web={int(enable_web_enrichment)}|model={llm_model}"
+            )
 
             cached = top_site_cache.get(cache_key)
             if cached:
                 top_site_blurb = cached
-        
+
             elif llm_top_site_blurb is not None:
                 try:
                     top_site_blurb = str(llm_top_site_blurb(ctx))
                 except Exception as e:
                     print("[LLM ERROR]", c, e)
                     top_site_blurb = None
-        
+
                 if top_site_blurb:
                     top_site_blurb = top_site_blurb.strip()
-                    if len(top_site_blurb) > 600:
-                        top_site_blurb = top_site_blurb[:600].rsplit(" ", 1)[0] + "…"
-        
+                    # <-- NEW: allow longer blurbs (better detail)
+                    if len(top_site_blurb) > 1800:
+                        top_site_blurb = top_site_blurb[:1800].rsplit(" ", 1)[0] + "…"
+
                     top_site_cache[cache_key] = top_site_blurb
                     save_top_site_cache()
 
         print("[DEBUG]", c, "top_site_blurb:", repr(top_site_blurb)[:200])
-        
+
         sections.append(
             {
                 "country": c,
                 "summary_md": summary_md,
-                "top_site_blurb": top_site_blurb,  # <--- NEW
-                "top_site_ctx": ctx,               # <--- optional: keep context for debugging
+                "top_site_blurb": top_site_blurb,
+                "top_site_ctx": ctx,  # includes web_evidence if enabled
                 "tables": {
                     "Top cities": cs["cities_top"],
                     "Top facilities": cs["facilities_top"],
