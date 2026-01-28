@@ -283,13 +283,6 @@ def build_pdf_report(
                 story.append(Paragraph(escape_paragraph_text(str(txt)), styles["BodyText"]))
                 story.append(Spacer(1, 8))
     
-            # NEW BLOCK (correct indentation)
-            top_site_blurb = sec.get("top_site_blurb")
-            if top_site_blurb:
-                story.append(Paragraph("Top site (short description)", styles["Heading3"]))
-                story.append(Paragraph(escape_paragraph_text(str(top_site_blurb)), styles["Normal"]))
-                story.append(Spacer(1, 10))
-    
             tables = sec.get("tables") or {}
             for name, obj in tables.items():
                 story.append(Paragraph(escape_paragraph_text(str(name)), styles["Heading3"]))
@@ -308,7 +301,14 @@ def build_pdf_report(
                 if p.exists():
                     story.append(Image(str(p), width=520, height=320))
                     story.append(Spacer(1, 10))
-    
+
+            # NEW BLOCK (correct indentation)
+            top_site_blurb = sec.get("top_site_blurb")
+            if top_site_blurb:
+                story.append(Paragraph("Top site (short description)", styles["Heading3"]))
+                story.append(Paragraph(escape_paragraph_text(str(top_site_blurb)), styles["Normal"]))
+                story.append(Spacer(1, 10))
+            
             story.append(PageBreak())
     
     doc.build(story)
