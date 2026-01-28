@@ -110,30 +110,17 @@ Facts (JSON):
 # return openai_chat(prompt, model=model)  # use your existing helper
 
 def llm_top_site_blurb_openai(context: dict, model: str = "gpt-4.1-mini") -> str:
-    """
-    Produce a concise (4–6 sentences) executive-style description of the top cyclotron site
-    using ONLY the provided context dict (no external facts).
-
-    If radiopharmaceutical info is not present in the context, explicitly state that it is
-    not provided in the dataset/context (instead of guessing).
-    """
     client = _require_openai_client()
 
     prompt = (
-        "You are writing a factual description for a PDF report (executive tone).\n"
-        "Write ONE paragraph of 4–6 sentences about the top cyclotron site in the country.\n\n"
-        "Hard rules:\n"
-        "- Use ONLY facts present in the JSON below.\n"
-        "- Do NOT add external knowledge or assumptions.\n"
-        "- If a detail is missing, say 'not provided in the dataset/context'.\n"
-        "- Keep it compact, but information-dense.\n\n"
-        "Content requirements (include these in the paragraph when possible):\n"
-        "1) Site name and city\n"
-        "2) Cyclotron manufacturer, model, and proton energy (MeV) if present\n"
-        "3) Operator/institution type if present (university hospital, private, etc.)\n"
-        "4) Radiopharmaceuticals / radioisotopes / tracers produced at the site ONLY if listed in the JSON.\n"
-        "   If not listed, include exactly one sentence: 'Radiopharmaceutical production details are not provided in the dataset/context.'\n"
-        "5) If available, add one sentence on why it is the top site (e.g., count, energy, capacity) using ONLY provided facts.\n\n"
+        "You are writing a factual facility description for a PDF report.\n"
+        "Write 6–10 sentences.\n"
+        "Use ONLY facts provided in the JSON below.\n"
+        "If you use any web evidence, you MUST cite it inline as [source: <url>].\n"
+        "Do NOT guess radiopharmaceuticals. Only list tracers if explicitly present in evidence text/snippets.\n"
+        "If radiopharmaceuticals are not mentioned, write: 'The specific radiopharmaceutical portfolio is not stated in the retrieved sources.'\n"
+        "Prefer concrete details: operator, city, cyclotron model/energy, role (clinical/research), GMP/production hints, collaborations.\n"
+        "If a detail is missing, say 'unknown'.\n\n"
         f"Facts (JSON):\n{json.dumps(context, ensure_ascii=False, indent=2)}\n\n"
         "Answer:"
     )
