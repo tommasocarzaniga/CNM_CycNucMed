@@ -9,6 +9,7 @@ requires-python = ">=3.10"
 dependencies = [
   "country_converter",
   "pandas",
+  "geopy>=2.3.0",
   "playwright",
   "nest_asyncio",
   # add the rest you use...
