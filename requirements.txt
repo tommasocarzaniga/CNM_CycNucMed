@@ -15,7 +15,7 @@ playwright
 rapidfuzz
 
 # Geocoding + maps (optional)
-geopy
+geopy>=2.3.0
 geopandas
 shapely
 pyproj
