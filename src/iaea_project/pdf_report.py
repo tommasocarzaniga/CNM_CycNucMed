@@ -308,6 +308,15 @@ def build_pdf_report(
                 story.append(Paragraph("Top site (short description)", styles["Heading3"]))
                 story.append(Paragraph(escape_paragraph_text(str(top_site_blurb)), styles["Normal"]))
                 story.append(Spacer(1, 10))
+
+            web_evidence = sec.get("top_site_ctx", {}).get("web_evidence", {})
+            results = (web_evidence.get("serper_results") or [])[:3]
+            if results:
+                story.append(Paragraph("Sources (top 3)", styles["Heading4"]))
+                for r in results:
+                    line = f"- {r.get('title','(no title)')}: {r.get('link','')}"
+                    story.append(Paragraph(escape_paragraph_text(line), styles["Normal"]))
+                story.append(Spacer(1, 10))
             
             story.append(PageBreak())
     
