@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import os
+import time
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Optional
@@ -13,40 +14,79 @@ from .utils import CACHE_DIR, FIGURES_DIR
 @dataclass(frozen=True)
 class GeocodeConfig:
     cache_csv: Path = CACHE_DIR / "geocode_cache.csv"
-    user_agent: str = "iaea_cyclotron_geocoder"
-    min_delay_seconds: float = 1.0
+    # Nominatim requires a valid, descriptive UA. Ideally include a contact email.
+    # You can override via env var IAEA_GEOCODER_UA.
+    user_agent: str = os.getenv("IAEA_GEOCODER_UA", "CNM_CycNucMed/1.0 (contact: your_email@example.com)")
+    # geopy RateLimiter delay between calls (polite usage)
+    min_delay_seconds: float = float(os.getenv("IAEA_GEOCODER_MIN_DELAY", "1.0"))
+    # network timeout for each request (your main fix vs read timeout=1)
+    timeout_seconds: int = int(os.getenv("IAEA_GEOCODER_TIMEOUT", "10"))
+    # additional retries (with exponential backoff) for transient timeouts
+    max_retries: int = int(os.getenv("IAEA_GEOCODER_RETRIES", "2"))
+    # backoff base seconds (1, 2, 4, ...)
+    backoff_base_seconds: float = float(os.getenv("IAEA_GEOCODER_BACKOFF_BASE", "1.0"))
 
 
 def geocode_country_cities(df: pd.DataFrame, country: str, config: GeocodeConfig = GeocodeConfig()):
-    """Return list of (city, lat, lon) for all cities in a country, using a persistent CSV cache."""
+    """Return list of (city, lat, lon) for all cities in a country, using a persistent CSV cache.
+
+    Improvements:
+      - cache-first: never hits network if we already have lat/lon
+      - no pd.concat warnings: uses .loc append
+      - fewer timeouts: increases timeout + retries with backoff
+      - polite usage: RateLimiter + UA
+    """
     from geopy.geocoders import Nominatim
     from geopy.extra.rate_limiter import RateLimiter
 
     cache_path = Path(config.cache_csv)
     cache_path.parent.mkdir(parents=True, exist_ok=True)
 
+    # Load cache or initialize with stable dtypes/columns
+    cols = ["Country_iso3", "Country", "City", "lat", "lon", "display_name"]
     if cache_path.exists():
         geo_cache = pd.read_csv(cache_path)
     else:
-        geo_cache = pd.DataFrame(columns=["Country_iso3", "Country", "City", "lat", "lon", "display_name"])
+        geo_cache = pd.DataFrame({c: pd.Series(dtype="object") for c in cols})
 
-    for col in ["Country_iso3", "Country", "City"]:
-        if col not in geo_cache.columns:
-            geo_cache[col] = ""
-        geo_cache[col] = geo_cache[col].astype(str)
+    # Ensure required columns exist
+    for c in cols:
+        if c not in geo_cache.columns:
+            geo_cache[c] = pd.Series(dtype="object")
 
-    geolocator = Nominatim(user_agent=config.user_agent)
-    geocode = RateLimiter(geolocator.geocode, min_delay_seconds=config.min_delay_seconds, swallow_exceptions=True)
+    # Normalize types (avoid future dtype weirdness)
+    for c in ["Country_iso3", "Country", "City", "display_name"]:
+        geo_cache[c] = geo_cache[c].astype("string")
 
-    def _norm(x):
+    def _norm(x) -> str:
         return str(x).strip().lower()
 
-    def get_latlon(country_: str, city_: str, country_iso3: Optional[str] = None):
-        nonlocal geo_cache
-        country_ = str(country_).strip()
-        city_ = str(city_).strip()
-        country_iso3 = None if country_iso3 is None else str(country_iso3).strip()
+    # Nominatim geocoder with a reasonable timeout
+    geolocator = Nominatim(user_agent=config.user_agent, timeout=config.timeout_seconds)
 
+    # RateLimiter: adds sleep between calls and swallows geopy exceptions
+    geocode = RateLimiter(
+        geolocator.geocode,
+        min_delay_seconds=config.min_delay_seconds,
+        swallow_exceptions=True,
+        return_value_on_exception=None,
+    )
+
+    def _append_cache_row(row: dict):
+        """Append one row without pandas concat (avoids FutureWarning)."""
+        nonlocal geo_cache
+        geo_cache.loc[len(geo_cache)] = {
+            "Country_iso3": row.get("Country_iso3", "") or "",
+            "Country": row.get("Country", "") or "",
+            "City": row.get("City", "") or "",
+            "lat": row.get("lat"),
+            "lon": row.get("lon"),
+            "display_name": row.get("display_name"),
+        }
+        geo_cache.to_csv(cache_path, index=False)
+
+    def _lookup_cache(country_: str, city_: str, country_iso3: Optional[str]):
+        """Return (lat,lon) if present, else (None,None)."""
         if country_iso3:
             hit = geo_cache[
                 (geo_cache["Country_iso3"].apply(_norm) == _norm(country_iso3))
@@ -62,46 +102,74 @@ def geocode_country_cities(df: pd.DataFrame, country: str, config: GeocodeConfig
         if not hit.empty and pd.notna(hit.iloc[0]["lat"]) and pd.notna(hit.iloc[0]["lon"]):
             return float(hit.iloc[0]["lat"]), float(hit.iloc[0]["lon"])
 
+        return None, None
+
+    def _geocode_with_retries(query: str):
+        """Geocode with retries + exponential backoff (helps Colab + Nominatim)."""
+        # First try immediately; then backoff
+        for attempt in range(config.max_retries + 1):
+            loc = geocode(query)
+            if loc is not None:
+                return loc
+            if attempt < config.max_retries:
+                sleep_s = config.backoff_base_seconds * (2**attempt)
+                time.sleep(sleep_s)
+        return None
+
+    def get_latlon(country_: str, city_: str, country_iso3: Optional[str] = None):
+        country_ = str(country_).strip()
+        city_ = str(city_).strip()
+        country_iso3 = None if country_iso3 is None else str(country_iso3).strip()
+
+        # 1) Cache-first
+        lat, lon = _lookup_cache(country_, city_, country_iso3)
+        if lat is not None and lon is not None:
+            return lat, lon
+
+        # 2) Structured queries: prefer city+country
         queries = [f"{city_}, {country_}"]
         if country_iso3:
             queries.append(f"{city_}, {country_iso3}")
+        # last resort: city only (can be ambiguous; kept for compatibility)
         queries.append(city_)
 
         loc = None
         for q in queries:
-            loc = geocode(q)
+            loc = _geocode_with_retries(q)
             if loc is not None:
                 break
 
+        # 3) Cache miss -> store miss too (so we don't keep hammering)
         if loc is None:
-            new_row = {
-                "Country_iso3": country_iso3 or "",
-                "Country": country_,
-                "City": city_,
-                "lat": None,
-                "lon": None,
-                "display_name": None,
-            }
-            geo_cache = pd.concat([geo_cache, pd.DataFrame([new_row])], ignore_index=True)
-            geo_cache.to_csv(cache_path, index=False)
+            _append_cache_row(
+                {
+                    "Country_iso3": country_iso3 or "",
+                    "Country": country_,
+                    "City": city_,
+                    "lat": None,
+                    "lon": None,
+                    "display_name": None,
+                }
+            )
             return None, None
 
+        # 4) Cache hit -> store coordinates
         lat, lon = loc.latitude, loc.longitude
         display_name = getattr(loc, "address", None)
 
-        new_row = {
-            "Country_iso3": country_iso3 or "",
-            "Country": country_,
-            "City": city_,
-            "lat": lat,
-            "lon": lon,
-            "display_name": display_name,
-        }
-
-        geo_cache = pd.concat([geo_cache, pd.DataFrame([new_row])], ignore_index=True)
-        geo_cache.to_csv(cache_path, index=False)
+        _append_cache_row(
+            {
+                "Country_iso3": country_iso3 or "",
+                "Country": country_,
+                "City": city_,
+                "lat": lat,
+                "lon": lon,
+                "display_name": display_name,
+            }
+        )
         return lat, lon
 
+    # --- Build the list of unique cities in the given country
     sub = df[df["Country"].str.lower() == str(country).strip().lower()].copy()
     cities = sorted([c for c in sub["City"].dropna().unique() if str(c).strip()])
 
@@ -147,7 +215,7 @@ def save_country_map(df: pd.DataFrame, country: str, out_path: Optional[Path] = 
 
     # Natural Earth polygons (remote zip)
     world = gpd.read_file(
-    "https://naturalearth.s3.amazonaws.com/50m_cultural/ne_50m_admin_0_countries.zip"
+        "https://naturalearth.s3.amazonaws.com/50m_cultural/ne_50m_admin_0_countries.zip"
     )
 
     country_poly = None
@@ -204,16 +272,14 @@ def save_country_map(df: pd.DataFrame, country: str, out_path: Optional[Path] = 
 
     # Points
     gdf_pts.plot(
-    ax=ax,
-    markersize=30,
-    color="red",          # or any color
-    edgecolor="white",
-    linewidth=0.5,
-    alpha=0.9,
+        ax=ax,
+        markersize=30,
+        color="red",
+        edgecolor="white",
+        linewidth=0.5,
+        alpha=0.9,
     )
 
-
-    
     title = f"{country} – cyclotron cities"
     if raster_ok:
         title += " (pop density background)"
