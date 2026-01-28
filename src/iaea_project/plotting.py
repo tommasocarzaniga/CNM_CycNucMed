@@ -4,7 +4,7 @@ import os
 import time
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Optional
+from typing import Optional, Tuple
 
 import pandas as pd
 
@@ -12,21 +12,23 @@ from .utils import CACHE_DIR, FIGURES_DIR
 
 
 # =========================
-# Geocoding (LocationIQ + cache)
+# Geocoding (LocationIQ via requests + cache; optional Nominatim fallback)
 # =========================
 @dataclass(frozen=True)
 class GeocodeConfig:
     cache_csv: Path = CACHE_DIR / "geocode_cache.csv"
 
-    # Provider selection
-    # Set IAEA_GEOCODER_PROVIDER=locationiq (default) or nominatim
+    # Provider selection:
+    # - "locationiq" (default, via requests)
+    # - "nominatim" (via geopy, optional fallback)
     provider: str = os.getenv("IAEA_GEOCODER_PROVIDER", "locationiq").lower()
 
-    # LocationIQ
+    # LocationIQ (requests)
     locationiq_api_key: str = os.getenv("LOCATIONIQ_API_KEY", "")
     locationiq_domain: str = os.getenv("LOCATIONIQ_DOMAIN", "api.locationiq.com")
 
-    # Nominatim requires a descriptive UA (only used if provider="nominatim")
+    # Nominatim (only used if provider="nominatim")
+    # Needs descriptive UA with contact
     user_agent: str = os.getenv(
         "IAEA_GEOCODER_UA",
         "CNM_CycNucMed/1.0 (contact: your_email@example.com)"
@@ -38,16 +40,19 @@ class GeocodeConfig:
     max_retries: int = int(os.getenv("IAEA_GEOCODER_RETRIES", "2"))
     backoff_base_seconds: float = float(os.getenv("IAEA_GEOCODER_BACKOFF_BASE", "1.0"))
 
+    # LocationIQ-specific: when true, store the raw "display_name" if present
+    keep_display_name: bool = os.getenv("IAEA_GEOCODER_KEEP_DISPLAY_NAME", "1").strip() not in {"0", "false", "no"}
+
 
 def geocode_country_cities(df: pd.DataFrame, country: str, config: GeocodeConfig = GeocodeConfig()):
     """Return list of (city, lat, lon) for all cities in a country, using a persistent CSV cache.
 
     - cache-first: never hits network if we already have lat/lon
     - avoids FutureWarning: no pd.concat for appends
-    - fewer failures: timeout + retries with exponential backoff
-    - can use LocationIQ (recommended for Colab) or Nominatim fallback
+    - robust: retries + exponential backoff + polite min delay
+    - LocationIQ uses pure requests (no geopy dependency)
     """
-    from geopy.extra.rate_limiter import RateLimiter
+    import requests
 
     cache_path = Path(config.cache_csv)
     cache_path.parent.mkdir(parents=True, exist_ok=True)
@@ -69,46 +74,6 @@ def geocode_country_cities(df: pd.DataFrame, country: str, config: GeocodeConfig
 
     def _norm(x) -> str:
         return str(x).strip().lower()
-
-    # ----------------------------
-    # Geocoder selection
-    # ----------------------------
-    provider = (config.provider or "locationiq").lower()
-
-    if provider == "locationiq":
-        from geopy.geocoders import LocationIQ
-
-        if not config.locationiq_api_key:
-            raise RuntimeError(
-                "IAEA_GEOCODER_PROVIDER=locationiq but LOCATIONIQ_API_KEY is not set."
-            )
-
-        geolocator = LocationIQ(
-            api_key=config.locationiq_api_key,
-            domain=config.locationiq_domain,
-            timeout=config.timeout_seconds,
-        )
-        geocode_func = geolocator.geocode
-
-    elif provider == "nominatim":
-        from geopy.geocoders import Nominatim
-
-        geolocator = Nominatim(
-            user_agent=config.user_agent,
-            timeout=config.timeout_seconds,
-        )
-        geocode_func = geolocator.geocode
-
-    else:
-        raise ValueError(f"Unknown geocoder provider: {provider}")
-
-    # RateLimiter: adds sleep between calls and swallows geopy exceptions
-    geocode = RateLimiter(
-        geocode_func,
-        min_delay_seconds=config.min_delay_seconds,
-        swallow_exceptions=True,
-        return_value_on_exception=None,
-    )
 
     def _append_cache_row(row: dict):
         """Append one row without pandas concat (avoids FutureWarning)."""
@@ -142,16 +107,107 @@ def geocode_country_cities(df: pd.DataFrame, country: str, config: GeocodeConfig
 
         return None, None
 
-    def _geocode_with_retries(query: str):
-        """Geocode with retries + exponential backoff."""
+    # ----------------------------
+    # Provider: LocationIQ via requests
+    # ----------------------------
+    last_call_ts = 0.0
+
+    def _rate_limit_sleep():
+        nonlocal last_call_ts
+        now = time.time()
+        elapsed = now - last_call_ts
+        if elapsed < config.min_delay_seconds:
+            time.sleep(config.min_delay_seconds - elapsed)
+        last_call_ts = time.time()
+
+    def _locationiq_geocode(query: str) -> Optional[Tuple[float, float, Optional[str]]]:
+        """Return (lat, lon, display_name) or None."""
+        if not config.locationiq_api_key:
+            raise RuntimeError("LOCATIONIQ_API_KEY is not set but provider=locationiq")
+
+        base = f"https://{config.locationiq_domain}/v1/search"
+        params = {
+            "key": config.locationiq_api_key,
+            "q": query,
+            "format": "json",
+            "limit": 1,
+        }
+
+        # Retries w/ backoff for transient issues + 429
         for attempt in range(config.max_retries + 1):
-            # For LocationIQ and Nominatim, these kwargs are safe
-            loc = geocode(query)
-            if loc is not None:
-                return loc
+            _rate_limit_sleep()
+            try:
+                r = requests.get(base, params=params, timeout=config.timeout_seconds)
+                # Handle rate limit explicitly
+                if r.status_code == 429:
+                    retry_after = r.headers.get("Retry-After")
+                    if retry_after:
+                        try:
+                            time.sleep(float(retry_after))
+                        except Exception:
+                            pass
+                    # then backoff
+                    if attempt < config.max_retries:
+                        time.sleep(config.backoff_base_seconds * (2**attempt))
+                        continue
+                    return None
+
+                if r.status_code >= 400:
+                    # Other errors: backoff and retry
+                    if attempt < config.max_retries:
+                        time.sleep(config.backoff_base_seconds * (2**attempt))
+                        continue
+                    return None
+
+                data = r.json()
+                if not data:
+                    return None
+
+                item = data[0]
+                lat = float(item["lat"])
+                lon = float(item["lon"])
+                display_name = item.get("display_name") if config.keep_display_name else None
+                return lat, lon, display_name
+
+            except Exception:
+                if attempt < config.max_retries:
+                    time.sleep(config.backoff_base_seconds * (2**attempt))
+                    continue
+                return None
+
+        return None
+
+    # ----------------------------
+    # Optional provider: Nominatim via geopy (only if you explicitly choose it)
+    # ----------------------------
+    def _nominatim_geocode(query: str):
+        # Only import geopy if you really use it
+        from geopy.geocoders import Nominatim
+
+        geolocator = Nominatim(user_agent=config.user_agent, timeout=config.timeout_seconds)
+        for attempt in range(config.max_retries + 1):
+            try:
+                _rate_limit_sleep()
+                loc = geolocator.geocode(query)
+                if loc is not None:
+                    return float(loc.latitude), float(loc.longitude), getattr(loc, "address", None)
+            except Exception:
+                pass
             if attempt < config.max_retries:
                 time.sleep(config.backoff_base_seconds * (2**attempt))
         return None
+
+    # ----------------------------
+    # Unified geocode wrapper
+    # ----------------------------
+    provider = (config.provider or "locationiq").lower()
+
+    def _geocode(query: str):
+        if provider == "locationiq":
+            return _locationiq_geocode(query)
+        if provider == "nominatim":
+            return _nominatim_geocode(query)
+        raise ValueError(f"Unknown geocoder provider: {provider}")
 
     def get_latlon(country_: str, city_: str, country_iso3: Optional[str] = None):
         country_ = str(country_).strip()
@@ -163,19 +219,19 @@ def geocode_country_cities(df: pd.DataFrame, country: str, config: GeocodeConfig
         if lat is not None and lon is not None:
             return lat, lon
 
-        # 2) Queries: keep structured, reduce ambiguity and calls
+        # 2) Queries: structured, reduce ambiguity and calls
         queries = [f"{city_}, {country_}"]
         if country_iso3:
             queries.append(f"{city_}, {country_iso3}")
 
-        loc = None
+        res = None
         for q in queries:
-            loc = _geocode_with_retries(q)
-            if loc is not None:
+            res = _geocode(q)
+            if res is not None:
                 break
 
-        # 3) Cache miss -> store miss too
-        if loc is None:
+        # 3) Cache miss -> store miss too (avoid hammering)
+        if res is None:
             _append_cache_row(
                 {
                     "Country_iso3": country_iso3 or "",
@@ -189,21 +245,7 @@ def geocode_country_cities(df: pd.DataFrame, country: str, config: GeocodeConfig
             return None, None
 
         # 4) Cache hit -> store coordinates
-        lat = getattr(loc, "latitude", None)
-        lon = getattr(loc, "longitude", None)
-        display_name = getattr(loc, "address", None)
-
-        # In case provider returns raw center (rare with geopy, but safe)
-        if (lat is None or lon is None) and hasattr(loc, "raw") and isinstance(loc.raw, dict):
-            # LocationIQ typically provides lat/lon as strings in raw
-            if "lat" in loc.raw and "lon" in loc.raw:
-                try:
-                    lat = float(loc.raw["lat"])
-                    lon = float(loc.raw["lon"])
-                except Exception:
-                    pass
-            display_name = display_name or loc.raw.get("display_name")
-
+        lat, lon, display_name = res
         _append_cache_row(
             {
                 "Country_iso3": country_iso3 or "",
