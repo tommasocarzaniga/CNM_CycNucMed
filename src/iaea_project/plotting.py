@@ -11,38 +11,47 @@ import pandas as pd
 from .utils import CACHE_DIR, FIGURES_DIR
 
 
+# =========================
+# Geocoding (LocationIQ + cache)
+# =========================
 @dataclass(frozen=True)
 class GeocodeConfig:
     cache_csv: Path = CACHE_DIR / "geocode_cache.csv"
-    # Nominatim requires a valid, descriptive UA. Ideally include a contact email.
-    # You can override via env var IAEA_GEOCODER_UA.
-    user_agent: str = os.getenv("IAEA_GEOCODER_UA", "CNM_CycNucMed/1.0 (contact: your_email@example.com)")
-    # geopy RateLimiter delay between calls (polite usage)
-    min_delay_seconds: float = float(os.getenv("IAEA_GEOCODER_MIN_DELAY", "1.0"))
-    # network timeout for each request (your main fix vs read timeout=1)
-    timeout_seconds: int = int(os.getenv("IAEA_GEOCODER_TIMEOUT", "10"))
-    # additional retries (with exponential backoff) for transient timeouts
+
+    # Provider selection
+    # Set IAEA_GEOCODER_PROVIDER=locationiq (default) or nominatim
+    provider: str = os.getenv("IAEA_GEOCODER_PROVIDER", "locationiq").lower()
+
+    # LocationIQ
+    locationiq_api_key: str = os.getenv("LOCATIONIQ_API_KEY", "")
+    locationiq_domain: str = os.getenv("LOCATIONIQ_DOMAIN", "api.locationiq.com")
+
+    # Nominatim requires a descriptive UA (only used if provider="nominatim")
+    user_agent: str = os.getenv(
+        "IAEA_GEOCODER_UA",
+        "CNM_CycNucMed/1.0 (contact: your_email@example.com)"
+    )
+
+    # pacing / networking
+    min_delay_seconds: float = float(os.getenv("IAEA_GEOCODER_MIN_DELAY", "0.2"))
+    timeout_seconds: int = int(os.getenv("IAEA_GEOCODER_TIMEOUT", "15"))
     max_retries: int = int(os.getenv("IAEA_GEOCODER_RETRIES", "2"))
-    # backoff base seconds (1, 2, 4, ...)
     backoff_base_seconds: float = float(os.getenv("IAEA_GEOCODER_BACKOFF_BASE", "1.0"))
 
 
 def geocode_country_cities(df: pd.DataFrame, country: str, config: GeocodeConfig = GeocodeConfig()):
     """Return list of (city, lat, lon) for all cities in a country, using a persistent CSV cache.
 
-    Improvements:
-      - cache-first: never hits network if we already have lat/lon
-      - no pd.concat warnings: uses .loc append
-      - fewer timeouts: increases timeout + retries with backoff
-      - polite usage: RateLimiter + UA
+    - cache-first: never hits network if we already have lat/lon
+    - avoids FutureWarning: no pd.concat for appends
+    - fewer failures: timeout + retries with exponential backoff
+    - can use LocationIQ (recommended for Colab) or Nominatim fallback
     """
-    from geopy.geocoders import Nominatim
     from geopy.extra.rate_limiter import RateLimiter
 
     cache_path = Path(config.cache_csv)
     cache_path.parent.mkdir(parents=True, exist_ok=True)
 
-    # Load cache or initialize with stable dtypes/columns
     cols = ["Country_iso3", "Country", "City", "lat", "lon", "display_name"]
     if cache_path.exists():
         geo_cache = pd.read_csv(cache_path)
@@ -54,19 +63,48 @@ def geocode_country_cities(df: pd.DataFrame, country: str, config: GeocodeConfig
         if c not in geo_cache.columns:
             geo_cache[c] = pd.Series(dtype="object")
 
-    # Normalize types (avoid future dtype weirdness)
+    # Normalize types
     for c in ["Country_iso3", "Country", "City", "display_name"]:
         geo_cache[c] = geo_cache[c].astype("string")
 
     def _norm(x) -> str:
         return str(x).strip().lower()
 
-    # Nominatim geocoder with a reasonable timeout
-    geolocator = Nominatim(user_agent=config.user_agent, timeout=config.timeout_seconds)
+    # ----------------------------
+    # Geocoder selection
+    # ----------------------------
+    provider = (config.provider or "locationiq").lower()
+
+    if provider == "locationiq":
+        from geopy.geocoders import LocationIQ
+
+        if not config.locationiq_api_key:
+            raise RuntimeError(
+                "IAEA_GEOCODER_PROVIDER=locationiq but LOCATIONIQ_API_KEY is not set."
+            )
+
+        geolocator = LocationIQ(
+            api_key=config.locationiq_api_key,
+            domain=config.locationiq_domain,
+            timeout=config.timeout_seconds,
+        )
+        geocode_func = geolocator.geocode
+
+    elif provider == "nominatim":
+        from geopy.geocoders import Nominatim
+
+        geolocator = Nominatim(
+            user_agent=config.user_agent,
+            timeout=config.timeout_seconds,
+        )
+        geocode_func = geolocator.geocode
+
+    else:
+        raise ValueError(f"Unknown geocoder provider: {provider}")
 
     # RateLimiter: adds sleep between calls and swallows geopy exceptions
     geocode = RateLimiter(
-        geolocator.geocode,
+        geocode_func,
         min_delay_seconds=config.min_delay_seconds,
         swallow_exceptions=True,
         return_value_on_exception=None,
@@ -105,15 +143,14 @@ def geocode_country_cities(df: pd.DataFrame, country: str, config: GeocodeConfig
         return None, None
 
     def _geocode_with_retries(query: str):
-        """Geocode with retries + exponential backoff (helps Colab + Nominatim)."""
-        # First try immediately; then backoff
+        """Geocode with retries + exponential backoff."""
         for attempt in range(config.max_retries + 1):
+            # For LocationIQ and Nominatim, these kwargs are safe
             loc = geocode(query)
             if loc is not None:
                 return loc
             if attempt < config.max_retries:
-                sleep_s = config.backoff_base_seconds * (2**attempt)
-                time.sleep(sleep_s)
+                time.sleep(config.backoff_base_seconds * (2**attempt))
         return None
 
     def get_latlon(country_: str, city_: str, country_iso3: Optional[str] = None):
@@ -126,12 +163,10 @@ def geocode_country_cities(df: pd.DataFrame, country: str, config: GeocodeConfig
         if lat is not None and lon is not None:
             return lat, lon
 
-        # 2) Structured queries: prefer city+country
+        # 2) Queries: keep structured, reduce ambiguity and calls
         queries = [f"{city_}, {country_}"]
         if country_iso3:
             queries.append(f"{city_}, {country_iso3}")
-        # last resort: city only (can be ambiguous; kept for compatibility)
-        queries.append(city_)
 
         loc = None
         for q in queries:
@@ -139,7 +174,7 @@ def geocode_country_cities(df: pd.DataFrame, country: str, config: GeocodeConfig
             if loc is not None:
                 break
 
-        # 3) Cache miss -> store miss too (so we don't keep hammering)
+        # 3) Cache miss -> store miss too
         if loc is None:
             _append_cache_row(
                 {
@@ -154,8 +189,20 @@ def geocode_country_cities(df: pd.DataFrame, country: str, config: GeocodeConfig
             return None, None
 
         # 4) Cache hit -> store coordinates
-        lat, lon = loc.latitude, loc.longitude
+        lat = getattr(loc, "latitude", None)
+        lon = getattr(loc, "longitude", None)
         display_name = getattr(loc, "address", None)
+
+        # In case provider returns raw center (rare with geopy, but safe)
+        if (lat is None or lon is None) and hasattr(loc, "raw") and isinstance(loc.raw, dict):
+            # LocationIQ typically provides lat/lon as strings in raw
+            if "lat" in loc.raw and "lon" in loc.raw:
+                try:
+                    lat = float(loc.raw["lat"])
+                    lon = float(loc.raw["lon"])
+                except Exception:
+                    pass
+            display_name = display_name or loc.raw.get("display_name")
 
         _append_cache_row(
             {
@@ -186,6 +233,9 @@ def geocode_country_cities(df: pd.DataFrame, country: str, config: GeocodeConfig
     return pts
 
 
+# =========================
+# Plotting map (unchanged)
+# =========================
 def save_country_map(df: pd.DataFrame, country: str, out_path: Optional[Path] = None) -> Optional[Path]:
     """Create a country map with city points and (optional) population density raster.
 
