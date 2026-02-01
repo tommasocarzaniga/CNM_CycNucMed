@@ -1,4 +1,4 @@
-Country,City,Institute,Manufacturer,Model,Energy
+Country,City,Facility,Manufacturer,Model,Energy
 Algeria,Alger,,IBA,CYCLONE KIUBE,18
 Algeria,Constantine,,IBA,CYCLONE KIUBE,18
 Algeria,Tizi Ouzou,Centre d'imagerie médicale MAHMOUDI,GE,PETtrace,16
@@ -1263,3 +1263,4 @@ Vietnam,Hanoi,,IBA,CYCLONE 30,30
 Vietnam,Ho Chi Minh City,,IBA,CYCLONE 10,10
 Vietnam,Ho Chi Minh City,,Siemens,ECLIPSE,11
 Vietnam,,,IBA,CYCLONE 18,18
+
