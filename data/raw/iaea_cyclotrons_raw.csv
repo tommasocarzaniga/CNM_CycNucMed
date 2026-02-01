@@ -1,0 +1,1265 @@
+Country,City,Institute,Manufacturer,Model,Energy
+Algeria,Alger,,IBA,CYCLONE KIUBE,18
+Algeria,Constantine,,IBA,CYCLONE KIUBE,18
+Algeria,Tizi Ouzou,Centre d'imagerie médicale MAHMOUDI,GE,PETtrace,16
+Argentina,Buenos Aires,Fleni,GE,PETtrace,16
+Argentina,Buenos Aires,,Siemens,ECLIPSE,11
+Argentina,Buenos Aires,Comisión Nacional de Energía Atómica (CNEA),TCC,CP-42,42
+Argentina,Cordoba,,IBA,CYCLONE KIUBE,18
+Argentina,Mendoza,,Siemens,RDS112,11
+Argentina,Rio Gallegos,,IBA,CYCLONE 11,11
+Argentina,Rio Negro,,IBA,CYCLONE 18,18
+Argentina,"Santa Rosa, La Pampa",,IBA,CYCLONE 11,11
+Argentina,Vte. Lopez - BS. As.,,IBA,CYCLONE 18,18
+Armenia,Yerevan,,IBA,CYCLONE 18,18
+Australia,Adelaide,SAHMRI,GE,PETtrace,16
+Australia,Brisbane,Diversified Pharmacy,GE,MiniTrace,10
+Australia,Brisbane,Royal Brisbane Hospital,GE,PETtrace,16
+Australia,Bundoora,Fujian Provincal Hospital,GE,MiniTrace,10
+Australia,Bundoora,Cyclotek Pty Ltd,GE,PETtrace,16
+Australia,Camperdown,Royal Prince Alfred Hospital,GE,PETtrace,16
+Australia,Camperdown (Sydney),,IBA,CYCLONE 18,18
+Australia,Heidelberg Heights VIC,,IBA,CYCLONE 10,10
+Australia,Heidelberg Heights VIC,,IBA,CYCLONE 18,18
+Australia,Melbourne,VCCC,GE,PETtrace,16
+Australia,Melbourne,VICTORIAN COMPREHENSIVE CANCER CENTRE (VCCC),GE,PETtrace,16
+Australia,Perth,,IBA,CYCLONE 18,18
+Australia,St. Lucia QLD 4072,,IBA,CYCLONE 18,18
+Australia,Sydney,CYCLOPET PTY LTD,GE,PETtrace,16
+Australia,Sydney,Liverpool Hospital,GE,PETtrace,16
+Australia,Sydney,,IBA,CYCLONE 30,30
+Australia,Sydney,,Siemens,ECLIPSE,11
+Australia,Sydney,,Siemens,ECLIPSE,11
+Australia,Woolloongabba,Princess Alexandra Hospital,GE,PETtrace,16
+Austria,Klagenfurt,Argos Zyklotron Klagenfurt,GE,PETtrace,16
+Austria,Linz,Argos Zyklotron Linz,GE,PETtrace,16
+Austria,Seibersdorf,Seibersdorf Laboratories,GE,PETtrace,16
+Austria,Wien,AKH Wien,GE,PETtrace,16
+Austria,Wien,AKH Wien,GE,PETtrace,16
+Azerbaijan,Baku,,IBA,CYCLONE 18,18
+Bahrain,Manama,King Hamad Univ. Hospital,GE,PETtrace,16
+Bangladesh,Dhaka,Masihe Daneshavari Hospital,GE,MiniTrace,10
+Bangladesh,Dhaka,,IBA,CYCLONE 18,18
+Belarus,,,IBA,CYCLONE 18,18
+Belgium,Antwerp,,Siemens,ECLIPSE,11
+Belgium,Brussel,,IBA,CYCLONE KIUBE,18
+Belgium,Bruxelles,,IBA,CYCLONE 18,18
+Belgium,Bruxelles,,IBA,CYCLONE 30,30
+Belgium,Fleurus,,IBA,CYCLONE 14,14
+Belgium,Fleurus,,IBA,CYCLONE 30,30
+Belgium,Gent,,IBA,CYCLONE 18,18
+Belgium,Leuven,,IBA,CYCLONE 18,18
+Belgium,Liège,,IBA,CYCLONE 18,18
+Belgium,Liège,,IBA,CYCLONE KIUBE,18
+Belgium,Ottignies-Louvain-la-Neuve,,IBA,CYCLONE 30,30
+Belgium,Seneffe,,IBA,CYCLONE 14,14
+Belgium,Seneffe,,IBA,CYCLONE 14,14
+Bolivia,La Paz,,ABT,BG-75,7.5
+Brazil,Belo Horizonte,CDTN ( Centro de Desenvolvimento da Tecnologia Nuclear ),GE,PETtrace,16
+Brazil,Brasilia,,Siemens,ECLIPSE,11
+Brazil,Curitiba,Cyclopet Radiofarmacos LTDA,GE,PETtrace,16
+Brazil,Porto Alegre,Pntificia Universade Catolica - Incer Instituto Do Cerebro,GE,PETtrace,16
+Brazil,Porto Alegre,,IBA,CYCLONE 18,18
+Brazil,Recife,,IBA,CYCLONE 18,18
+Brazil,Rio de Janeiro,,Siemens,ECLIPSE,11
+Brazil,Salvador,Clinica Delfin Gonzalez Miranda,GE,PETtrace,16
+Brazil,Sao Paolo,Hospital das Clinicas,GE,PETtrace,16
+Brazil,Sao Paolo,,IBA,CYCLONE 30,30
+Brazil,Sao Paolo,,IBA,CYCLONE 18,18
+Brazil,Sao Paolo,,Siemens,ECLIPSE,11
+Brazil,Sao Paolo,Instituto de Pesquisas Energéticas e Nucleares - IPEN/CNEN-SP,TCC,CV-28,28
+Brazil,Votuporanga,IBF,GE,PETtrace,16
+Brunei Darussalam,Brunei Darussalam,,IBA,CYCLONE 18,18
+Bulgaria,Sofia,,ABT,BG-75,7.5
+Bulgaria,Sofia,The Institute for Nuclear Research and Nuclear Energy (INRNE),ACSI,TR-24,24
+Bulgaria,Sofia,,IBA,CYCLONE 18,18
+Bulgaria,Varna,,ABT,BG-75,7.5
+Canada,Alberta,Cross Cancer Institute / Alberta Health Services,ACSI,TR-19/9,19
+Canada,"Edmonton, AB",University of Alberta,ACSI,TR-24,24
+Canada,Halifax,Victoria General Hospital,GE,PETtrace,16
+Canada,"Hamilton, ON",MCMASTER UNIV; Lawson Health Research Institute,GE,PETtrace,16
+Canada,"Hamilton, ON",,Siemens,RDS112,11
+Canada,London,Lawson Health Research Institute,GE,PETtrace,16
+Canada,Mississauga ON,,Siemens,ECLIPSE,11
+Canada,Montreal,Pharmalogic 5,GE,PETtrace,16
+Canada,Montreal,,IBA,CYCLONE 18,18
+Canada,Montréal,,IBA,CYCLONE 18,18
+Canada,Mount Pearl,,IBA,CYCLONE 18,18
+Canada,Ottawa,,Siemens,ECLIPSE,11
+Canada,"Saskatoon, SK",University of Saskatchewan,ACSI,TR-24,24
+Canada,Sherbrooke (Québec),Centre Hospitalier Universitaire de Sherbrooke,ACSI,TR-24,24
+Canada,"Sherbrooke, Quebec",Centre Hospitalier Universitaire de Sherbrooke,ACSI,TR-19,19
+Canada,"Thunder Bay, ON",Thunder Bay Regional Health Sciences Centre,ACSI,TR-24,24
+Canada,"Toronto, ON",Toronto General Hospital UHN,GE,PETtrace,16
+Canada,"Toronto, ON",,IBA,CYCLONE 18,18
+Canada,"Toronto, ON",,IBA,CYCLONE 18,18
+Canada,"Vancouver, BC",TRIUMF,ACSI,TR-13,13
+Canada,"Vancouver, BC",BC Cancer Agency,ACSI,TR-19,19
+Canada,"Vancouver, BC",TRIUMF,ACSI,TR-24,24
+Canada,"Vancouver, BC",Nordion (TRIUMF),ACSI,TR-30,30
+Canada,"Vancouver, BC",Nordion (TRIUMF),ACSI,TR-30,30
+Canada,"Vancouver, BC",Nordion Inc.,TCC,CP-42,42
+Canada,"Vancouver, BC",,TRIUMF,700 MeV,700
+Chile,Santiago,,IBA,CYCLONE 18,18
+Chile,Santiago,,IBA,CYCLONE 18,18
+China,Beijing,,IBA,CYCLONE 30,30
+China,Beijing,,IBA,CYCLONE 11,11
+China,Beijing,,IBA,CYCLONE 18,18
+China,Beijing,,Siemens,ECLIPSE,11
+China,Beijing,,Siemens,ECLIPSE,11
+China,Beijing,,Siemens,ECLIPSE,11
+China,Beijing,,Siemens,ECLIPSE,11
+China,Beijing,,Sumitomo,HM-10,10
+China,Beijing,,Sumitomo,HM-20,20
+China,Beijing,,Sumitomo,HM-12,12
+China,Beijing,,Sumitomo,HM-20,20
+China,Beijing,Institute of Applied Chemistry,TCC,CS-22,22
+China,Beijing,Institute of Applied Chemistry,TCC,CS-30,30
+China,Beijing,,NIIEFA,U-120,
+China,Boshan,ZIBO WANJIE ADVANCED MEDICALCOLLEGE,GE,PETtrace,16
+China,Chanchun,GUANGXI MEDICAL UNIVERSITY AFFILIATED TUMOUR HOSPITAL,GE,MiniTrace,10
+China,Changchun,XINJIANG MEDICAL UNIVERSITY AFFIILIATED NO.1 HOSPITAL,GE,MiniTrace,10
+China,Changchun,,Sumitomo,HM-10,10
+China,Changsha,HeNan LuoHe Central hospital,GE,MiniTrace,10
+China,Changsha,,IBA,CYCLONE KIUBE,18
+China,Chengdu,CMU CLINICAL HP SHENYANG,GE,MiniTrace,10
+China,Chengdu,,Siemens,ECLIPSE,11
+China,Chengdu,,Sumitomo,HM-10,10
+China,Chengdu,,Sumitomo,HM-10,10
+China,Chenzhou,,Sumitomo,HM-10,10
+China,Chongqing,x,GE,PETtrace,16
+China,Chongqing,,Siemens,ECLIPSE,11
+China,Chongqing,,Sumitomo,HM-10,10
+China,Dalian,,Sumitomo,HM-10,10
+China,DAQING,,Siemens,ECLIPSE,11
+China,Dongyang,Diversified Pharmacy,GE,MiniTrace,10
+China,Fuyang,,Sumitomo,HM-10,10
+China,Fuzhou,SHANDONG YANTAI YUHUANGDING HOSPITAL,GE,MiniTrace,10
+China,Fuzhou,Fuzhou PLA hospital,GE,PETtrace,16
+China,Fuzhou,,Siemens,ECLIPSE,11
+China,Fuzhou,,Sumitomo,HM-10,10
+China,Ganzhou,,Sumitomo,HM-10,10
+China,Guang Zhou,,IBA,CYCLONE 10,10
+China,Guangdong,,Siemens,ECLIPSE,11
+China,Guangxi,,Siemens,ECLIPSE,11
+China,Guangxi,,Sumitomo,HM-10,10
+China,Guangzhou,HUNAN TUMOR HP CHANG SHA,GE,MiniTrace,10
+China,Guangzhou,Nanfang hospital,GE,PETtrace,16
+China,Guangzhou,HTA CO LTD,GE,PETtrace,16
+China,Guangzhou,x,GE,PETtrace,16
+China,Guangzhou,,IBA,CYCLONE 11,11
+China,Guangzhou,,IBA,CYCLONE 18,18
+China,Guangzhou,,IBA,CYCLONE 18,18
+China,Guangzhou,,Siemens,ECLIPSE,11
+China,Guangzhou,,Siemens,ECLIPSE,11
+China,Guangzhou,,Siemens,ECLIPSE,11
+China,Guilin,,IBA,CYCLONE 18,18
+China,Guiyang,,Sumitomo,HM-10,10
+China,Haebin,Heilongjiang M.U.No.4 Hospital,GE,PETtrace,16
+China,Haerbin,ZHEJIANG HENGDIAN GROUP HOSPITAL,GE,MiniTrace,10
+China,Haerbin,SICHUAN PEOPLE HP CHENGDU,GE,MiniTrace,10
+China,Haikou,,Sumitomo,HM-10,10
+China,Hangzhou,,Sumitomo,HM-12,12
+China,Harbin,,Sumitomo,HM-12,12
+China,Hefei,,IBA,CYCLONE 11,11
+China,Hengdian,,IBA,CYCLONE 18,18
+China,Hengyang,,IBA,CYCLONE 18,18
+China,Hong Kong,"RNP Gamma Plus, Denver L.L.C.",GE,MiniTrace,10
+China,Hong Kong,,Siemens,ECLIPSE,11
+China,Hong Kong,,Sumitomo,HM-12,12
+China,Hong Kong,,Sumitomo,HM-12,12
+China,Hong Kong,,Sumitomo,HM-10,10
+China,Huhhot,"A.O. Brotzu, Centro PET",GE,MiniTrace,10
+China,Ji Ning,"Universitätsklinikum Rostock AöR, Klinik und Poliklinik für Nuklearmedizin",GE,MiniTrace,10
+China,Jiamusi City,First Affiliated Hospital of Kunming Medical University,GE,MiniTrace,10
+China,Jilin,,Sumitomo,HM-12,12
+China,Jinan,TIANJING MEDICAL COLLEGE AFFILIATED NO.1 HOSPITAL,GE,MiniTrace,10
+China,Jinan,Southern Xray,GE,MiniTrace,10
+China,Jincheng,,Siemens,ECLIPSE,11
+China,Jinhua,,Sumitomo,HM-12,12
+China,Jixi Jikuang,x,GE,MiniTrace,10
+China,Kunming,AZIENDA OSPEDALIERA UNIVERSITARIA FEDERICO II,GE,MiniTrace,10
+China,Kunming,Landspitali,GE,MiniTrace,10
+China,Kunming,,Sumitomo,HM-10,10
+China,Lanshgou,,NIIEFA,U-150,
+China,Lanzhou,UNITED HOSPITAL LTD,GE,MiniTrace,10
+China,Lanzhou,ZHEJIANG WENZHOU MEDCIAL AFFLIATED NO.1 HOSPITAL,GE,MiniTrace,10
+China,Lanzhou,,Sumitomo,HM-12,12
+China,Lhasa,SD NANSHAN TUM,GE,MiniTrace,10
+China,Liaocheng,,Sumitomo,HM-10,10
+China,Liuzhou,,Sumitomo,HM-10,10
+China,Longkou,x,GE,MiniTrace,10
+China,LuoHe,HOSPITAL INFANTA CRISTINA SERVISION DE MEDICINA NUCLEAR,GE,MiniTrace,10
+China,Nanchang City,,IBA,CYCLONE KIUBE,18
+China,Nanjing,Isotop Talent /P.L.A. General Hospital,ACSI,TR-19,19
+China,NanJing,JiangSu province people hospital,GE,PETtrace,16
+China,Nanning,XINJIANG AUTONOMOUS REGION HOSPITAL,GE,MiniTrace,10
+China,Ningbo,,Sumitomo,HM-10,10
+China,Qingdao,,Sumitomo,HM-10,10
+China,Sanya,,Sumitomo,HM-10,10
+China,Shandong,x,GE,MiniTrace,10
+China,Shandong,,Siemens,ECLIPSE,11
+China,Shandong,,Siemens,ECLIPSE,11
+China,Shanghai,,IBA,CYCLONE 30,30
+China,Shanghai,,IBA,CYCLONE 18,18
+China,Shanghai,,Siemens,ECLIPSE,11
+China,Shanghai,,Siemens,ECLIPSE,11
+China,Shanghai,,Siemens,ECLIPSE,11
+China,Shanghai,,Siemens,ECLIPSE,11
+China,Shanghai,,Sumitomo,HM-10,10
+China,Shanghai,,Sumitomo,HM-10,10
+China,Shanghai,,Sumitomo,HM-10,10
+China,Shanghai,,Sumitomo,HM-7,7
+China,Shanghai,SHANGHAI RUIJIN HOSPITAL,GE,PETtrace,16
+China,Shanghai,"SHANGHAI YUANZI KEXING PHARMACEUTICAL CO., LTD.",GE,PETtrace,16
+China,Shanxi Hanzhong,x,GE,MiniTrace,10
+China,Shengjing,x,GE,PETtrace,16
+China,Shenyang,TianJin Tumor hospital,GE,MiniTrace,10
+China,Shenyang,FEDERAL PROTON THERAPY CENTRE,GE,MiniTrace,10
+China,Shenyang,,Siemens,ECLIPSE,11
+China,Shenzhen,Shenzhen Longzhu Hospital,GE,PETtrace,16
+China,Shijiazhuang,,Sumitomo,HM-12,12
+China,Shiyan,,Sumitomo,HM-10,10
+China,Sichuan,,Siemens,ECLIPSE,11
+China,Taipei,Molypharma S.A. / Clinica Lopez Ibor,GE,MiniTrace,10
+China,TaiYuan,GUANGZHOU CHINESE MEDICAL UNIVERSITY NO.1 AFFILIATED HOSPITAL,GE,MiniTrace,10
+China,TAIYUAN,INSTITUTUL REGIONAL DE ONCOLOGIE IASI,GE,MiniTrace,10
+China,Taiyuan,,Sumitomo,HM-10,10
+China,Tianjin,Shandong tumor hospital,GE,MiniTrace,10
+China,TianJin,JILIN CHANGCHUN CENTER HP,GE,MiniTrace,10
+China,Ürümqi,Xinjiang Maifei TZ CO.,GE,PETtrace,16
+China,Urumuqi City,SHANXI TAIYUAN STEEL CO.LTD STAFF HOSPITAL,GE,MiniTrace,10
+China,Wen Zhou,ZHONGNAN UNIVERSITY XIANGYA MEDICAL COLLEGE AFFILIATED NO.1 H,GE,MiniTrace,10
+China,Wuhan,PET center of Union hospital of Huazhong S&T University,GE,MiniTrace,10
+China,Wuhan,SHENG TUMOR HP HAERBIN,GE,MiniTrace,10
+China,Wuhan,Jiamusi Tumor Hospital,GE,MiniTrace,10
+China,Wuhan,,Sumitomo,HM-10,10
+China,Wuhan,,Sumitomo,HM-10,10
+China,Wuxi,,Sumitomo,HM-7,7
+China,Wuxi,,Sumitomo,HM-10,10
+China,x,Diagnostisch Therapeutisches Zentrum Radiochemie am Frankfurter Tor,GE,MiniTrace,10
+China,x,WUHAN BEISIKE BIOLOGY TECHNOLOGY DEVELOPMENT CO.`L,GE,MiniTrace,10
+China,x,x,GE,MiniTrace,10
+China,x,x,GE,MiniTrace,10
+China,x,x,GE,MiniTrace,10
+China,x,x,GE,MiniTrace,10
+China,Xamen,,IBA,CYCLONE 18,18
+China,Xamen,,Siemens,ECLIPSE,11
+China,Xian,Tangdu Hospital FMMU,ACSI,TR-14 FX,14
+China,Xian,Mecure Healthcare Ltd,GE,MiniTrace,10
+China,Xian,,IBA,CYCLONE 18,18
+China,Xi'an,HOP DU MONT LIBAN,GE,MiniTrace,10
+China,Xin Jiang,Henan People Hospital,GE,MiniTrace,10
+China,Yantai,Iason S.R.L.,GE,MiniTrace,10
+China,Yichang,,Sumitomo,HM-10,10
+China,Yinchuan,,Sumitomo,HM-10,10
+China,Yulin,,Sumitomo,HM-10,10
+China,Zhanjiang,,Sumitomo,HM-10,10
+China,Zhengzhou,Liaoning Province Tumor Hospital,GE,MiniTrace,10
+China,Zhengzhou,,Sumitomo,HM-20,20
+China,Zhongnan,SHANDONG JINING MEDICAL COLLEGE AFFLIATED HOSPITAL,GE,MiniTrace,10
+China,Zhongshan,,Siemens,ECLIPSE,11
+China,Zuzhou,x,GE,PETtrace,16
+China,,XUZHOU ATOM HIGH TECHNOLOGY MEDICAL CO. LTD.,GE,PETtrace,16
+China,,,IBA,CYCLONE 18,18
+Colombia,Barranquilla,,ABT,BG-75,7.5
+Colombia,Bogotá,CLINICORP,GE,PETtrace,16
+Colombia,Bogotá,,Siemens,ECLIPSE,11
+Colombia,Cali,,ABT,BG-75,7.5
+Colombia,Medellin,,Siemens,ECLIPSE,11
+Colombia,Bogotá,NMG MED1 Coll. Affi Hospital,GE,MiniTrace,10
+Croatia/Hrvatska,Zagreb,,IBA,CYCLONE 18,18
+Cuba,La Habana,,IBA,CYCLONE 18,18
+Cyprus,Limassol,,ABT,BG-75,7.5
+Czech Republic,Brno,,IBA,CYCLONE 18,18
+Czech Republic,Prague,,IBA,CYCLONE 18,18
+Czech Republic,Prague,,NIIEFA,U-120,
+Czech Republic,Psc,,IBA,CYCLONE 18,18
+Czech Republic,Rez,,IBA,CYCLONE 18,18
+Czech Republic,Řež,Nuclear Physics Institute of the Academy of Sciences of the Czech Republic,ACSI,TR-24,24
+Denmark,Aarhus,AARHUS SYGEHUS,GE,PETtrace,16
+Denmark,AArhus,x,GE,PETtrace,16
+Denmark,Aarhus N,,IBA,CYCLONE 18,18
+Denmark,Copenhagen,University Hospital of Copenhagen,Scanditronix,MC 32NI,
+Denmark,Copenhagen,,Siemens,ECLIPSE,11
+Denmark,Copenhagen,Bispebjerg Hospital,GE,GENTrace,7.8
+Denmark,Herlev,,IBA,CYCLONE 18,18
+Denmark,Odense,ODENSE UNIVERSITETSHOSPITAL,GE,PETtrace,16
+Denmark,Odense,x,GE,PETtrace,16
+Denmark,Roskilde,FORSKNINGSCENTER RISO,GE,PETtrace,16
+Dominican Republic,"Santo Domingo, Dominican Republic",,IBA,CYCLONE 18,18
+Dubai,Dubai,,Siemens,ECLIPSE,11
+Ecuador,Guayaquil,Solca,GE,PETtrace,16
+Ecuador,Quito,IESS,GE,PETtrace,16
+Egypt,Cairo,ITCS_CHILDREN CANCER INSTITUTE 57357,GE,PETtrace,16
+Egypt,Cairo,ALFA SCAN,GE,PETtrace,16
+Egypt,Cairo,,IBA,CYCLONE 18,18
+Egypt,Cairo,,NIIEFA,MGC-20,
+Egypt,Cairo,,Siemens,ECLIPSE,11
+Finland,Heilsenki,,NIIEFA,MCC-30/15,
+Finland,Helsinki,"DOCRATES FACILITY, MAP",GE,PETtrace,16
+Finland,Juvaskula,,NIIEFA,MCC-30/15,
+Finland,Kuopio,KYS,GE,PETtrace,16
+Finland,Turku,Turku University,ACSI,TR-19,19
+Finland,Turku,,IBA,CYCLONE 3,3
+Finland,Turku,,NIIEFA,MGC-20,
+Finland,Turku,,NIIEFA,CC-18/9,
+Finland,,,IBA,CYCLONE 10,10
+Finland,,,IBA,CYCLONE KIUBE,18
+France,Caen Cedex 5,,IBA,CYCLONE 18,18
+France,Dijon,Cyclopharma Laboratories,GE,PETtrace,16
+France,Fontenay aux Roses Cedex,,IBA,CYCLONE 18,18
+France,Gif sur Yvette Cedex,,IBA,CYCLONE 30,30
+France,Glisy,Laboratoires Cyclopharma Amiens,GE,PETtrace,16
+France,Institut Pluridisciplinaire Hubert Curie,University of Strasbourg/CNRS,ACSI,TR-24,24
+France,Janneyrias,Laboratoires Cyclopharma Lyon,GE,PETtrace,16
+France,Lyon,,IBA,CYCLONE 18,18
+France,Marseille,TECHNOPOLE DE CHATEAU GOMBERT,GE,PETtrace,16
+France,Marseille,Cerimed,GE,PETtrace,16
+France,Marseille,Cerimed,GE,PETtrace,16
+France,Nantes Cedex 3,,IBA,CYCLONE 70,70
+France,Nimes,Cis Bio International,GE,PETtrace,16
+France,Orsay,,IBA,CYCLONE 18,18
+France,Paris,,IBA,CYCLONE 18,18
+France,Paris,,Siemens,ECLIPSE,11
+France,Paris,,Siemens,ECLIPSE,11
+France,Pessac Cedex,Hopital Xavier Arnozan,GE,PETtrace,16
+France,Rennes,IBA RENNES,GE,PETtrace,16
+France,Saint Genis-Pouilly,,IBA,CYCLONE 18,18
+France,Saint-Cloud,Institut Curie's René Huguenin,GE,PETtrace,16
+France,Sainte Clotilde Céde- Reunion,GIP CYROI,GE,PETtrace,16
+France,Sarcelles,"Réseau de Soins Cancérologie Onconord, Positron",GE,PETtrace,16
+France,Sarcelles,,IBA,CYCLONE 18,18
+France,St Genis Pouilly,"Adavance Accelerator Applications, St Genis Pouilly",GE,PETtrace,16
+France,Toulouse,Laboratoires Cyclopharma Toulouse,GE,PETtrace,16
+France,Toulouse Cedex,,IBA,CYCLONE 10,10
+France,Tours,Cyclopharma Laboratories,GE,PETtrace,16
+France,Troyes,Advanced Accelerator Applications,GE,PETtrace,16
+France,Vandœuvre les Nancy,CSBIO Nancy Chu Brabois,GE,PETtrace,16
+Germany,Aachen,,Siemens,ECLIPSE,11
+Germany,Bad Berka,x,GE,PETtrace,16
+Germany,Bad Berka,,Siemens,ECLIPSE,11
+Germany,Bad Oeynhausen,Hertz- und Diabeteszentrum NRW,GE,PETtrace,16
+Germany,Bad Oeynhausen,,IBA,CYCLONE 18,18
+Germany,Berlin,UNIVERSITETSSJUKHUSET I LINKÖPING,GE,MiniTrace,10
+Germany,Berlin,EUROPET BERLIN ZYKLOTRON GMBH,GE,PETtrace,16
+Germany,Berlin,,IBA,CYCLONE 3,3
+Germany,Berlin,,Siemens,RDS112,11
+Germany,Bonn,Umbra Medical AG,GE,PETtrace,16
+Germany,Bonn,,Siemens,RDS112,11
+Germany,Dresden,"Forschungszentrum Dresden-Rossendorf, Institute of Radiopharmacy",ACSI,TR-FLEX,24
+Germany,Dresden,,NIIEFA,U-120,
+Germany,Eggenstein-Leopoldshafen,ZAG Zyklotron AG,ACSI,TR-19/9,19
+Germany,Essen,,IBA,CYCLONE 18,18
+Germany,Essen,Institute for Medical Radiation Physics,TCC,CV 28,28
+Germany,Freiburg,EURO PET GMBH,GE,PETtrace,16
+Germany,Hamburg,Universitätsklinikum Hamburg-Eppendorf,Philips,140/IV,
+Germany,Hannover,Medizinische Hochschule Hannover (MHH),Scanditronix,MC 35,
+Germany,Heidelberg,German Cancer Research Centre (DKFZ),Scanditronix,MC 32NI,
+Germany,Julich,,IBA,CYCLONE 18,18
+Germany,Jülich,FORSCHUNGSZENTRUM JUELICH GMBH,GE,PETtrace,16
+Germany,Jülich,,IBA,CYCLONE 30,30
+Germany,Jülich,,Japan Steel Works,BC 1710,
+Germany,Karlsruhe,ZAG Zyklotron AG,TCC,CP-42,42
+Germany,KIEL,,Siemens,ECLIPSE,11
+Germany,Koln,Max-Planck-Institut fuer Neurologische Forschung,Scanditronix,MC 16,
+Germany,Leipzig,UNIVERSITAET LEIPZIG N.M.,GE,PETtrace,16
+Germany,leipzig,,IBA,CYCLONE 18,18
+Germany,Mainz,SHANXI HANZONG CENTRAL HOSPITAL,GE,MiniTrace,10
+Germany,Muenster,,Siemens,ECLIPSE,11
+Germany,Munich,Klinikum Rechts der Isar AOER,GE,PETtrace,16
+Germany,Munich,Ludwig-Maximilians Universität,GE,PETtrace,16
+Germany,Munich,,Siemens,RDS112,11
+Germany,Nuremberg,,Siemens,ECLIPSE,11
+Germany,Radeberg,"X-Ray & Diagnostic, Ultrasound Consultants Ltd",GE,MiniTrace,10
+Germany,Regensburg,,Siemens,ECLIPSE,11
+Germany,Rossendorf bei Dresden,,IBA,CYCLONE 18,18
+Germany,Rostock,Hong Kong Baptist Hospital,GE,MiniTrace,10
+Germany,Tübingen,Eberhard Karls University of Tübingen,GE,PETtrace,16
+Germany,Ulm,UNI ULM - ESELSBERG,GE,PETtrace,16
+Germany,Ulm,,IBA,CYCLONE 18,18
+Germany,Würzburg,Universitätsklinikum,GE,PETtrace,16
+Greece,Lavrio,BIOKOSMOS S.A.,GE,PETtrace,16
+Hong Kong,Kowloon,SHANXI DA HOSPITAL,GE,MiniTrace,10
+Hong Kong,x,Qingdao Shandong,GE,MiniTrace,10
+Hungary,Budapest,,Siemens,ECLIPSE,11
+Hungary,Debrecen,IMC-DEBRECENI EGYETEM ORVOSI Ä©S,GE,PETtrace,16
+Hungary,Debrecen,,NIIEFA,MGC-20,
+Iceland,Reykjavík,x,GE,MiniTrace,10
+India,Bangalore,FDI Care,ACSI,TR-19,19
+India,Bangalore,HEALTHCARE GLOBAL ADVANCED MEDICAL IMAGING PVT LTD,GE,PETtrace,16
+India,Bangalore,NATIONAL INSTITUTE OF MENTAL HEALTH & NEURO SCIENCES DEEMED,GE,PETtrace,16
+India,Bangalore,,IBA,CYCLONE 18,18
+India,Calcutta,,IBA,CYCLONE 30,30
+India,Calcutta,Variable Energy Cyclotron Centre (VECC),VEC Centre,(Individual design),
+India,Chandigarh,Post Graduate Institute of Medical Education and Research (PGIMER),GE,PETtrace,16
+India,Chandigarh,,Siemens,ECLIPSE,11
+India,Chennai,"Healthcare Global, Dr. Kamakshi Memorial Hospital",GE,PETtrace,16
+India,Delhi,,Siemens,ECLIPSE,11
+India,Haryana,SHREEJI IMAGING&DIAGNOSTIC CENTRE PVT LTD,GE,PETtrace,16
+India,Hyderabad,Basavatarakam Indo-American Cancer Hospital,GE,PETtrace,16
+India,Hyderabad,,Siemens,ECLIPSE,11
+India,Kolkota,,Siemens,ECLIPSE,11
+India,Lucknow,,Sumitomo,HM-18,18
+India,Mumbai,"Radiation Medicine Centre, Tata Memorial Hospital",GE,PETtrace,16
+India,Mumbai,,IBA,CYCLONE 18,18
+India,Navi Mumbai,SHREEJI Navi IMAGING & DIAGNOSTIC CENTRE PVT LTD,GE,PETtrace,16
+India,Navi Mumbai,"Nueclear Healthcare, Thyrocare Technologies Limited",GE,PETtrace,16
+India,Navrangpura,,IBA,CYCLONE KIUBE,18
+India,New Delhi,"Institute of Nuclear Medicine and Aliied Sciences (INMAS), DRDO",GE,PETtrace,16
+India,New Delhi,Delhi State Cancer Institute,GE,PETtrace,16
+India,NEW DELHI,,Siemens,ECLIPSE,11
+India,Waghodia,,IBA,CYCLONE 18,18
+Indonesia,Jakarta,,Siemens,ECLIPSE,11
+Indonesia,Jakarta Selotan,,IBA,CYCLONE 18,18
+Indonesia,Lippo Karawaci Tangerang,,IBA,CYCLONE 18,18
+Iran,Payam,,ABT,BG-75,7.5
+Iran,Teheran,Tumor Hospital,GE,MiniTrace,10
+Iran,Tehran,,ABT,BG-75,7.5
+Iran,Tehran,,Siemens,ECLIPSE,11
+Iran,Tehran,,Siemens,ECLIPSE,11
+Iran,Tehran,,Siemens,ECLIPSE,11
+Iran (Islamic Republic of),Karaj,,IBA,CYCLONE 30,30
+Iran (Islamic Republic of),Tehran,,IBA,CYCLONE KIUBE,18
+Iraq,Baghdad,AL ANDULS HOSPITAL,GE,PETtrace,16
+Iraq,Erbil,,Sumitomo,HM-20,20
+Ireland,Dublin,M2I/BLACKROCK CLINIC,GE,PETtrace,16
+Israel,Ein-Kerem Jerusalem,,IBA,CYCLONE 18,18
+Israel,Ein-Kerem Jerusalem,,IBA,CYCLONE 18,18
+Israel,Petah Tikva,,IBA,CYCLONE 18,18
+Israel,Tel Aviv,ISOTOPIA MOLECULAR IMAGIN,GE,PETtrace,16
+Israel,Yavne,,IBA,CYCLONE 10,10
+Italy,Bagheria,,IBA,CYCLONE 18,18
+Italy,Bologna,Policlinico Sant'Orsola Malpighi,GE,PETtrace,16
+Italy,Brescia,A.O. Spedali Civili-Brescia,GE,PETtrace,16
+Italy,Cagliari,CROM,GE,MiniTrace,10
+Italy,Casarano (LE),,IBA,CYCLONE 18,18
+Italy,Castelfranco,,Siemens,RDS112,11
+Italy,Castelfranco,,Siemens,ECLIPSE,11
+Italy,Catania,,IBA,CYCLONE 18,18
+Italy,Cuneo,Kosei Sendai Clinic,GE,MiniTrace,10
+Italy,Florence,St. Teresa Hospital,GE,MiniTrace,10
+Italy,Genova,,Siemens,ECLIPSE,11
+Italy,Ispra,Joint Research Centre (European Commission),Scanditronix,MC-40,
+Italy,Ivrea/Colleretto Giacosa/Torino,AAA Colleretto Giacosa,GE,PETtrace,16
+Italy,Meldola,Istituto Scientifico Romagnolo per lo Studio e la Cura dei Tumori (I.R.S.T.) S.r.l,GE,PETtrace,16
+Italy,Messina,,Siemens,ECLIPSE,11
+Italy,Milan,Policlinico Ospedale Maggiore,GE,PETtrace,16
+Italy,Milan,IEO,GE,PETtrace,16
+Italy,Milano,,IBA,CYCLONE 18,18
+Italy,Milano,,IBA,CYCLONE 18,18
+Italy,Milano,,IBA,CYCLONE 18,18
+Italy,Milano,Istituto Nazionale per lo Studio e la Cura dei Tumori,Scanditronix,MC 17E,
+Italy,Montecosaro,,IBA,CYCLONE 18,18
+Italy,Naples,Daiyu-kai Hospital,GE,MiniTrace,10
+Italy,Naples,Honjo Clinic,GE,MiniTrace,10
+Italy,Naples/Avellino,GANSU PROVINCIAL HP LANZHOU,GE,MiniTrace,10
+Italy,Napoli,,IBA,CYCLONE 18,18
+Italy,Napoli,Consiglio Nazionale delle Ricerche Institute Pascale (CNR),Scanditronix,MC 17,
+Italy,Palermo,Azienda Ospedaliera Villa Sofia CTO,GE,PETtrace,16
+Italy,Palermo,,IBA,CYCLONE 18,18
+Italy,Pavia,,IBA,CYCLONE 18,18
+Italy,Perugia,Nuclear CDD -Fundación Santafe de Bogotá,GE,MiniTrace,10
+Italy,Pisa,AREA DELLA RICERCA DI PISA C.N.R.,GE,PETtrace,16
+Italy,Reggio Emilia,Azienda Sanitaria Ospedaliera S. Croce E Carle,GE,MiniTrace,10
+Italy,Roma,,IBA,CYCLONE 18,18
+Italy,Rome,Radius / Policlinico Gemelli Hospital,ACSI,TR-19,19
+Italy,Rome,AZIENDA OSPEDALIERA DI PERUGIA,GE,MiniTrace,10
+Italy,Rome,NSA S.R.L,GE,PETtrace,16
+Italy,Rozzano,,IBA,CYCLONE 18,18
+Italy,Ruvo di Puglia,ITEL TELECOMUNICAZ.S.R.L,GE,PETtrace,16
+Italy,Ruvo di Puglia,ITEL TELECOMUNICAZ.S.R.L,GE,PETtrace,16
+Italy,San Raffaele,,Siemens,ECLIPSE,11
+Italy,Turin,MOLINETTE OSP.,GE,PETtrace,16
+Italy,Udine,,IBA,CYCLONE 18,18
+Italy,Venafro,AAA Venafro,GE,PETtrace,16
+Italy,Verona,Radius / Ospedale Sacro Cuore Don Calabria,ACSI,TR-19,19
+Italy,,x,GE,PETtrace,16
+Jamaica,Kingston,x,GE,MiniTrace,10
+Japan,Aichi,,Sumitomo,HM-18,18
+Japan,Aichi-Ken,,IBA,CYCLONE 18,18
+Japan,Akishima/Tokyo,,Sumitomo,HM-10,10
+Japan,Akita City,Research Institute for Brain & Blood Vessels Akita,Japan Steel Works,BC 168,
+Japan,Asai City,,IBA,CYCLONE 10,10
+Japan,Atsugi/Kanagawa,,Sumitomo,HM-12,12
+Japan,Beppu/Ohita,,Sumitomo,HM-10,10
+Japan,Chiba,,IBA,CYCLONE 10,10
+Japan,Chiba,"Daiichi Radioisotope Laboratories, Ltd.",Scanditronix,MC-40,
+Japan,Chiba,,Thomson CSF,AVF 930,
+Japan,Chiba Pref.,,IBA,CYCLONE 30,30
+Japan,Chiba Pref.,,IBA,CYCLONE 30,30
+Japan,Chiba/Chiba,,Sumitomo,HM-20,20
+Japan,Chiba/Chiba,,Sumitomo,HM-18,18
+Japan,Chiba/Chiba,,Sumitomo,HM-18,18
+Japan,Chiba/Chiba,,Sumitomo,CY-370,18
+Japan,Chiba-shi,Chiba Ryogo Center,GE,PETtrace,16
+Japan,Fukuchiyama/Kyoto,,Sumitomo,HM-12,12
+Japan,Fukui,Biomedical Imaging Research Centre,Oxford,OSCAR 5,
+Japan,FUKUI,,Siemens,ECLIPSE,11
+Japan,Fukui/Fukui,,Sumitomo,HM-12,12
+Japan,Fukuoka,PET center of Union hospital of Huazhong S&T University,GE,MiniTrace,10
+Japan,Fukuoka,,Sumitomo,HM-18,18
+Japan,Fukuoka,Kyushu University,Japan Steel Works,BC 1710,
+Japan,Fukuoka/Fukuoka,,Sumitomo,HM-20,20
+Japan,Fukuoka/Fukuoka,,Sumitomo,HM-7,7
+Japan,Fukuoka/Fukuoka,,Sumitomo,HM-10,10
+Japan,Fukushima/Fukushima,,Sumitomo,HM-20,20
+Japan,Gunma,Gunma University School of Medicine,Japan Steel Works,BC 1700,
+Japan,Hakodate/Hokkaido,,Sumitomo,HM-10,10
+Japan,Hamamatsu/Shizuoka,,Sumitomo,HM-12,12
+Japan,Hamamatsu/Shizuoka,,Sumitomo,HM-18,18
+Japan,Hamamatsu/Shizuoka,,Sumitomo,HM-18,18
+Japan,Hamamatsu/Shizuoka,,Sumitomo,HM-18,18
+Japan,Hamamatsu-shi,Seirei PETcenter,GE,PETtrace,16
+Japan,Hidaka/Saitama,,Sumitomo,HM-18,18
+Japan,Himeji/Hyogo,,Sumitomo,HM-12,12
+Japan,Hirosaki-shi,Aomori PET Image Diagnostic Center,GE,PETtrace,16
+Japan,Hiroshima,Chuden Hospital,GE,PETtrace,16
+Japan,Hiroshima/Hiroshima,,Sumitomo,HM-12,12
+Japan,Hokkaido,,Siemens,ECLIPSE,11
+Japan,Hokkaido,,Sumitomo,HM-18,18
+Japan,Hokohama,,Japan Steel Works,BC 2010N,
+Japan,Hyogo,,IBA,CYCLONE 30,30
+Japan,Hyogo,,IBA,CYCLONE 30,30
+Japan,Hyogo,Hyogo Institute for Aging Brain and Cognitive Disorders,Oxford,OSCAR-2,
+Japan,Hyogo,,Sumitomo,HM-18,18
+Japan,Ibaraki,,Japan Steel Works,BC 1710,
+Japan,Ichinomiya/Aichi,,Sumitomo,HM-10,10
+Japan,Iruma,,IBA,CYCLONE 10,10
+Japan,Isahaya/Nagasaki,,Sumitomo,HM-12,12
+Japan,Ishikawa,Kanazawa Cardiovascular Hospital,Japan Steel Works,BC 1710,
+Japan,Itabashi/Tokyo,,Sumitomo,HM-20,20
+Japan,Iwanuma/Miyagi,,Sumitomo,HM-10,10
+Japan,Iwate,,IBA,CYCLONE 10,10
+Japan,Kagoshima Prefecture,,IBA,CYCLONE 18,18
+Japan,Kagoshima/Kagoshima,,Sumitomo,HM-10,10
+Japan,Kamogawa/Chiba,,Sumitomo,HM-12,12
+Japan,Kanagawa,,IBA,CYCLONE 18,18
+Japan,Kanagawa,,IBA,CYCLONE 18,18
+Japan,Kanagawa,,Sumitomo,HM-18,18
+Japan,Kanazawa,Kanazawa advanced medical center,GE,PETtrace,16
+Japan,Kanazawa,,Siemens,ECLIPSE,11
+Japan,Kashiwa/Chiba,,Sumitomo,HM-12,12
+Japan,Kawasaki/Kanagawa,,Sumitomo,HM-20,20
+Japan,Kitakami/Iwate,,Sumitomo,HM-18,18
+Japan,Kitakyushu/Fukuoka,,Sumitomo,HM-12,12
+Japan,Kitami/Hokkaido,,Sumitomo,HM-12,12
+Japan,Kobe/Hyogo,,Sumitomo,HM-12,12
+Japan,Kobe/Hyogo,,Sumitomo,HM-12,12
+Japan,Kobe/Hyogo,,Sumitomo,HM-12,12
+Japan,Kobe/Hyogo,,Sumitomo,HM-18,18
+Japan,Kodaira/Tokyo,,Sumitomo,HM-12,12
+Japan,Kodaira/Tokyo,,Sumitomo,HM-20,20
+Japan,Kofu City,,IBA,CYCLONE 10,10
+Japan,Koriyama,Koga Hospital 21,GE,MiniTrace,10
+Japan,Koriyama/Fukushima,,Sumitomo,HM-18,18
+Japan,Koutou/Tokyo,,Sumitomo,HM-10,10
+Japan,Kumagaya/Saitama,,Sumitomo,HM-12,12
+Japan,Kumamoto,,Siemens,ECLIPSE,11
+Japan,Kurume/Fukuoka,,Sumitomo,HM-10,10
+Japan,Kurume-shi,,IBA,CYCLONE 18,18
+Japan,Kusatsu/Shiga,,Sumitomo,HM-10,10
+Japan,Kusatsu-shi,Kusatsu general hospital,GE,PETtrace,16
+Japan,Kushiro/Hokkaido,,Sumitomo,HM-12,12
+Japan,Kyoto,Nishijin Hospital,Japan Steel Works,BC 1710,
+Japan,Kyoto,,Siemens,ECLIPSE,11
+Japan,Kyoto,,Sumitomo,HM-18,18
+Japan,Kyoto/Kyoto,,Sumitomo,HM-12,12
+Japan,Kyoto/Kyoto,,Sumitomo,HM-10,10
+Japan,Kyoto/Kyoto,,Sumitomo,CY-325,16
+Japan,Kyushu,,Japan Steel Works,BC 168,
+Japan,Maebashi/Gunma,,Sumitomo,HM-18,18
+Japan,Matsumoto/Nagano,,Sumitomo,HM-10,10
+Japan,Matsuyama/Ehime,,Sumitomo,HM-12,12
+Japan,Matsuyama/Ehime,,Sumitomo,HM-12,12
+Japan,Matsuzaka/Mie,,Sumitomo,HM-12,12
+Japan,Mattou/Ishikawa,,Sumitomo,HM-12,12
+Japan,Mibu/Tochigi,,Sumitomo,HM-18,18
+Japan,Mie-Ken,,IBA,CYCLONE 10,10
+Japan,Mie-Ken,,IBA,CYCLONE 18,18
+Japan,Miki/Kagawa,,Sumitomo,HM-18,18
+Japan,Minokamo/Gifu,,Sumitomo,HM-18,18
+Japan,Miyakonojo/Miyazaki,,Sumitomo,HM-12,12
+Japan,Miyazaki/Miyazaki,,Sumitomo,HM-10,10
+Japan,Morioka,,Siemens,ECLIPSE,11
+Japan,Moriyama/Shiga,,Sumitomo,HM-18,18
+Japan,Musashimura-yama/Tokyo,,Sumitomo,HM-12,18
+Japan,Nagaizumi/Shizuoka,,Sumitomo,HM-12,12
+Japan,Nagano,CDD Las Mercedes,GE,MiniTrace,10
+Japan,Nagano,,Siemens,ECLIPSE,11
+Japan,Nagaoka/Niigata,,Sumitomo,HM-12,12
+Japan,Nagoya,Arcispedale S. Maria Nuova,GE,MiniTrace,10
+Japan,Nagoya,Medical School of Nagoya University,Japan Steel Works,BC 2211,
+Japan,Nagoya/Aichi,,Sumitomo,HM-12,12
+Japan,Nagoya/Aichi,,Sumitomo,HM-18,18
+Japan,Nagoya/Aichi,,Sumitomo,HM-12,12
+Japan,Nagoya/Aichi,,Sumitomo,CY-370,18
+Japan,Nagoya-Shi,,IBA,CYCLONE 10,10
+Japan,Nakano/Tokyo,,Sumitomo,HM-10,10
+Japan,Nangoku/Kochi,,Sumitomo,HM-18,18
+Japan,Nara City,,IBA,CYCLONE 18,18
+Japan,Nigata,,Siemens,ECLIPSE,11
+Japan,Niigata/Niigata,,Sumitomo,HM-7,7
+Japan,Niigata-shi,"Center for Integrated Human Brain Science, University of Niigata",GE,PETtrace,16
+Japan,Nishinomiya/Hyogo,,Sumitomo,HM-18,18
+Japan,Obihiro/Hokkaido,,Sumitomo,HM-12,12
+Japan,Obu/Aichi,,Sumitomo,HM-18,18
+Japan,Ohita/Ohita,,Sumitomo,HM-20,20
+Japan,Okayama,,Sumitomo,HM-18,18
+Japan,Okayama/Okayama,,Sumitomo,HM-12,12
+Japan,Okayama/Okayama,,Sumitomo,HM-18,18
+Japan,Okayama/Okayama,,Sumitomo,HM-18,18
+Japan,Okinawa,,IBA,CYCLONE 18,18
+Japan,Okinawa,,Siemens,ECLIPSE,11
+Japan,Okinawa,,Sumitomo,HM-12,12
+Japan,Osaka,MI Clinic,GE,PETtrace,16
+Japan,Osaka,,IBA,CYCLONE 10,10
+Japan,Osaka,,IBA,CYCLONE 10,10
+Japan,Osaka,,IBA,CYCLONE 18,18
+Japan,Osaka,,IBA,CYCLONE 18,18
+Japan,Osaka,Osaka City University Medical School,Oxford,OSCAR SCC12P,
+Japan,Osaka City,,IBA,CYCLONE 10,10
+Japan,Osaka/Osaka,,Sumitomo,HM-12,12
+Japan,Osaka/Osaka,,Sumitomo,HM-12,12
+Japan,Osaka/Osaka,,Sumitomo,HM-12,12
+Japan,Osakafu,,IBA,CYCLONE 18,18
+Japan,Osakasayama/Osaka,,Sumitomo,HM-12,12
+Japan,Rokkasyo/Aomori,,Sumitomo,HM-20,20
+Japan,Sagamihara/Kanagawa,,Sumitomo,HM-7,7
+Japan,Sakai/Osaka,,Sumitomo,HM-18,18
+Japan,Saku/Nagano,,Sumitomo,HM-12,12
+Japan,Sapporo/Hokkaido,,Sumitomo,HM-12,12
+Japan,Sapporo/Hokkaido,,Sumitomo,HM-18,18
+Japan,Sapporo/Hokkaido,,Sumitomo,HM-12,12
+Japan,Sapporo/Hokkaido,,Sumitomo,HM-18,18
+Japan,Sendai,SXI'AN GAOXIN HOSPITAL,GE,MiniTrace,10
+Japan,Sendai/Miyagi,,Siemens,ECLIPSE,11
+Japan,Sendai/Miyagi,,Sumitomo,HM-12,12
+Japan,Sendai/Miyagi,,Sumitomo,HM-10,10
+Japan,Sendai/Miyagi,,Sumitomo,HM-18,18
+Japan,Sendai/Miyagi,,Sumitomo,HM-12,12
+Japan,Shizuoka/Shizuoka,,Sumitomo,HM-10,10
+Japan,Shizuoka-Ken,,IBA,CYCLONE 18,18
+Japan,Shunan/Yamaguchi,,Sumitomo,HM-10,10
+Japan,"Suita City, Osaka",,IBA,CYCLONE 18,18
+Japan,"Suita City, Osaka",,IBA,CYCLONE 3,3
+Japan,Suita/Osaka,,Sumitomo,HM-12,12
+Japan,Suita/Osaka,,Sumitomo,HM-18,18
+Japan,Suita/Osaka,,Sumitomo,HM-18,18
+Japan,Suita/Osaka,,Sumitomo,CY-370,18
+Japan,Takasaki/Gunma,,Sumitomo,HM-12,12
+Japan,Takatsuki/Osaka,,Sumitomo,HM-20,20
+Japan,Tenri-Shi,,IBA,CYCLONE 10,10
+Japan,Tokorozawa/Saitama,,Sumitomo,HM-18,18
+Japan,Tokushima/Tokushima,,Sumitomo,HM-12,12
+Japan,Tokyo,,IBA,CYCLONE 10,10
+Japan,Tokyo,,IBA,CYCLONE 10,10
+Japan,Tokyo,National Institute of Radiological Sciences,Japan Steel Works,BC 2010N,
+Japan,Tokyo,National Centre of Neurology and Psychiatry,Oxford,"OSCAR, SCC12P",
+Japan,Tokyo,,Siemens,ECLIPSE,11
+Japan,Tokyo,,Siemens,ECLIPSE,11
+Japan,Tokyo,,Sumitomo,HM-12,12
+Japan,Tokyo,,Sumitomo,HM-20,20
+Japan,Tokyo,,Sumitomo,HM-12,12
+Japan,Tokyo,,Sumitomo,HM-12,12
+Japan,Tokyo,,Sumitomo,HM-12,12
+Japan,Tokyo,,Sumitomo,HM-18,18
+Japan,Tokyo,,Sumitomo,HM-18,18
+Japan,Tokyo,,Sumitomo,HM-18,18
+Japan,Tokyo,,Sumitomo,HM-18,18
+Japan,Tokyo,,Sumitomo,CY-370,18
+Japan,Tokyo,,Sumitomo,CY-370,18
+Japan,Toyama/Toyama,,Sumitomo,HM-18,18
+Japan,Toyota/Aichi,,Sumitomo,HM-18,18
+Japan,Tsukuba,,Siemens,ECLIPSE,11
+Japan,Undisclosed Location,Undisclosed Customer #1,ACSI,TR-19,19
+Japan,Undisclosed Location,Undisclosed Customer #1,ACSI,TR-19,19
+Japan,Undisclosed Location,Undisclosed Customer #1,ACSI,TR-19,19
+Japan,Undisclosed Location,Undisclosed Customer #1,ACSI,TR-19,19
+Japan,Undisclosed Location,Undisclosed Customer #1,ACSI,TR-19,19
+Japan,Undisclosed Location,Undisclosed Customer #1,ACSI,TR-19,19
+Japan,Undisclosed Location,Undisclosed Customer #2,ACSI,TR-19,19
+Japan,Undisclosed Location,Undisclosed Customer #2,ACSI,TR-19,19
+Japan,Undisclosed Location,Undisclosed Customer #1,ACSI,TR-30,30
+Japan,Utsonomiya City,,IBA,CYCLONE 10,10
+Japan,Wakayama/Wakayama,,Sumitomo,HM-12,12
+Japan,x,YOUNGNAM UNIV. HOSPITAL,GE,MiniTrace,10
+Japan,Yamagata/Yamagata,,Sumitomo,HM-20,20
+Japan,Yamagata/Yamagata,,Sumitomo,HM-12,12
+Japan,Yamaguchi-ken,,IBA,CYCLONE 18,18
+Japan,Yamanakako/Yamanashi,,Sumitomo,HM-18,18
+Japan,Yokohama,,IBA,CYCLONE 18,18
+Japan,Yokohama,,IBA,CYCLONE 18,18
+Japan,Yokohama,,IBA,CYCLONE 18,18
+Japan,Yokohama,,IBA,CYCLONE 3,3
+Japan,,,IBA,CYCLONE 10,10
+Jordan,Amman,,IBA,CYCLONE 18,18
+Jordan,Amman,,Siemens,ECLIPSE,11
+Kazakhstan,Almaty,,ABT,BG-75,7.5
+Kazakhstan,Almaty,,IBA,CYCLONE 30,30
+Kazakhstan,Almaty,,NIIEFA,U-150,
+Kazakhstan,Astana,,IBA,CYCLONE 18,18
+Kazakhstan,Semey,,IBA,CYCLONE 18,18
+Kuwait,Kuwait City,JABER AL AHMED MOLECULAR IMAGING (KFAS),GE,PETtrace,16
+Kuwait,Kuwait City,,Siemens,ECLIPSE,11
+Latvia,Riga,,IBA,CYCLONE 18,18
+Lebanon,Beirut,Aizawa Hospital,GE,MiniTrace,10
+Lebanon,Beirut,,IBA,CYCLONE 18,18
+Libya,Tripoli,,IBA,CYCLONE 10,10
+Macedonia,Skopje,x,GE,PETtrace,16
+Malaysia,Bandar Enstek,,IBA,CYCLONE 18,18
+Malaysia,Kuala Lumpur,,Siemens,ECLIPSE,11
+Malaysia,Kuala Lumpur,,Sumitomo,HM-12,12
+Malaysia,Kuching,,ABT,BG-75,7.5
+Malaysia,Putrajaya / Kuala Lumpur,"Institut Kanser Negara, Putrajaya, Malaysia",GE,PETtrace,16
+Mexico,Cancun,,ABT,BG-75,7.5
+Mexico,Leon,,Siemens,ECLIPSE,11
+Mexico,Mexico City,,Siemens,ECLIPSE,11
+Mexico,Mexico City,,Siemens,ECLIPSE,11
+Mexico,Mexico DF,,IBA,CYCLONE 18,18
+Mexico,Monterrey,Cyclotek Pty Ltd,GE,MiniTrace,10
+Mexico,San Lucas,MYMSA MEDIDORES INDUST.MEDICOS (MIYMSA),GE,PETtrace,16
+Mexico,"Zapopan, Jalisco",Guadalajara PET (,GE,PETtrace,16
+Morocco,Casablanca,Cylopharma,GE,PETtrace,16
+Morocco,Casablanca,,IBA,CYCLONE 18,18
+Myanmar (Burma),Yangon,,IBA,CYCLONE 18,18
+Netherlands,Alkmaar,,IBA,CYCLONE 18,18
+Netherlands,Amsterdam,,IBA,CYCLONE 18,18
+Netherlands,Amsterdam,,IBA,CYCLONE 18,18
+Netherlands,Amsterdam,,IBA,CYCLONE 18,18
+Netherlands,Amsterdam,,IBA,CYCLONE 3,3
+Netherlands,Amsterdam,,Siemens,ECLIPSE,11
+Netherlands,Eindhoven,,IBA,CYCLONE 30,30
+Netherlands,Groningen,,IBA,CYCLONE 18,18
+Netherlands,Groningen,Groningen University Hospital,Scanditronix,MC 17F,
+Netherlands,Petten,,IBA,CYCLONE 30,30
+Netherlands,Petten,Mallinckrodt Medical,Philips,AVF,
+Netherlands,Rotterdam,Cyclotron Rotterdam B.V (Erasmus MC),GE,PETtrace,16
+New Zealand,Wellington,Cyclotek Pty Ltd,GE,PETtrace,16
+Nigeria,Lagos,Junqu General Hospital,GE,MiniTrace,10
+North Korea,Pyongyang,,NIIEFA,MGC-20,
+Norway,Bergen,Haukelands Universitetssykehus,GE,PETtrace,16
+Norway,Oslo,"OSLO UNIV. SYKEHUS, RIKSHOSP.",GE,PETtrace,16
+Norway,Oslo,University of Oslo,Scanditronix,MC 35,
+Norway,Tromso,x,GE,PETtrace,16
+Norway,Trondheim,,GE,PETtrace,16
+Pakistan,Karachi,,ABT,BG-75,7.5
+Pakistan,Karachi,,ABT,BG-75,7.5
+Pakistan,Karachi,x,GE,MiniTrace,10
+Pakistan,Karachi,,IBA,CYCLONE 18,18
+Pakistan,Karachi,,Siemens,ECLIPSE,11
+Pakistan,Lahore,SHEIKH ZAID HOSPITAL,GE,PETtrace,16
+Pakistan,Lahore,,IBA,CYCLONE 18,18
+Panama,Panama City,x,GE,PETtrace,16
+Peru,Lima,x,GE,PETtrace,16
+Peru,Lima,,Siemens,ECLIPSE,11
+Philippines,Quezon City,x,GE,PETtrace,16
+Poland,Gliwice,,IBA,CYCLONE 18,18
+Poland,Kielce,,Siemens,ECLIPSE,11
+Poland,Krakow,Voxel 5 WOJSKOWY SZPITAL KLINICZNY Z POLIKLINIKA,GE,PETtrace,16
+Poland,Krakow,,NIIEFA,U-120,
+Poland,Lodz,,Siemens,ECLIPSE,11
+Poland,Mszczonow,,IBA,CYCLONE 18,18
+Poland,Warsaw,SRODOWISKOWE LABOLATORIUM CIEZKI,GE,PETtrace,16
+Poland,Warsaw,,Siemens,ECLIPSE,11
+Poland,Warsaw,,Siemens,ECLIPSE,11
+Portugal,Coimbra,,IBA,CYCLONE 18,18
+Portugal,Porto,Hospital da Boavista,GE,PETtrace,16
+Puerto Rico,San Juan,,Siemens,ECLIPSE,11
+Puerto Rico,San Juan,,Siemens,ECLIPSE,11
+Qatar,Qatar,,Siemens,ECLIPSE,11
+Romania,Bucharest,Horia Hulubei National Institute of Physics and Nuclear Engineering,ACSI,TR-19,19
+Romania,Bucharest,,IBA,CYCLONE 18,18
+Romania,Bucharest,,NIIEFA,U-120,
+Romania,Iasi,Johannes Gutenberg-Universität Mainz,GE,MiniTrace,10
+Russia,Catherinsburg,,NIIEFA,P-7,
+Russia,Cheljabinsk,,Siemens,ECLIPSE,11
+Russia,Dubna,,NIIEFA,U-120,
+Russia,Dubna,,NIIEFA,U-150,
+Russia,Dubna,,NIIEFA,U-300,
+Russia,Dubna,,NIIEFA,Cytrack,
+Russia,Ekaterinburg,"Ural Federal University,",ACSI,TR-24,24
+Russia,Elets,Cancer Center,GE,PETtrace,16
+Russia,Kazan,GUZ REPUBLICAN CLINICAL ONCOLOGICAL DISPENSARY,GE,PETtrace,16
+Russia,Khabarovsk,Pet Center,GE,PETtrace,16
+Russia,Krasnoyarsk,,IBA,CYCLONE 18,18
+Russia,Magnitogorsk,,Siemens,ECLIPSE,11
+Russia,Moscow,Federal Medical Biophysics Centre,ACSI,TR-24,24
+Russia,Moscow,RONC,GE,PETtrace,16
+Russia,Moscow,RONC,GE,PETtrace,16
+Russia,Moscow,,IBA,CYCLONE 18,18
+Russia,Moscow,,IBA,CYCLONE 18,18
+Russia,Moscow,,IBA,CYCLONE 70,70
+Russia,Moscow,,NIIEFA,M-1,
+Russia,Moscow,,NIIEFA,M-1,
+Russia,Moscow,,NIIEFA,M-C,
+Russia,Moscow,,NIIEFA,P-7,
+Russia,Moscow,,NIIEFA,MGC-20,
+Russia,Moscow,,NIIEFA,DC-3,
+Russia,Moscow,,NIIEFA,CC-18/9,
+Russia,Moscow,,Siemens,ECLIPSE,11
+Russia,Moscow,,Siemens,ECLIPSE,11
+Russia,Moscow,,Siemens,ECLIPSE,11
+Russia,Moscow,,Siemens,ECLIPSE,11
+Russia,Moscow,,Siemens,ECLIPSE,11
+Russia,Obninsk,,NIIEFA,U-150,
+Russia,Obninsk,,NIIEFA,RIC-14,
+Russia,Petrusko,x,GE,PETtrace,16
+Russia,Rostov on Don,,IBA,CYCLONE 18,18
+Russia,Snezhinsk,,NIIEFA,CC-18/9,
+Russia,St Petersburg,,ABT,BG-75,7.5
+Russia,St Petersburg,,IBA,CYCLONE KIUBE,18
+Russia,St Petersburg,Institute of Human Brain RAS,Scanditronix,MC-17,
+Russia,St Petersburg,,Siemens,ECLIPSE,11
+Russia,St Petersburg,,Siemens,ECLIPSE,11
+Russia,St. Petersburg,St Petersburg State University (Human Brain Institute),GE,PETtrace,16
+Russia,St. Petersburg,NII KARDIOLOGII IM.ALMAZOVA,GE,PETtrace,16
+Russia,St. Petersburg,x,GE,PETtrace,16
+Russia,St. Petersburg,,NIIEFA,RI,
+Russia,St. Petersburg,,NIIEFA,FTI,
+Russia,St. Petersburg,,NIIEFA,U-120,
+Russia,St. Petersburg,,NIIEFA,MGC-20(thrie),
+Russia,St. Petersburg,,NIIEFA,CC-18/9,
+Russia,St. Petersburg,,NIIEFA,CC-12,
+Russia,St. Petersburg,,NIIEFA,C-80,
+Russia,Stavropol,x,GE,PETtrace,16
+Russia,Tomsk,,NIIEFA,P-7,
+Russia,Tver,,NIIEFA,RIC-30,
+Russia,Tyumen,,Siemens,ECLIPSE,11
+Russia,Ufa,x,GE,PETtrace,16
+Russia,Voronezh,,Siemens,ECLIPSE,11
+Russia,Dimitrovgrad,Servicio Autonomo Oncologico de Lara,GE,MiniTrace,10
+Saudi Arabia,Dammam,,IBA,CYCLONE 18,18
+Saudi Arabia,Jeddah,Wadi Jeddah,GE,PETtrace,16
+Saudi Arabia,Jeddah,,Siemens,ECLIPSE,11
+Saudi Arabia,Khobar,,Siemens,ECLIPSE,11
+Saudi Arabia,Riyadh,,ABT,BG-75,7.5
+Saudi Arabia,Riyadh,King Khalid University Hospital,ACSI,TR-24,24
+Saudi Arabia,Riyadh,"National Guard Hospital,",ACSI,TR-24,24
+Saudi Arabia,Riyadh,,IBA,CYCLONE 30,30
+Saudi Arabia,Riyadh,,IBA,CYCLONE KIUBE,18
+Saudi Arabia,Riyadh,,Siemens,ECLIPSE,11
+Saudi Arabia,Riyadh,King Faisal Specialist Hospital and Research Centre,TCC,CS-30,30
+Scotland,Aberdeen,,Siemens,ECLIPSE,11
+Serbia,Belgrade,,NIIEFA,CC-1-3,
+Singapore,Singapore,Positron Tracers,GE,PETtrace,16
+Singapore,Singapore,Singapore Radiopharmaceutical Pte Ltd - Radlink,GE,PETtrace,16
+Singapore,Singapore,National University of Singapore,GE,PETtrace,16
+Slovak Republic,Bratislava 15,,IBA,CYCLONE 18,18
+South Africa,Cape Town,,Siemens,ECLIPSE,11
+South Africa,Johannesburg,,Siemens,ECLIPSE,11
+South Africa,Pretoria,NTP Cyclotope,GE,PETtrace,16
+South Korea,Busan,PUSAN BAK HOSPITAL,GE,PETtrace,16
+South Korea,Busan,Dong-A University,GE,PETtrace,16
+South Korea,Chon-buk,Chon-buk National University Hospital,Kotron,Kotron-13,
+South Korea,Cho-sun,Cho-sun University Hospital,Kotron,Kotron-13,
+South Korea,Daegu,Southern Tohoku General Hospital,GE,MiniTrace,10
+South Korea,Daegu,x,GE,PETtrace,16
+South Korea,Daegu,,IBA,CYCLONE 18,18
+South Korea,Daejeon,,Siemens,ECLIPSE,11
+South Korea,Daejeon,,Sumitomo,HM-12,12
+South Korea,Gyeonggi-do,,IBA,CYCLONE 18,18
+South Korea,Incheon,,Siemens,ECLIPSE,11
+South Korea,Incheon,,Sumitomo,HM-12,12
+South Korea,Jeju,,Sumitomo,HM-7,7
+South Korea,Je-ju,Je-ju National University Hospital,Kotron,Kotron-13,
+South Korea,Joenju,x,GE,PETtrace,16
+South Korea,Kang-won,Kang-won National University Hospital,Kotron,Kotron-13,
+South Korea,Kwang Ju,YEONG NAM UNIVERSITY MEDICAL CENTER,GE,PETtrace,16
+South Korea,Kyungbuk,,Siemens,ECLIPSE,11
+South Korea,Kyung-pook,Kyung-pook National University Hospital,Kotron,Kotron-13,
+South Korea,Pusan,,IBA,CYCLONE 18,18
+South Korea,Pusan,Pusan National University Hospital,Kotron,Kotron-13,
+South Korea,Pusan,,Siemens,ECLIPSE,11
+South Korea,Seo-gu,,IBA,CYCLONE 18,18
+South Korea,Seoul,Seoul National University Hospital,ACSI,TR-19,19
+South Korea,Seoul,x,GE,MiniTrace,10
+South Korea,Seoul,"SEOUL ASAN MEDICAL CENTER,",GE,PETtrace,16
+South Korea,Seoul,Hanyang Univ hospital,GE,PETtrace,16
+South Korea,Seoul,Seoul National University Hospital,GE,PETtrace,16
+South Korea,Seoul,Severance Hospital,GE,PETtrace,16
+South Korea,Seoul,Severance Hospital,GE,PETtrace,16
+South Korea,Seoul,Samsung Medical Center,GE,PETtrace,16
+South Korea,Seoul,Samsung Medical Center,GE,PETtrace,16
+South Korea,Seoul,Samsung Medical Center,GE,PETtrace,16
+South Korea,Seoul,Samsung Medical Center,GE,PETtrace,16
+South Korea,Seoul,Samsung Medical Center,GE,PETtrace,16
+South Korea,Seoul,,IBA,CYCLONE 18,18
+South Korea,Seoul,,IBA,CYCLONE 18,18
+South Korea,Seoul,,IBA,CYCLONE 30,30
+South Korea,Seoul,,IBA,CYCLONE 18,18
+South Korea,Seoul,,IBA,CYCLONE 18,18
+South Korea,Seoul,Seoul National University,Kotron,Kotron-13,
+South Korea,Seoul,Korea Cancer Centre Hospital,Kotron,Kotron-13,
+South Korea,Seoul,Korea Cancer Centre Hospital,Scanditronix,MC 50,
+South Korea,Seoul,,Siemens,ECLIPSE,11
+South Korea,Seoul,,Siemens,ECLIPSE,11
+South Korea,Seoul,,Sumitomo,HM-12,12
+South Korea,Sun-Cheon,,IBA,CYCLONE 18,18
+South Korea,Sungnam,x,GE,PETtrace,16
+South Korea,Suwon,,Siemens,ECLIPSE,11
+South Korea,Yongin,,Siemens,ECLIPSE,11
+South Korea,,,IBA,CYCLONE 18,18
+Spain,BADAJOZ,OCA Hospital,GE,MiniTrace,10
+Spain,Barcelona,HOSPITAL VIRGEN DE LA ARRIXACA,GE,PETtrace,16
+Spain,Barcelona,,IBA,CYCLONE 18,18
+Spain,Barcelona,,IBA,CYCLONE 18,18
+Spain,"El Palmar, Murcia",BARNATRON SA,GE,PETtrace,16
+Spain,Madrid,N. Florida Cyc. Ctr.,GE,MiniTrace,10
+Spain,Madrid,,IBA,CYCLONE 18,18
+Spain,Madrid,,IBA,CYCLONE 18,18
+Spain,Madrid,Centro PET Complutense (CPC),Oxford,OSCAR 12,
+Spain,Madrid,,Siemens,ECLIPSE,11
+Spain,Madrid,,Siemens,ECLIPSE,11
+Spain,Malaga,UNIVERSIDAD DE MALAGA,GE,PETtrace,16
+Spain,Pamplona,,IBA,CYCLONE 18,18
+Spain,San Sebastian,,IBA,CYCLONE 18,18
+Spain,Santander,Hospital Universitario Marques de Valdecilla,GE,PETtrace,16
+Spain,Santiago de Compostela,Instituto Galego de Medicina Tecnica S.a. (Galaria),GE,PETtrace,16
+Spain,Sevilla,Centro Andaluz de Diagnostico Pet,GE,PETtrace,16
+Spain,Sevilla,,IBA,CYCLONE 18,18
+Spain,Tenerif / Grand Canarie,,IBA,CYCLONE 11,11
+Spain,Valencia,,Siemens,ECLIPSE,11
+Spain,Zaragoza,AAA Zaragoza,GE,PETtrace,16
+Sweden,Göteborg,SAHLGRENSKA UNIVERSITETSSJUKHUSET,GE,PETtrace,16
+Sweden,Linköping,LANZHOU UNIVERSITY NO.2 PEOPLE HOSPITAL,GE,MiniTrace,10
+Sweden,Lund,"Skånes Universitetssjukhus, Lund",GE,PETtrace,16
+Sweden,Lund,"Skånes Universitetssjukhus, Lund",GE,PETtrace,16
+Sweden,Solna,"Karolinska Sjukhuset, Solna",GE,PETtrace,16
+Sweden,Solna,"Karolinska Sjukhuset, Solna",GE,PETtrace,16
+Sweden,Stockholm,KAROLINSKA SJUKHUSET,GE,PETtrace,16
+Sweden,Umeå,NORRLANDS UNIVERSITETSSJUKHUS,GE,PETtrace,16
+Sweden,Uppsala,Uppsala Universitet,Scanditronix,MC 17,
+Switzerland,Bern,,IBA,CYCLONE 18,18
+Switzerland,Genève,,IBA,CYCLONE 18,18
+Switzerland,Schlieren,"Universitätsspital Zueurich, Labor Schlieren, Klinik für Onkologie (Wagi)",GE,PETtrace,16
+Switzerland,Villigen,Paul Scherrer Institute,PSI,72 MeV,
+Switzerland,Zürich,Universitätsspital Zueurich (USZ),GE,PETtrace,16
+Switzerland,,,IBA,CYCLONE 18,18
+Syrian Arab Republic,Damascus,,IBA,CYCLONE 30,30
+Taiwan,"Hsichih City,Tapei Hsien",,IBA,CYCLONE 18,18
+Taiwan,Hualien,Buddhist Tzu Chi General Hospital,GE,PETtrace,16
+Taiwan,KaoHsiung,E-DA HOSPITAL,GE,PETtrace,16
+Taiwan,Kaohsiung,,Sumitomo,HM-12,12
+Taiwan,Linkou,,Sumitomo,HM-12,12
+Taiwan,"Longtan, Taoyuan",Inst. of Nuclear Energy Research,ACSI,TR-30/15,30
+Taiwan,New Taipei City,,Sumitomo,HM-12,12
+Taiwan,Taipei,National Taiwan Unversity Hospital,GE,PETtrace,16
+Taiwan,Taipei,CGMH-LKU,GE,PETtrace,16
+Taiwan,Taipei,,IBA,CYCLONE 18,18
+Taiwan,Taipei,,Siemens,ECLIPSE,11
+Thailand,Bangkok,Bangkok General Hospital,ACSI,TR-19,19
+Thailand,Bangkok,Chulabhorn Cancer Centre,GE,PETtrace,16
+Thailand,Bangkok,,Sumitomo,HM-20,20
+Thailand,Chiang Mai,,Sumitomo,HM-20,20
+Tunisia,Tunis,,IBA,CYCLONE 18,18
+Turkey,Adana,MONROL NUK TIC VE SAN AS,GE,PETtrace,16
+Turkey,Ankara,Ankara Universitesi Bilimsel Arastirma Projeleri,GE,PETtrace,16
+Turkey,Ankara,,IBA,CYCLONE 30,30
+Turkey,Ankara,,IBA,CYCLONE 18,18
+Turkey,Ankara,,Siemens,ECLIPSE,11
+Turkey,Gebze - Kocaeli,,IBA,CYCLONE 18,18
+Turkey,Gebze - Kocaeli,,IBA,CYCLONE 18,18
+Turkey,Gebze - Kocaeli,,IBA,CYCLONE 18,18
+Turkey,Gebze - Kocaeli,,IBA,CYCLONE 18,18
+Turkey,Gebze/Kocaeli,Moltek,ACSI,TR-19,19
+Turkey,Istanbul,CAN RADYOFARMASOTIK URUNLER,GE,PETtrace,16
+Turkey,Istanbul,CAN RADYOFARMASOTIK URUNLER,GE,PETtrace,16
+Turkey,Istanbul,,IBA,CYCLONE 18,18
+Turkey,Istanbul,,Siemens,ECLIPSE,11
+Turkey,Istanbul,,Siemens,ECLIPSE,11
+Turkey,Istanbul,,Siemens,ECLIPSE,11
+Turkey,Izmir,,Siemens,ECLIPSE,11
+Turkey,Izmir,,Siemens,ECLIPSE,11
+Turkey,,,IBA,CYCLONE 18,18
+Ukraine,Kiev,Kiev City Oncology Hospital,GE,PETtrace,16
+Ukraine,Kiev,,NIIEFA,P-7,
+Ukraine,Kiev,,NIIEFA,U-240,
+Ukraine,Kiev,,Siemens,ECLIPSE,11
+United Arab Emirate,Abu Dhabi,GULF INTERNATIONAL CANCER CENTRE,GE,PETtrace,16
+United Arab Emirates,Dubai,,IBA,CYCLONE 18,18
+United Kingdom,Amersham,AMERSHAM INTERNATIONAL PLC,GE,PETtrace,16
+United Kingdom,Bebington,,Scanditronix,MC-62,
+United Kingdom,Belfast,ROYAL VICTORIA HOSPITAL - NORTH,GE,PETtrace,16
+United Kingdom,Birmingham,,Scanditronix,MC-40,
+United Kingdom,Cambridge,WOLFSON BRAIN IMAGING CENTRE,GE,PETtrace,16
+United Kingdom,Cardiff,,IBA,CYCLONE 18,18
+United Kingdom,Edinburgh,UNIVERSITY OF EDINBURGH / CRIC,GE,PETtrace,16
+United Kingdom,Glasgow,Gartnaval Hospital,GE,PETtrace,16
+United Kingdom,Guilford,,IBA,CYCLONE 18,18
+United Kingdom,Hammersmith,,Siemens,ECLIPSE,11
+United Kingdom,Hammersmith,,Siemens,ECLIPSE,11
+United Kingdom,Hull,,ABT,BG-75,7.5
+United Kingdom,Keele Staffordshire,Keele University Science Park,GE,PETtrace,16
+United Kingdom,London,"St. Thomas Hospital, Pet Centre",GE,PETtrace,16
+United Kingdom,London,,IBA,CYCLONE 3,3
+United Kingdom,London,,IBA,CYCLONE 3,3
+United Kingdom,London,,Siemens,RDS112,11
+United Kingdom,Manchester,WOLFSON MOLECULAR IMAGING CENTRE,GE,PETtrace,16
+United Kingdom,Middlesex,,Siemens,ECLIPSE,11
+United Kingdom,Newcastle,,ABT,BG-75,7.5
+United Kingdom,Nottingham,,Siemens,ECLIPSE,11
+United Kingdom,Preston,Royal Preston Hospital,GE,PETtrace,16
+United Kingdom,Sheffield,,IBA,CYCLONE 18,18
+United Kingdom,South Yorkshire,Alliance Medical,ACSI,TR-24,24
+United Kingdom,Sutton Surrey,Royal Marsden NHS Foundation Trust,GE,PETtrace,16
+United Kingdom,Yorkshire,Castle Hill Hospital,GE,GENTrace,7.8
+United States,Albany,"IBA MOLECULAR, INC (FORMALLY PHAMALOGIC PET SERVICES)",GE,PETtrace,16
+United States,Albany,,Siemens,ECLIPSE,11
+United States,Albuquerque,Biotek NM,GE,PETtrace,16
+United States,Albuquerque,New Mexico Positron,GE,PETtrace,16
+United States,Albuquerque,,Siemens,ECLIPSE,11
+United States,Ann Arbor,Univ of Michigan,GE,PETtrace,16
+United States,Atlanta,Shandong province hospital,GE,MiniTrace,10
+United States,"Atlanta, GA",North Pet,GE,PETtrace,16
+United States,"Atlanta, GA",,Siemens,ECLIPSE,11
+United States,"Atlanta, GA",,Siemens,ECLIPSE,11
+United States,"Atlanta, GA",,Siemens,RDS112,11
+United States,"Baltimore, MD",Johns Hopkins Hosp.,GE,PETtrace,16
+United States,"Beltsville, OH",Cardinal 12,GE,PETtrace,16
+United States,"Berkeley, CA",,Siemens,ECLIPSE,11
+United States,"Bethesda, MD",National Inst. Of Health,GE,PETtrace,16
+United States,"Bethesda, MD",NIH 2,GE,PETtrace,16
+United States,"Bethesda, MD",National Institutes of Health,Japan Steel Works,BC 1710,
+United States,"Birmingham, AL",University of Alabama Birmingham,ACSI,TR-24,24
+United States,"Birmingham, AL",,Siemens,ECLIPSE,11
+United States,"Birmingham, AL",,Siemens,ECLIPSE,11
+United States,"Bismark, ND",,Siemens,ECLIPSE,11
+United States,"Boston, MA",Brigham & Women's hospital,GE,PETtrace,16
+United States,"Boston, MA",Mass General,GE,PETtrace,16
+United States,"Boston, MA",x,GE,PETtrace,16
+United States,"Boston, MA",Massachusetts General Hospital,Scanditronix,MC-17 F,
+United States,"Boston, MA",,Siemens,ECLIPSE,11
+United States,"Boston, MA",,Siemens,ECLIPSE,11
+United States,"Boston, MA",,Siemens,ECLIPSE,11
+United States,"Buffalo, NY",,IBA,CYCLONE 30,30
+United States,"Buford, GA",,IBA,CYCLONE 18,18
+United States,"Buford, GA",,IBA,CYCLONE 18,18
+United States,"Buford, GA",,IBA,CYCLONE 18,18
+United States,"Buford, GA",,IBA,CYCLONE 18,18
+United States,"Buford, GA",,IBA,CYCLONE 18,18
+United States,"Buford, GA",,IBA,CYCLONE 18,18
+United States,"Buford, GA",,IBA,CYCLONE 18,18
+United States,"Buford, GA",,IBA,CYCLONE 18,18
+United States,"Buford, GA",,IBA,CYCLONE 18,18
+United States,"Buford, GA",,IBA,CYCLONE 18,18
+United States,"Buford, GA",,IBA,CYCLONE 18,18
+United States,"Buford, GA",,IBA,CYCLONE 18,18
+United States,"Buford, GA",,IBA,CYCLONE 18,18
+United States,"Buford, GA",,IBA,CYCLONE 18,18
+United States,"Chapel Hill, NC",,ABT,BG-75,7.5
+United States,"Chapel Hill, NC",UNC,GE,PETtrace,16
+United States,"Charleston, SC",,Siemens,ECLIPSE,11
+United States,"Charlotte, NC",Cardinal 14,GE,PETtrace,16
+United States,"Charlotte, NC",,Siemens,RDS112,11
+United States,"Charlotte, NC",,Siemens,ECLIPSE,11
+United States,Chattanooga,Scenic City Iso.,GE,PETtrace,16
+United States,"Chicago, IL",GE Healthcare,ACSI,TR-30,30
+United States,"Chicago, IL",GE Healthcare,ACSI,TR-30,30
+United States,"Chicago, IL",,IBA,CYCLONE 18,18
+United States,"Chicago, IL",,Siemens,RDS112,11
+United States,"Cincinnati, OH",,Siemens,RDS112,11
+United States,"Cleveland, OH",Case Western Reserve University,Scanditronix,MC-17,
+United States,"Cleveland, OH",,Siemens,ECLIPSE,11
+United States,"Colton, CA",Cardinal 6,GE,PETtrace,16
+United States,Columbia,Murr/Essential Iso,GE,PETtrace,16
+United States,Columbia,,Siemens,ECLIPSE,11
+United States,"Columbus, OH",Cardinal Columbus 1,GE,PETtrace,16
+United States,"Columbus, OH",Cardinal Columbus 2,GE,PETtrace,16
+United States,"Dallas, TX",RNP 3,GE,PETtrace,16
+United States,"Dallas, TX",UTSW,GE,PETtrace,16
+United States,"Dallas, TX",,IBA,CYCLONE 18,18
+United States,"Dallas, TX",,Siemens,ECLIPSE,11
+United States,"Dallas, TX",,Siemens,ECLIPSE,11
+United States,"Davenport, IA","Midwest Pharmacy,",GE,PETtrace,16
+United States,"Davis, CA",,Siemens,ECLIPSE,11
+United States,"Davis, CA",,Siemens,ECLIPSE,11
+United States,"Davis, CA",,Siemens,ECLIPSE,11
+United States,"Davis, CA",Crocker Nuclear Laboratory,W.M. Brobeck,AC60,60
+United States,"Decatur, IL",Decatur Memorial Hospital,GE,PETtrace,16
+United States,Denver,Shin Kong Wu Ho-Su Memonal Hospital,GE,MiniTrace,10
+United States,"Denver, CO",Stapleton Business Center - Cardinal,GE,PETtrace,16
+United States,"Denver, CO",,Siemens,ECLIPSE,11
+United States,"Denver, CO",,Siemens,ECLIPSE,11
+United States,"Detroit, MI",Childrens Hospital of Michigan,GE,PETtrace,16
+United States,"Detroit, MI",,Siemens,RDS112,11
+United States,Duncan,Shertech,GE,PETtrace,16
+United States,East Hartford,Cardinal Health,GE,PETtrace,16
+United States,"Fort Lauderdale, FL",Cardinal Fort Lauderdale,GE,PETtrace,16
+United States,"Fort Lauderdale, FL",,Siemens,ECLIPSE,11
+United States,"Fort Lauderdale, FL",,Siemens,ECLIPSE,11
+United States,"Gilroy, CA",,IBA,CYCLONE 18,18
+United States,"Gilroy, GA",,IBA,CYCLONE 18,18
+United States,Gray,CPS,GE,PETtrace,16
+United States,"Groton, CT",,Siemens,ECLIPSE,11
+United States,"Hakensack, NJ",,Siemens,ECLIPSE,11
+United States,"Hakensack, NJ",,Siemens,ECLIPSE,11
+United States,Haverhill,Pharmalogic 4,GE,PETtrace,16
+United States,"Honolulu, HI",,Siemens,ECLIPSE,11
+United States,"Houston, TX",MetroNational (Cyclotope),ACSI,TR-19/9,19
+United States,"Houston, TX",Cardinal 9,GE,PETtrace,16
+United States,"Houston, TX",MD Anderson Cancer Center,GE,PETtrace,16
+United States,"Houston, TX",Houston Methodist Hospital,GE,PETtrace,16
+United States,"Houston, TX",University of Texas Houston,Scanditronix,MC-40,
+United States,"Houston, TX",,Siemens,ECLIPSE,11
+United States,"Houston, TX",,Siemens,ECLIPSE,11
+United States,"Indianapolis, IN",,Siemens,ECLIPSE,11
+United States,"Indianapolis, IN",,Siemens,RDS112,11
+United States,"Indianapolis, IN",,Siemens,RDS112,11
+United States,"Iowa City, IA",University of Iowa Hospitals - PET Imaging,GE,PETtrace,16
+United States,"Irvine, CA",University of California-Irvine,Scanditronix,MC 17,
+United States,"Jackson, MS",RNP 5,GE,PETtrace,16
+United States,"Jacksonville, FL",x,GE,PETtrace,16
+United States,"Jacksonville, FL",,Siemens,ECLIPSE,11
+United States,"Jacksonville, FL",,Siemens,ECLIPSE,11
+United States,"Kansas City, KS",Pharmalogic 2,GE,PETtrace,16
+United States,"Kansas City, KS",,Siemens,ECLIPSE,11
+United States,"Kansas City, KS",,Siemens,ECLIPSE,11
+United States,"Kettering, OH",,Siemens,RDS112,11
+United States,"Knoxville, TN",,Siemens,ECLIPSE,11
+United States,"Knoxville, TN",,Siemens,ECLIPSE,11
+United States,"Knoxville, TN",,Siemens,RDS112,11
+United States,"Lansing, MI",MSU/Cardinal 11,GE,PETtrace,16
+United States,"Las Vegas, NV",Health Imaging I,GE,PETtrace,16
+United States,"Las Vegas, NV",x,GE,PETtrace,16
+United States,"Las Vegas, NV",,Siemens,ECLIPSE,11
+United States,"Little Rock, AK",,Siemens,ECLIPSE,11
+United States,"Little Rock, AK",,Siemens,ECLIPSE,11
+United States,"Los Angeles, CA",West Los Angeles Veterans VA Medical Center / UCLA,ACSI,TR-19,19
+United States,"Los Angeles, CA",University of Southern California Molecular bldg,GE,PETtrace,16
+United States,"Los Angeles, CA",,Siemens,ECLIPSE,11
+United States,"Los Angeles, CA",,Siemens,ECLIPSE,11
+United States,"Los Angeles, CA",,Siemens,ECLIPSE,11
+United States,"Los Angeles, CA",,Siemens,ECLIPSE,11
+United States,"Los Angeles, CA",,Siemens,RDS112,11
+United States,"Los Angeles, CA",,Siemens,RDS112,11
+United States,"Louisville, KY",,Siemens,ECLIPSE,11
+United States,"Lubbock, TX",West Texas Positron,GE,PETtrace,16
+United States,"Macon, GA",,Siemens,ECLIPSE,11
+United States,"Madison, WI",Univ of Wis,GE,PETtrace,16
+United States,"Manhasset, NY",North Shore University Research,GE,PETtrace,16
+United States,"McAllen, TX",Valley Nuclear,GE,PETtrace,16
+United States,"Memphis, TN",RNP 2,GE,PETtrace,16
+United States,"Memphis, TN",,IBA,CYCLONE 18,18
+United States,"Milwaukee, WI",Wisconson Medical,GE,PETtrace,16
+United States,"Minneapolis, MN",,Siemens,ECLIPSE,11
+United States,"Minneapolis, MN",,Siemens,ECLIPSE,11
+United States,"Minneapolis, MN",,Siemens,ECLIPSE,11
+United States,"Mishawaka,IN",,Siemens,ECLIPSE,11
+United States,"Mobile, AL",CoNuclear Pharmacy,GE,PETtrace,16
+United States,"Morgantown, WV",University of West Virginia Robert c Byrd Health Science Center,GE,PETtrace,16
+United States,"Nashville, TN",Vanderbilt University Hospital,GE,PETtrace,16
+United States,"Nashville, TN",,Siemens,RDS112,11
+United States,"New Haven, CT",Yale,GE,PETtrace,16
+United States,"New Orleans, LA",Ochsner Health Center,ACSI,TR-19,19
+United States,"New Orleans, LA",,Siemens,ECLIPSE,11
+United States,"New York, NY",Memorial Sloan Kettering Cancer Center,ACSI,TR-19/9,19
+United States,"New York, NY",Tessler Developments LLC,GE,PETtrace,16
+United States,"New York, NY",Tessler Developments LLC,GE,PETtrace,16
+United States,"New York, NY",Memorial Sloan Kettering,GE,PETtrace,16
+United States,"New York, NY",,Siemens,RDS112,11
+United States,"New York, NY",,Siemens,ECLIPSE,11
+United States,"New York, NY",,Siemens,ECLIPSE,11
+United States,"Noblesville, IN",,IBA,CYCLONE 70,70
+United States,"Norman, OK",,ABT,BG-75,7.5
+United States,"North Billerica, MA",,IBA,CYCLONE 30,30
+United States,"Oakwood Village / Cleveland, OH",Cyclo-Tech LLC (Eastern Isotopes),GE,PETtrace,16
+United States,"Oklahoma City, OK",,Siemens,ECLIPSE,11
+United States,"Omaha, NE",,Siemens,RDS112,11
+United States,Orange Park,S.D.N. SPA,GE,MiniTrace,10
+United States,"Orlando, FL",Cardinal Health Orlando,GE,PETtrace,16
+United States,"Orlando, FL",,IBA,CYCLONE 18,18
+United States,"Palo Alto, CA",Lucas MRS Center,GE,PETtrace,16
+United States,"Palo Alto, CA",,Siemens,RDS112,11
+United States,"Peoria, IL",,Siemens,RDS112,11
+United States,"Philadelphia, PA",Cardinal 3,GE,PETtrace,16
+United States,"Philadelphia, PA",,IBA,CYCLONE 18,18
+United States,"Philadelphia, PA",University of Pennsylvania,Japan Steel Works,BC 3015,
+United States,"Philadelphia, PA",,Siemens,ECLIPSE,11
+United States,"Philadelphia, PA",,Siemens,ECLIPSE,11
+United States,"Phoenix, AZ",Biotek Ph1,GE,PETtrace,16
+United States,"Phoenix, AZ",Banner Health,GE,PETtrace,16
+United States,"Phoenix, AZ",Mayo Foundation for Medical Education & Research,GE,PETtrace,16
+United States,"Phoenix, AZ",,Siemens,ECLIPSE,11
+United States,"Phoenix, AZ",,Siemens,ECLIPSE,11
+United States,"Phoenix, AZ",,Siemens,RDS112,11
+United States,"Pittsburgh, PA",Geoda( I believe its now cardinal health),GE,PETtrace,16
+United States,"Pittsburgh, PA",,Siemens,ECLIPSE,11
+United States,"Pittsburgh, PA",,Siemens,RDS112,11
+United States,"Portland, OR",OREGON HEALTH & SCIENCE UNIVERSITY,GE,PETtrace,16
+United States,"Portland, OR",,Siemens,ECLIPSE,11
+United States,"Princeton, NJ",Bristol-Myers-Squibb,GE,PETtrace,16
+United States,"Raleigh-Durham, NC",,Siemens,ECLIPSE,11
+United States,"Raleigh-Durham, NC",,Siemens,ECLIPSE,11
+United States,"Raleigh-Durham, NC",Duke University Medical Centre,TCC,CS-30,30
+United States,"Richmond, VA",MCV (& E.I.),GE,PETtrace,16
+United States,"Roanoke, VA",,Siemens,ECLIPSE,11
+United States,"Rochester, NY",Mayo Clinic,GE,PETtrace,16
+United States,"Rochester, NY",Cardinal 13,GE,PETtrace,16
+United States,"Rochester, NY",Mayo Clinic,GE,PETtrace,16
+United States,"Romeoville, IL",Eastern Isotopes #2,GE,PETtrace,16
+United States,"Romeoville, IL",,IBA,CYCLONE 18,18
+United States,Roseville,Cardinal 17,GE,PETtrace,16
+United States,ROYAL OAK,,Siemens,RDS112,11
+United States,"Rutherford, NJ",RNP 4,GE,PETtrace,16
+United States,"Sacramento, CA",,Siemens,RDS112,11
+United States,"Saint Louis, MO",,IBA,CYCLONE 30,30
+United States,"Salt Lake City, UT","Huntsman Cancer,",GE,PETtrace,16
+United States,"San Antonio, TX",University of Texas Research Imaging Center,Scanditronix,MC-17F,
+United States,"San Antonio, TX",,Siemens,ECLIPSE,11
+United States,"San Antonio, TX",,Siemens,ECLIPSE,11
+United States,"San Diego, CA",,Siemens,ECLIPSE,11
+United States,"San Francisco, CA",USCF,GE,PETtrace,16
+United States,Sanford,,IBA,CYCLONE 18,18
+United States,Sanford,,IBA,CYCLONE 18,18
+United States,"Scottsdale, AZ",,Siemens,ECLIPSE,11
+United States,"Seattle, WA",Cardinal 10,GE,PETtrace,16
+United States,"Seattle, WA",,Siemens,ECLIPSE,11
+United States,"Seattle, WA",,Siemens,ECLIPSE,11
+United States,"Shreveport, LA",Biomedical Foundation of Louisiana (Baton Rouge),ACSI,TR-19,19
+United States,"Shreveport, LA",,IBA,CYCLONE 18,18
+United States,"Somerset, NJ",,IBA,CYCLONE 18,18
+United States,"Somerset, NJ",,IBA,CYCLONE 18,18
+United States,"South Plainfield, NJ",,IBA,CYCLONE 30,30
+United States,"South San Francisco, CA",PETNET SOLUTIONS INC,GE,PETtrace,16
+United States,"Spokane, WA",,Siemens,ECLIPSE,11
+United States,"St Louis, MO",Washington University in St. Louis,ACSI,TR-19/9,19
+United States,"St Louis, MO",Covidien / Mallinckrodt,ACSI,TR-30,30
+United States,"St Louis, MO",Covidien / Mallinckrodt,ACSI,TR-30,30
+United States,"St Louis, MO",Cardinal 7,GE,PETtrace,16
+United States,"St Louis, MO",,Siemens,ECLIPSE,11
+United States,"St Louis, MO",,Siemens,RDS112,11
+United States,"Sterling, VA",Eastern Isotopes #1,GE,PETtrace,16
+United States,"Stony Brook, NY",x,GE,PETtrace,16
+United States,Tallahassee,YUNNAN KUNMING PLA NO.43 HOSPITAL,GE,MiniTrace,10
+United States,"Tampa, FL",Cardinal 16,GE,PETtrace,16
+United States,"Tampa, FL",,Siemens,ECLIPSE,11
+United States,"Tampa, FL",,Siemens,ECLIPSE,11
+United States,"Tampa, FL",,Siemens,RDS112,11
+United States,Totowa,Pharmalogic 3,GE,PETtrace,16
+United States,"Troy, NY",,Siemens,ECLIPSE,11
+United States,"Tulsa, OK",,Siemens,ECLIPSE,11
+United States,"Tulsa, OK",,Siemens,ECLIPSE,11
+United States,Undisclosed Location,Cardinal Health #1,ACSI,TR-19,19
+United States,Undisclosed Location,Cardinal Health #2,ACSI,TR-19,19
+United States,Undisclosed Location,Cardinal Health #3,ACSI,TR-19,19
+United States,"Upton, NY",Brookhaven National Laboratory,ACSI,TR-19/9,19
+United States,"Van Nuys, CA",Cardinal 4,GE,PETtrace,16
+United States,West Chester,Cardinal 5,GE,PETtrace,16
+United States,"West Haven, CT",,Siemens,RDS112,11
+United States,"Wichita, KS",PFI Wichita,GE,PETtrace,16
+United States,"Winston-Salem, NC",Wake Forest,GE,PETtrace,16
+United States,"Winston-Salem, NC",,Siemens,ECLIPSE,11
+United States,"Winston-Salem, NC",,Siemens,RDS112,11
+United States,"Woburn, MA",Cardinal 8,GE,PETtrace,16
+Uruguay,Montevideo,CUDIM,GE,PETtrace,16
+Uzbekistan,Tashkenkt,x,GE,MiniTrace,10
+Uzbekistan,Tashkent,,ABT,BG-75,7.5
+Uzbekistan,Tashkent,,NIIEFA,U-150,
+Venezuela,Barquisimeto,Xian Jiaotong University Affiliated No 1 Hospital,GE,MiniTrace,10
+Venezuela,Caracas,HEILONGJIANG FARM BUREAU GENERAL HOSPITAL,GE,MiniTrace,10
+Venezuela,Caracas,CAREGGI OSP.,GE,PETtrace,16
+Vietnam,Hanoi,,IBA,CYCLONE 30,30
+Vietnam,Ho Chi Minh City,,IBA,CYCLONE 10,10
+Vietnam,Ho Chi Minh City,,Siemens,ECLIPSE,11
+Vietnam,,,IBA,CYCLONE 18,18
