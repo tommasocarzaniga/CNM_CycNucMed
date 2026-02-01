@@ -12,6 +12,80 @@ from rapidfuzz import fuzz
 from .utils import CACHE_DIR
 
 # -----------------------------
+# Input schema normalization
+# -----------------------------
+
+
+def standardize_columns(df: pd.DataFrame) -> pd.DataFrame:
+    """
+    Normalize input schema to the column names expected by the rest of the pipeline.
+    This prevents KeyError when upstream scraping changes header labels
+    (case, whitespace, or alternate header names).
+    """
+    df = df.copy()
+
+    # Strip whitespace from headers and coerce to str
+    df.columns = [str(c).strip() for c in df.columns]
+
+    # Case-insensitive lookup helper
+    lower = {c.lower(): c for c in df.columns}
+
+    # Country: accept common variants
+    if "country" in lower:
+        df = df.rename(columns={lower["country"]: "Country"})
+    else:
+        for alt in [
+            "member state",
+            "state",
+            "country/region",
+            "country region",
+            "nation",
+            "country name",
+        ]:
+            if alt in lower:
+                df = df.rename(columns={lower[alt]: "Country"})
+                break
+
+    # Manufacturer
+    if "manufacturer" in lower:
+        df = df.rename(columns={lower["manufacturer"]: "Manufacturer"})
+
+    # Facility
+    if "facility" in lower:
+        df = df.rename(columns={lower["facility"]: "Facility"})
+
+    # City
+    if "city" in lower:
+        df = df.rename(columns={lower["city"]: "City"})
+
+    # Model
+    if "model" in lower:
+        df = df.rename(columns={lower["model"]: "Model"})
+
+    # Proton energy column: tolerate a few variants
+    if "proton energy (mev)" not in {c.lower() for c in df.columns}:
+        for alt in [
+            "proton energy",
+            "energy (mev)",
+            "proton energy mev",
+            "proton energy/mev",
+        ]:
+            if alt in lower:
+                df = df.rename(columns={lower[alt]: "Proton energy (MeV)"})
+                break
+
+    return df
+
+
+def require_columns(df: pd.DataFrame, required: list[str]) -> None:
+    missing = [c for c in required if c not in df.columns]
+    if missing:
+        raise KeyError(
+            f"Missing required columns {missing}. Available columns: {df.columns.tolist()}"
+        )
+
+
+# -----------------------------
 # Country canonicalization (country_converter)
 # -----------------------------
 
@@ -19,6 +93,7 @@ from .utils import CACHE_DIR
 @dataclass(frozen=True)
 class CountryCanonConfig:
     cache_path: Path = CACHE_DIR / "country_fix_cache.json"
+
 
 def _pre_map_country(raw: str) -> str:
     s = str(raw).strip()
@@ -33,6 +108,7 @@ def _pre_map_country(raw: str) -> str:
         return "United Kingdom"
 
     return s
+
 
 def canonicalize_countries(
     df: pd.DataFrame,
@@ -61,7 +137,10 @@ def canonicalize_countries(
             return fix_cache[raw]
         if llm_fix is None:
             fix_cache[raw] = raw
-            cache_path.write_text(json.dumps(fix_cache, ensure_ascii=False, indent=2), encoding="utf-8")
+            cache_path.write_text(
+                json.dumps(fix_cache, ensure_ascii=False, indent=2),
+                encoding="utf-8",
+            )
             return raw
 
         candidate = str(llm_fix(raw)).strip().strip('"').strip("'")
@@ -71,17 +150,23 @@ def canonicalize_countries(
             fixed = coco.convert(names=candidate, to="name_short", not_found=raw)
 
         fix_cache[raw] = fixed
-        cache_path.write_text(json.dumps(fix_cache, ensure_ascii=False, indent=2), encoding="utf-8")
+        cache_path.write_text(
+            json.dumps(fix_cache, ensure_ascii=False, indent=2),
+            encoding="utf-8",
+        )
         return fixed
+
+    # If the column does not exist, do nothing (caller can enforce required columns)
+    if col not in df.columns:
+        return df
 
     # Pre-map obvious non-country entries
     df[col] = df[col].apply(lambda x: _pre_map_country(x) if pd.notna(x) else x)
-    
+
     unique = df[col].dropna().unique()
     short_names = coco.convert(names=list(unique), to="name_short", not_found=None)
     mapping = dict(zip(unique, short_names))
 
-    
     tmp_col = out_col or f"{col}__canon"
     df[tmp_col] = df[col].map(mapping)
 
@@ -97,7 +182,9 @@ def canonicalize_countries(
         df.drop(columns=[tmp_col], inplace=True)
 
     # Add ISO3 for mapping
-    df["Country_iso3"] = coco.convert(names=df[col].fillna(""), to="ISO3", not_found=None)
+    df["Country_iso3"] = coco.convert(
+        names=df[col].fillna(""), to="ISO3", not_found=None
+    )
 
     return df
 
@@ -114,34 +201,66 @@ class ManufacturerCanonConfig:
 
 
 SEED_CANON: set[str] = {
-    "Siemens Healthineers",                            # acquired CTI
-    "Avelion (Alcen)",                                 # PMB -> Avelion (Alcen)
-    "Best Cyclotron Systems (BCS)",                    # ABT -> BCS
-    "Advanced Cyclotron Systems, Inc. (ACSI)",         # ACSI/ASCI
-    "Rosatom",                                         # Rosatom
-    "Sichuan Longevous Beamtech Co., Ltd (LBT)",       # LBT
-    "TCC (The Cyclotron Corporation)",                 # TCC variants
-    "Scanditronix",                                    # Scanditronix variants
-    "Sumitomo",                                        # Sumitomo typo variants
+    "Siemens Healthineers",  # acquired CTI
+    "Avelion (Alcen)",  # PMB -> Avelion (Alcen)
+    "Best Cyclotron Systems (BCS)",  # ABT -> BCS
+    "Advanced Cyclotron Systems, Inc. (ACSI)",  # ACSI/ASCI
+    "Rosatom",  # Rosatom
+    "Sichuan Longevous Beamtech Co., Ltd (LBT)",  # LBT
+    "TCC (The Cyclotron Corporation)",  # TCC variants
+    "Scanditronix",  # Scanditronix variants
+    "Sumitomo",  # Sumitomo typo variants
 }
 
 # Strong normalization helpers (for dedup/collapse)
 # NOTE: "corporation" deliberately NOT treated as legal suffix because we need it for "Cyclotron Corporation" matching.
 LEGAL_SUFFIXES = {
-    "inc", "incorporated", "corp",
+    "inc",
+    "incorporated",
+    "corp",
     # "corporation",  # intentionally removed
-    "co", "company",
-    "ltd", "limited", "llc", "plc",
-    "gmbh", "ag", "sa", "sarl", "srl", "spa", "bv", "nv", "kg", "oy", "ab", "as",
-    "pte", "pty", "kk", "ltda", "sas",
+    "co",
+    "company",
+    "ltd",
+    "limited",
+    "llc",
+    "plc",
+    "gmbh",
+    "ag",
+    "sa",
+    "sarl",
+    "srl",
+    "spa",
+    "bv",
+    "nv",
+    "kg",
+    "oy",
+    "ab",
+    "as",
+    "pte",
+    "pty",
+    "kk",
+    "ltda",
+    "sas",
 }
 
 # NOTE: we do NOT remove "negative"/"ion" because "Scanditronix-Negative-Ion" should still match reliably.
 GENERIC_TOKENS = {
-    "the", "and", "&",
-    "group", "international", "global", "holding", "holdings",
-    "systems", "system", "technology", "technologies",
-    "medical", "health", "healthcare",
+    "the",
+    "and",
+    "&",
+    "group",
+    "international",
+    "global",
+    "holding",
+    "holdings",
+    "systems",
+    "system",
+    "technology",
+    "technologies",
+    "medical",
+    "health",
+    "healthcare",
 }
 
 
@@ -157,8 +276,8 @@ def _basic_cleanup(s: str) -> str:
 def _norm_key(s: str) -> str:
     """Light normalization (for compatibility + simple manual rules)."""
     s = _basic_cleanup(s).lower()
-    s = re.sub(r"\(([^)]{1,20})\)", " ", s)   # remove short bracket chunks
-    s = re.sub(r"[^\w\s]", " ", s)            # remove punctuation
+    s = re.sub(r"\(([^)]{1,20})\)", " ", s)  # remove short bracket chunks
+    s = re.sub(r"[^\w\s]", " ", s)  # remove punctuation
     s = re.sub(r"\s+", " ", s).strip()
     return s
 
@@ -195,14 +314,18 @@ def _norm_key_strong(s: str) -> str:
 
 def _choose_rep_label(labels: list[str]) -> str:
     """Prefer labels with an acronym in parentheses; otherwise longest."""
+
     def score(x: str) -> tuple[int, int]:
         x0 = _basic_cleanup(x)
         has_paren = 1 if ("(" in x0 and ")" in x0) else 0
         return (has_paren, len(x0))
+
     return max(labels, key=score)
 
 
-def _best_fuzzy_to_canon(raw: str, canon_list: list[str], threshold: int = 93) -> Optional[str]:
+def _best_fuzzy_to_canon(
+    raw: str, canon_list: list[str], threshold: int = 93
+) -> Optional[str]:
     """Conservative fuzzy match raw -> existing canonical using strong keys."""
     rk = _norm_key_strong(raw)
     if not rk:
@@ -245,7 +368,13 @@ def _manual_map(raw: str) -> Optional[str]:
         return "Advanced Cyclotron Systems, Inc. (ACSI)"
 
     # Siemens / CTI
-    if "siemens" in k or k == "cti" or k.startswith("cti ") or "siemens" in ks or ks == "cti":
+    if (
+        "siemens" in k
+        or k == "cti"
+        or k.startswith("cti ")
+        or "siemens" in ks
+        or ks == "cti"
+    ):
         return "Siemens Healthineers"
 
     # PMB -> Avelion (Alcen)
@@ -273,7 +402,7 @@ def _manual_map(raw: str) -> Optional[str]:
     if "tcc" in ks or ("cyclotron" in ks and "corporation" in ks):
         return "TCC (The Cyclotron Corporation)"
 
-    # Scanditronix variants: incl. "Negative-Ion" etc.
+    # Scanditronix variants: incl. Negative-Ion etc.
     if "scanditronix" in ks:
         return "Scanditronix"
 
@@ -348,7 +477,10 @@ def canonicalize_manufacturers(
         for name in lst:
             placed = False
             for g in groups:
-                if fuzz.token_sort_ratio(_norm_key_strong(name), _norm_key_strong(g[0])) >= threshold:
+                if (
+                    fuzz.token_sort_ratio(_norm_key_strong(name), _norm_key_strong(g[0]))
+                    >= threshold
+                ):
                     g.append(name)
                     placed = True
                     break
@@ -371,6 +503,10 @@ def canonicalize_manufacturers(
         raw_col = f"{col}_raw"
         if raw_col not in df.columns:
             df[raw_col] = df[col]
+
+    # If manufacturer column isn't present, do nothing
+    if col not in df.columns:
+        return df, {}
 
     uniq = sorted(set(_basic_cleanup(x) for x in df[col].dropna().astype(str).unique()))
     uniq = [u for u in uniq if u]
@@ -552,8 +688,17 @@ def clean_cyclotron_df(
     """End-to-end cleaner to match the notebook pipeline."""
     df = df.copy()
 
-    # Whitespace
-    df = normalize_whitespace(df, ["Country", "City", "Facility", "Manufacturer", "Model", "Proton energy (MeV)"])
+    # NEW: normalize schema early so downstream code can rely on standard names
+    df = standardize_columns(df)
+
+    # If the scrape changes and Country is not present, fail early with a helpful message
+    require_columns(df, required=["Country"])
+
+    # Whitespace (safe even if some columns missing)
+    df = normalize_whitespace(
+        df,
+        ["Country", "City", "Facility", "Manufacturer", "Model", "Proton energy (MeV)"],
+    )
 
     # Unspecified -> NaN
     for col in ["Facility", "Manufacturer", "Model", "City", "Country", "Proton energy (MeV)"]:
